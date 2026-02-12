@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>City Dashboard - Damaan</title>
+</head>
+<body class="bg-[#0b0e14] text-gray-300 font-sans flex min-h-screen">
+   <aside x-data="{ openMenu: '', openSub: '' }"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
+            <div class="p-6 mb-2 border-b border-gray-800/50 relative">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-8 h-8">
+                        <div
+                            class="absolute inset-0 border-t-2 border-l-2 border-green-500 rounded-tl-full">
+                        </div>
+                        <div
+                            class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
+                        </div>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-white font-bold leading-none tracking-wider text-lg">
+                            DAMAAN</h1>
+                        <p
+                            class="text-[10px] text-gray-500 font-medium uppercase">
+                            Business Group</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto sidebar-scroll px-0 pb-10">
+                <nav class="space-y-0.5">
+                    <div
+                        class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Main Navigation</div>
+                    <a href="../Dashboard/city-dashboard.html"
+                        class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        <i class="fas fa-home w-8 text-sm"></i>
+                        <span
+                            class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                    </a>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                            <div class="flex items-center">
+                                <i class="fas fa-plus-square w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-bold uppercase tracking-tight">New
+                                    Entry</span>
+                            </div>
+                            <i class="fas text-[10px] transition-transform duration-200"
+                                :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'newEntry'" x-collapse
+                            class="bg-[#0b0f17]">
+                            <button
+                                @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Branch
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'branchEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12">
+                                <a href="../Superbranch/superbranch.html"
+                                    @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
+                                    Super Branch
+                                </a>
+                                <a href="../Superbranch/countrybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
+                                    Branch</a>
+                                <a href="../Superbranch/citybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
+                                    Branch</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">User
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
+                                    Admin User Entry</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Account
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'accountEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/newaccount.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
+                                    Account</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-file-invoice-dollar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Ledger
+                                    Account</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ledger'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/super-admin-ledger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Ledger</a>
+                            <a href="../Ledger/countryLedger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
+                                Ledger</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-money-bill-wave w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Daily
+                                    Payment</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'dailyPay'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/Super-admin-roznamcha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Roznamcha
+                            </a>
+                            <a href="../Ledger/branchRomancha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
+                                Roznamcha
+                            </a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Operations</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-shopping-cart w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ops'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Sale</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Purchase</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-boxes w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'stock'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
+                                Stock</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
+                                Reports</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-ship w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Shipping
+                                    Line</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ship'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
+                                Entry</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-tie w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Clearing
+                                    Agent</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'agent'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Reports & Utils</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-bar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Total
+                                    Reports</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'reports'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
+                                Report</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
+                                Summary</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <a href="../Ledger/email-compose.html">
+                            <button
+                                @click="openMenu = (openMenu === 'email' ? '' : 'email')"
+                                class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope w-8 text-sm"></i>
+                                    <span
+                                        class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
+                                </div>
+                                <i class="fas text-[10px]"
+                                    :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-cog w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'settings'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/setting-bill-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
+                                Entry</a>
+                            <a href="../Ledger/setting-cash-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
+                                Entry</a>
+                            <a href="../Ledger/exchange-entry-setting.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
+                                Entry</a>
+                            <a href="../Ledger/bank-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
+                                Entry</a>
+                            <a href="../Ledger/employe-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
+                                Data Entry</a>
+                            <a href="../Ledger/worker.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
+                                Entry</a>
+                            <a href="../Ledger/goods-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
+                                Entry</a>
+                            <a href="../Ledger/warehouse-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
+                                Entry</a>
+                            <a href="../Ledger/wherehouse-import.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                            <a href="../Ledger/warehouse-export.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+    <main class="flex-1 p-6 bg-[#0b0e14] min-h-screen">
+        <header
+            class="flex justify-between items-center mb-8 bg-[#0b0e14] py-2">
+            <div class="relative w-1/2 max-w-md">
+                <span
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                    <i class="fas fa-search text-sm"></i>
+                </span>
+                <input type="text"
+                    class="bg-[#111827] w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-800/50 text-sm focus:outline-none focus:border-gray-700 transition-all placeholder-gray-600 text-white"
+                    placeholder="Search invoices, customers, or reports...">
+            </div>
+            <div class="flex items-center space-x-5">
+                <button
+                    class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-moon text-lg"></i>
+                </button>
+                <div class="flex items-center space-x-2 cursor-pointer group">
+                    <i
+                        class="fas fa-globe text-gray-400 group-hover:text-white"></i>
+                    <span
+                        class="text-xs font-semibold text-gray-400 group-hover:text-white">EN</span>
+                </div>
+                <div
+                    class="relative cursor-pointer text-gray-400 hover:text-white">
+                    <i class="far fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span
+                            class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-[#0b0e14]"></span>
+                    </span>
+                </div>
+                <div
+                    class="flex items-center space-x-3 pl-4 border-l border-gray-800">
+                    <div class="text-right leading-tight">
+                        <p class="text-sm font-bold text-white tracking-wide">
+                            Admin User</p>
+                        <p class="text-[10px] text-gray-500 font-medium">
+                            City Admin</p>
+                    </div>
+                    <div
+                        class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-gray-800 ring-offset-2 ring-offset-[#0b0e14] cursor-pointer hover:bg-blue-500 transition-colors">
+                        AD
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="p-8 space-y-6 overflow-y-auto">
+            <div class="grid grid-cols-4 gap-6">
+                <div class="bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <p
+                        class="text-[10px] text-gray-500 uppercase tracking-tighter">
+                        City Total Sales</p>
+                    <h2 class="text-2xl font-bold mt-2">$442,610</h2>
+                    <p class="text-green-500 text-[10px] mt-1">+3.2% vs last
+                        month</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <p class="text-[10px] text-gray-500 uppercase">City Total
+                        Purchase</p>
+                    <h2 class="text-2xl font-bold mt-2">$386,510</h2>
+                    <p class="text-gray-400 text-[10px] mt-1">Within Budget</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <p class="text-[10px] text-gray-500 uppercase">Local
+                        Logistics Cost</p>
+                    <h2 class="text-2xl font-bold mt-2">$51,220</h2>
+                    <p class="text-gray-500 text-[10px] mt-1">Total city
+                        distribution</p>
+                </div>
+                <div
+                    class="bg-[#161b22] p-6 rounded-xl border-l-4 border-cyan-400">
+                    <p class="text-[10px] text-gray-500 uppercase">City
+                        Operating Margin</p>
+                    <div class="flex items-center space-x-2 mt-2">
+                        <h2 class="text-2xl font-bold">12.6%</h2>
+                        <i class="fas fa-chart-line text-cyan-400"></i>
+                    </div>
+                    <span
+                        class="inline-block mt-2 px-2 py-0.5 bg-green-900/30 text-green-400 text-[10px] rounded">Peak
+                        Performance</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-6">
+                <div
+                    class="col-span-2 bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-bold">Internal Branch
+                            Performance</h3>
+                        <span
+                            class="text-[10px] border border-gray-700 px-2 py-1 rounded text-gray-500">CITY
+                            ADMIN VIEW</span>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-sm">North Sector Branch</p>
+                                <p class="text-[10px] text-gray-500">Active
+                                    Staff: 12 | Deliveries: 142</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-cyan-400">$156.2k</p>
+                                <p class="text-[10px] text-gray-500">Top
+                                    Contributor</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-sm">Central Hub Station</p>
+                                <p class="text-[10px] text-gray-500">Active
+                                    Staff: 24 | Deliveries: 310</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-orange-400">$210.5k</p>
+                                <p class="text-[10px] text-gray-500">Primary Hub
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <h3 class="text-sm font-bold mb-6">Monthly City Targets</h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1">
+                                <span>Sales Target</span><span>92%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-1.5 rounded-full">
+                                <div
+                                    class="bg-cyan-400 h-1.5 rounded-full w-[92%]">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1">
+                                <span>Inventory Turnover</span><span>65%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-1.5 rounded-full">
+                                <div
+                                    class="bg-orange-400 h-1.5 rounded-full w-[65%]">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1">
+                                <span>Customer
+                                    Satisfaction</span><span>88%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-1.5 rounded-full">
+                                <div
+                                    class="bg-green-400 h-1.5 rounded-full w-[88%]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-6">
+                <div
+                    class="col-span-2 bg-[#161b22] p-6 rounded-xl border border-gray-800">
+                    <h3 class="text-sm font-bold mb-4">Recent Local Transactions
+                    </h3>
+                    <table class="w-full text-left text-[11px]">
+                        <thead
+                            class="text-gray-500 uppercase border-b border-gray-800">
+                            <tr>
+                                <th class="pb-2">Transaction Info</th>
+                                <th class="pb-2">Assigned Branch</th>
+                                <th class="pb-2">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-800">
+                            <tr>
+                                <td class="py-4">Sale INV-8812<br><span
+                                        class="text-gray-500">Counter
+                                        Sale</span></td>
+                                <td class="py-4">Central Hub</td>
+                                <td class="py-4 text-green-400 font-bold">$1,200
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4">Purchase ENT-4421<br><span
+                                        class="text-gray-500">Restock
+                                        Order</span></td>
+                                <td class="py-4">North Sector</td>
+                                <td class="py-4 text-red-400 font-bold">$4,900
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div
+                    class="bg-[#111827] p-6 rounded-xl border border-gray-800 flex flex-col items-center">
+                    <h3 class="text-white font-semibold mb-8 w-full text-left">
+                        Branch Profit
+                        Share</h3>
+                    <div class="relative flex items-center justify-center">
+                        <svg class="w-40 h-40">
+                            <circle cx="80" cy="80" r="70" fill="transparent"
+                                stroke="#1f2937" stroke-width="12"></circle>
+                            <circle cx="80" cy="80" r="70" fill="transparent"
+                                stroke="#00c2ff" stroke-width="12"
+                                stroke-dasharray="100 440" stroke-dashoffset="0"
+                                class="donut-segment"></circle>
+                            <circle cx="80" cy="80" r="70" fill="transparent"
+                                stroke="#eab308" stroke-width="12"
+                                stroke-dasharray="80 440"
+                                stroke-dashoffset="-105" class="donut-segment">
+                            </circle>
+                            <circle cx="80" cy="80" r="70" fill="transparent"
+                                stroke="#22c55e" stroke-width="12"
+                                stroke-dasharray="60 440"
+                                stroke-dashoffset="-190" class="donut-segment">
+                            </circle>
+                        </svg>
+                        <div class="absolute text-center">
+                            <p class="text-2xl font-bold text-white">$89k</p>
+                            <p
+                                class="text-[10px] text-gray-500 uppercase tracking-widest">
+                                Total</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-8 w-full">
+                        <div class="flex items-center space-x-2 text-[11px]">
+                            <span
+                                class="w-2 h-2 rounded-full bg-cyan-500"></span>
+                            <span class="text-gray-400">Central
+                                Hub: $38k</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-[11px]">
+                            <span
+                                class="w-2 h-2 rounded-full bg-green-500"></span>
+                            <span class="text-gray-400">North
+                                Sector: $27k</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-[11px]">
+                            <span
+                                class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                            <span class="text-gray-400">East Sector: $15k</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-[11px]">
+                            <span
+                                class="w-2 h-2 rounded-full bg-gray-500"></span>
+                            <span class="text-gray-400">West Sector: $10k</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Animation from Super Admin */
+        .animate-spin-slow {
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        /* Syncing Gradient with Super Admin Style */
+        .btn-primary-gradient {
+            background: linear-gradient(90deg, #0F172A 0%, #1E40AF 50%, #059669 100%);
+        }
+        .active-lang {
+            background-color: #EFF6FF;
+            /* blue-50 */
+            color: #2563EB;
+            /* blue-600 */
+        }
+        /* Persistent Hover Logic & Z-Index */
+        .lang-group:hover .lang-menu {
+            display: block;
+            opacity: 1;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+    <main class="min-h-screen flex items-center justify-center p-6">
+        <div
+            class="w-full max-w-6xl bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200 overflow-hidden flex min-h-[750px]">
+            <div
+                class="flex flex-col justify-between w-full p-10 lg:w-2/5 md:p-16">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <svg width="45" height="45" viewBox="0 0 100 100"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25 60C25 40 45 25 75 25" stroke="#065F46"
+                                stroke-width="8" stroke-linecap="round" />
+                            <path d="M28 75C28 55 48 40 78 40" stroke="#94A3B8"
+                                stroke-width="8" stroke-linecap="round" />
+                            <rect x="42" y="48" width="8" height="20" rx="2"
+                                fill="#0284C7" />
+                            <rect x="52" y="38" width="8" height="30" rx="2"
+                                fill="#082F49" />
+                            <rect x="62" y="30" width="8" height="38" rx="2"
+                                fill="#0F172A" />
+                        </svg>
+                        <div>
+                            <h1
+                                class="text-2xl font-black tracking-tight text-[#0F172A] uppercase leading-none">
+                                DAMAAN</h1>
+                            <p
+                                class="text-[9px] font-bold tracking-[0.3em] text-slate-400 uppercase mt-1">
+                                Business Group</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="max-w-sm w-full mx-auto mt-12">
+                    <h2 class="text-3xl font-bold text-blue-950">City Admin
+                        Portal</h2>
+                    <p class="mt-2 text-sm text-slate-500 font-medium">Global
+                        Inventory Management System.</p>
+                    <div class="flex p-1.5 mt-10 mb-8 bg-slate-100 rounded-2xl">
+                        <a href="super-admin-login.html"
+                            class="flex-1 text-center py-2.5 text-[11px] font-bold text-slate-400 hover:text-blue-950 transition-colors">Super
+                            Admin</a>
+                        <a href="country-admin-login.html"
+                            class="flex-1 text-center py-2.5 text-[11px] font-bold text-slate-400 hover:text-blue-950 transition-colors">Country</a>
+                        <a href="city-admin-login.html"
+                            class="flex-1 text-center py-2.5 text-[11px] font-bold text-white transition-all bg-blue-950 rounded-xl shadow-xl shadow-blue-950/30">City</a>
+                    </div>
+                    <form class="space-y-6" id="loginForm">
+                        <p id="loginError"
+                            class="hidden text-red-500 text-xs font-bold text-center">
+                            Invalid email or password
+                        </p>
+                        <div>
+                            <label
+                                class="block mb-2 text-[10px] font-black tracking-widest text-slate-400 uppercase">Email
+                                Address</label>
+                            <input type="email" id="email"
+                                placeholder="city.admin@damaan.com"
+                                class="w-full px-5 py-4 text-sm border-2 border-slate-50 rounded-2xl bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500/20 transition-all" />
+                        </div>
+                        <div>
+                            <label
+                                class="block mb-2 text-[10px] font-black tracking-widest text-slate-400 uppercase">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password"
+                                    placeholder="••••••••••••"
+                                    class="w-full px-5 py-4 text-sm border-2 border-slate-50 rounded-2xl bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500/20 transition-all" />
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-5 font-black text-[12px] tracking-[0.1em] text-white transition-all rounded-2xl btn-primary-gradient hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-900/30 uppercase">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+                <div
+                    class="flex gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-8">
+                    <a href="#" class="hover:text-blue-600">Privacy</a>
+                    <a href="#" class="hover:text-blue-600">Security</a>
+                    <a href="#" class="hover:text-blue-600">Terms</a>
+                </div>
+            </div>
+            <div
+                class="relative hidden lg:flex flex-col items-center justify-center w-3/5 bg-[#122647] overflow-hidden">
+                <div class="absolute top-10 right-10 lang-group z-50">
+                    <button id="langBtn"
+                        class="flex items-center gap-2 px-5 py-2.5 text-[10px] font-black text-slate-900 bg-white rounded-full uppercase tracking-tighter shadow-xl">
+                        <span id="langFlag">🌐</span>
+                        <span id="langText">English</span>
+                        <svg class="w-3 h-3 opacity-30" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div
+                        class="lang-menu hidden absolute right-0 pt-2 w-48 drop-shadow-2xl z-[100]">
+                        <div
+                            class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-2xl">
+                            <button onclick="changeLang('English','🌐', this)"
+                                class="lang-option w-full text-left px-4 py-3 text-[10px] font-bold uppercase transition-colors">
+                                English (US)
+                            </button>
+                            <button onclick="changeLang('Urdu','🇵🇰', this)"
+                                class="lang-option w-full text-left px-4 py-3 text-[10px] font-bold uppercase transition-colors border-t border-slate-50">
+                                Urdu (اردو)
+                            </button>
+                            <button onclick="changeLang('German','🇩🇪', this)"
+                                class="lang-option w-full text-left px-4 py-3 text-[10px] font-bold uppercase transition-colors border-t border-slate-50">
+                                German (Deutsch)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative w-full max-w-sm z-10">
+                    <div
+                        class="p-8 bg-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] rounded-[2.5rem] transform -rotate-2 transition-transform hover:rotate-0 duration-700">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="font-black text-slate-900">City
+                                    Logistics</h3>
+                                <p
+                                    class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em]">
+                                    Regional Status</p>
+                            </div>
+                            <span
+                                class="px-3 py-1 text-[9px] font-black text-emerald-600 uppercase bg-emerald-50 rounded-full">Active</span>
+                        </div>
+                        <svg class="w-full h-24 text-blue-900 mb-6"
+                            viewBox="0 0 100 40" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path
+                                d="M0 35 L15 25 L30 30 L45 15 L60 20 L75 5 L100 10"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <div
+                            class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-50">
+                            <div>
+                                <p
+                                    class="text-[9px] font-black text-slate-300 uppercase">
+                                    Local Units</p>
+                                <p class="text-xl font-black text-blue-950">
+                                    42.8K</p>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-[9px] font-black text-slate-300 uppercase">
+                                    Growth</p>
+                                <p class="text-xl font-black text-emerald-500">
+                                    +12.4%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute -bottom-12 -right-12 p-6 bg-white shadow-2xl rounded-3xl w-44 transform rotate-6 border border-slate-50">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin-slow">
+                            </div>
+                            <div>
+                                <p
+                                    class="text-lg font-black text-blue-950 leading-none">
+                                    88%</p>
+                                <p
+                                    class="text-[8px] font-black text-slate-400 uppercase mt-1">
+                                    Efficiency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-32 text-center px-10">
+                    <p
+                        class="text-[10px] font-bold tracking-[0.4em] text-blue-400/50 uppercase">
+                        Established Excellence</p>
+                    <h2
+                        class="mt-4 text-3xl font-bold text-white leading-tight">
+                        Damaan Group Of Business</h2>
+                    <p
+                        class="mt-4 text-sm text-blue-200/60 max-w-xs mx-auto leading-relaxed">
+                        Global Logistics & Inventory Management Solutions.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function changeLang(name, flag) {
+            document.getElementById('langText').innerText = name;
+            document.getElementById('langFlag').innerText = flag;
+            // Optional: Log language change
+            console.log("Language changed to: " + name);
+        }
+        const langBtn = document.getElementById("langBtn");
+        const langMenu = document.querySelector(".lang-menu");
+        const langText = document.getElementById("langText");
+        const langFlag = document.getElementById("langFlag");
+        // Toggle dropdown
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle("hidden");
+        });
+        // Change language
+        function changeLang(language, flag, el) {
+            langText.innerText = language;
+            langFlag.innerText = flag;
+            document.querySelectorAll(".lang-option").forEach(btn => {
+                btn.classList.remove("active-lang");
+            });
+            el.classList.add("active-lang");
+            localStorage.setItem("selectedLang", language);
+            localStorage.setItem("selectedFlag", flag);
+            langMenu.classList.add("hidden");
+        }
+        // Close dropdown on outside click
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest(".lang-group")) {
+                langMenu.classList.add("hidden");
+            }
+        });
+        // Load saved language on refresh
+        window.addEventListener("DOMContentLoaded", () => {
+            const savedLang = localStorage.getItem("selectedLang");
+            const savedFlag = localStorage.getItem("selectedFlag");
+            if (savedLang && savedFlag) {
+                langText.innerText = savedLang;
+                langFlag.innerText = savedFlag;
+                document.querySelectorAll(".lang-option").forEach(
+                    btn => {
+                        if (btn.innerText.includes(savedLang)) {
+                            btn.classList.add("active-lang");
+                        }
+                    });
+            } else {
+                document.querySelectorAll(".lang-option")[0].classList
+                    .add("active-lang");
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit",
+            function(e) {
+                e.preventDefault();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value
+                    .trim();
+                const errorMsg = document.getElementById("loginError");
+                const validEmail = "City@damaan.com";
+                const validPassword = "123456";
+                if (email === validEmail && password === validPassword) {
+                    errorMsg.classList.add("hidden");
+                    window.open("../Dashboard/city-dashboard.html",
+                        "_self");
+                } else {
+                    errorMsg.classList.remove("hidden");
+                }
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damaan - BL System</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js">
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #0b1120;
+            color: #94a3b8;
+        }
+        .sidebar-active {
+            background-color: #0ea5e9;
+            color: white;
+            border-radius: 4px;
+        }
+        input,
+        select,
+        textarea {
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            color: white !important;
+        }
+        .table-header {
+            background-color: #1e293b;
+            color: #94a3b8;
+            font-size: 10px;
+        }
+        /* Custom scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-sm" x-data="{ sidebarOpen: false }">
+    <div class="flex min-h-screen overflow-hidden">
+        <div x-show="sidebarOpen"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" @click="sidebarOpen = false"
+            class="fixed inset-0 z-30 bg-black/50 md:hidden"></div>
+        <aside x-data="{ openMenu: '', openSub: '' }"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
+            <div class="p-6 mb-2 border-b border-gray-800/50 relative">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-8 h-8">
+                        <div
+                            class="absolute inset-0 border-t-2 border-l-2 border-green-500 rounded-tl-full">
+                        </div>
+                        <div
+                            class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
+                        </div>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-white font-bold leading-none tracking-wider text-lg">
+                            DAMAAN</h1>
+                        <p
+                            class="text-[10px] text-gray-500 font-medium uppercase">
+                            Business Group</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto sidebar-scroll px-0 pb-10">
+                <nav class="space-y-0.5">
+                    <div
+                        class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Main Navigation</div>
+                    <a href="../Dashboard/Superadmin.html"
+                        class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        <i class="fas fa-home w-8 text-sm"></i>
+                        <span
+                            class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                    </a>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                            <div class="flex items-center">
+                                <i class="fas fa-plus-square w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-bold uppercase tracking-tight">New
+                                    Entry</span>
+                            </div>
+                            <i class="fas text-[10px] transition-transform duration-200"
+                                :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'newEntry'" x-collapse
+                            class="bg-[#0b0f17]">
+                            <button
+                                @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Branch
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'branchEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12">
+                                <a href="../Superbranch/superbranch.html"
+                                    @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
+                                    Super Branch
+                                </a>
+                                <a href="../Superbranch/countrybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
+                                    Branch</a>
+                                <a href="../Superbranch/citybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
+                                    Branch</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">User
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
+                                    Admin User Entry</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Account
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'accountEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/newaccount.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
+                                    Account</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-file-invoice-dollar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Ledger
+                                    Account</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ledger'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/super-admin-ledger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Ledger</a>
+                            <a href="../Ledger/countryLedger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
+                                Ledger</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-money-bill-wave w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Daily
+                                    Payment</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'dailyPay'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/Super-admin-roznamcha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Roznamcha
+                            </a>
+                            <a href="../Ledger/branchRomancha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
+                                Roznamcha
+                            </a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Operations</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-shopping-cart w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ops'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Sale</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Purchase</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-boxes w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'stock'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
+                                Stock</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
+                                Reports</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-ship w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Shipping
+                                    Line</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ship'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
+                                Entry</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-tie w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Clearing
+                                    Agent</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'agent'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Reports & Utils</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-bar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Total
+                                    Reports</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'reports'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
+                                Report</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
+                                Summary</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <a href="../Ledger/email-compose.html">
+                            <button
+                                @click="openMenu = (openMenu === 'email' ? '' : 'email')"
+                                class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope w-8 text-sm"></i>
+                                    <span
+                                        class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
+                                </div>
+                                <i class="fas text-[10px]"
+                                    :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-cog w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'settings'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/setting-bill-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
+                                Entry</a>
+                            <a href="../Ledger/setting-cash-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
+                                Entry</a>
+                            <a href="../Ledger/exchange-entry-setting.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
+                                Entry</a>
+                            <a href="../Ledger/bank-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
+                                Entry</a>
+                            <a href="../Ledger/employe-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
+                                Data Entry</a>
+                            <a href="../Ledger/worker.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
+                                Entry</a>
+                            <a href="../Ledger/goods-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
+                                Entry</a>
+                            <a href="../Ledger/warehouse-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
+                                Entry</a>
+                            <a href="../Ledger/wherehouse-import.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                            <a href="../Ledger/warehouse-export.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+        <div
+            class="flex-1 flex flex-col bg-[#0b0e14] min-h-screen overflow-hidden">
+            <header
+                class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
+                <!-- LEFT SIDE -->
+                <div class="flex items-center w-full max-w-md">
+                    <!-- Mobile Menu Button -->
+                    <button @click="sidebarOpen = true"
+                        class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <!-- Search -->
+                    <div class="relative w-full hidden md:block">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </span>
+                        <input type="text"
+                            class="bg-[#111827] w-full pl-10 pr-4 py-2 rounded-lg border border-slate-800 text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder-slate-500 text-white"
+                            placeholder="Search invoices, customers, or reports...">
+                    </div>
+                </div>
+                <!-- RIGHT SIDE -->
+                <div class="flex items-center space-x-6">
+                    <!-- Icons Group -->
+                    <div
+                        class="flex items-center space-x-4 pr-6 border-r border-slate-800">
+                        <button
+                            class="text-slate-400 hover:text-white transition-colors p-1">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </button>
+                        <div
+                            class="flex items-center space-x-1.5 cursor-pointer group p-1">
+                            <i data-lucide="globe"
+                                class="w-4 h-4 text-slate-400 group-hover:text-blue-400"></i>
+                            <span
+                                class="text-xs font-bold text-slate-400 group-hover:text-white uppercase tracking-wider">EN</span>
+                        </div>
+                        <div
+                            class="relative cursor-pointer text-slate-400 hover:text-white transition-colors p-1">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                            <span class="absolute top-1 right-1 flex h-2 w-2">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span
+                                    class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Profile -->
+                    <div
+                        class="flex items-center space-x-3 group cursor-pointer">
+                        <div class="text-right hidden sm:block">
+                            <p
+                                class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                                Admin User
+                            </p>
+                            <p
+                                class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
+                                Super Admin
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 ring-offset-2 ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
+                                AD
+                            </div>
+                            <div
+                                class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0b0f1a] rounded-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main class="flex-1 p-2 md:p-4 lg:p-8">
+                <div class="bg-[#0f172a] text-slate-300 font-sans min-h-screen">
+                    <div
+                        class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-6 gap-4">
+                        <div
+                            class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full xl:w-auto">
+                            <h2
+                                class="text-xl font-bold text-white whitespace-nowrap">
+                                BL System</h2>
+                            <div
+                                class="flex flex-wrap items-center bg-[#1e293b] rounded p-1 gap-2 border border-slate-700 w-full md:w-auto">
+                                <span
+                                    class="text-[10px] px-2 text-slate-400 font-bold">MUSIC</span>
+                                <input type="text"
+                                    placeholder="Select track (or paste URL)"
+                                    class="bg-transparent text-[10px] flex-1 min-w-[120px] px-2 outline-none border-r border-slate-700">
+                                <input type="text"
+                                    placeholder="Paste MP3/OGG URL here (opt)"
+                                    class="bg-transparent text-[10px] flex-1 min-w-[120px] px-2 outline-none">
+                                <button
+                                    class="bg-white text-black px-4 py-1 rounded text-[10px] font-bold uppercase hover:bg-slate-200 ml-auto md:ml-0">Play</button>
+                            </div>
+                        </div>
+                        <div
+                            class="flex space-x-2 w-full md:w-auto justify-end">
+                            <button
+                                class="bg-white text-black px-4 py-1.5 rounded text-xs font-bold flex-1 md:flex-none">Print</button>
+                            <button
+                                class="bg-slate-800 text-white px-4 py-1.5 rounded text-xs font-bold border border-slate-700 flex-1 md:flex-none">Preview</button>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
+                        <button
+                            class="bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap">Sheet
+                            1) Entry</button>
+                        <button
+                            class="bg-slate-800 text-slate-400 px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap">Sheet
+                            2) Live Report</button>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 lg:gap-6">
+                        <div
+                            class="col-span-12 lg:col-span-4 xl:col-span-3 bg-[#111827] rounded-lg p-4 md:p-5 border border-slate-800 h-fit">
+                            <div
+                                class="text-[11px] mb-4 space-y-2 text-slate-400 border-b border-slate-800 pb-3">
+                                <div class="flex justify-between">
+                                    <span>Mode:</span> <span
+                                        class="text-white font-medium">New
+                                        BL</span></div>
+                                <div class="flex justify-between"><span>Issue
+                                        Date:</span> <span
+                                        class="text-white font-medium">2026-01-29</span>
+                                </div>
+                                <div class="flex justify-between"><span>Issue
+                                        Serial:</span> <span
+                                        class="text-white font-medium">ISS-776441</span>
+                                </div>
+                                <div class="flex justify-between"><span>BL
+                                        No:</span> <span
+                                        class="text-white font-medium">BL-776441</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1 mb-6">
+                                <button
+                                    class="bg-blue-600 text-white py-2 rounded text-[9px] font-bold">1)
+                                    BL Entry</button>
+                                <button
+                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400">2)
+                                    Parties</button>
+                                <button
+                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400">3)
+                                    Goods Entry</button>
+                            </div>
+                            <div class="space-y-4">
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label
+                                            class="text-[9px] text-slate-500 uppercase block mb-1">Issue
+                                            Date*</label>
+                                        <input type="text" value="01/29/2026"
+                                            class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="text-[9px] text-slate-500 uppercase block mb-1">Issue
+                                            Serial No*</label>
+                                        <input type="text" value="ISS-776441"
+                                            class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none focus:border-blue-500">
+                                    </div>
+                                </div>
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div class="sm:col-span-1">
+                                        <label
+                                            class="text-[9px] text-slate-500 uppercase block mb-1">BL
+                                            Type</label>
+                                        <select
+                                            class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none appearance-none">
+                                            <option>New BL</option>
+                                        </select>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label
+                                            class="text-[9px] text-slate-500 uppercase block mb-1">BL
+                                            No</label>
+                                        <div class="flex">
+                                            <input type="text"
+                                                placeholder="Enter BL Number..."
+                                                class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded-l text-white outline-none focus:border-blue-500">
+                                            <button
+                                                class="bg-slate-700 px-3 rounded-r text-[10px] border border-l-0 border-slate-600 hover:bg-slate-600">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label
+                                        class="text-[9px] text-slate-500 uppercase block mb-1">Vessel
+                                        Name</label>
+                                    <input type="text"
+                                        placeholder="Enter Vessel Name"
+                                        class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none focus:border-blue-500">
+                                </div>
+                                <div class="pt-2">
+                                    <p
+                                        class="text-[10px] font-bold text-cyan-400 border-b border-slate-800 mb-3 pb-1 uppercase">
+                                        Loading Details</p>
+                                    <div class="space-y-2">
+                                        <select
+                                            class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                            <option>Select Country</option>
+                                        </select>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <select
+                                                class="bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                                <option>Select Port</option>
+                                            </select>
+                                            <input type="text"
+                                                placeholder="mm/dd/yyyy"
+                                                class="bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-2">
+                                    <p
+                                        class="text-[10px] font-bold text-red-400 border-b border-slate-800 mb-3 pb-1 uppercase">
+                                        Receiving Details</p>
+                                    <div class="space-y-2">
+                                        <select
+                                            class="w-full bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                            <option>Select Country</option>
+                                        </select>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <select
+                                                class="bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                                <option>Select Port</option>
+                                            </select>
+                                            <input type="text"
+                                                placeholder="mm/dd/yyyy"
+                                                class="bg-[#1e293b] border border-slate-700 p-2 text-xs rounded text-white outline-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2 pt-4">
+                                    <button
+                                        class="flex-1 bg-slate-600 py-2.5 rounded text-xs font-bold uppercase hover:bg-slate-500 transition-colors">Reset</button>
+                                    <button
+                                        class="flex-1 bg-blue-600 py-2.5 rounded text-xs text-white font-bold uppercase hover:bg-blue-500 transition-colors">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-4">
+                            <div
+                                class="bg-[#111827] rounded-lg border border-slate-800 overflow-hidden">
+                                <div
+                                    class="flex justify-between items-center bg-[#1e293b]/30 p-4 border-b border-slate-800">
+                                    <h3 class="font-bold text-white text-sm">
+                                        Live BL Report</h3>
+                                    <button
+                                        class="bg-red-600 text-white text-[10px] px-3 py-1 rounded font-bold uppercase hover:bg-red-500">Clear
+                                        BL</button>
+                                </div>
+                                <div
+                                    class="p-4 grid grid-cols-1 xl:grid-cols-3 gap-6">
+                                    <div class="space-y-2 text-[11px]">
+                                        <div
+                                            class="flex justify-between border-b border-slate-800/50 pb-1">
+                                            <span>MODE</span> <span
+                                                class="text-sky-400 font-bold">New
+                                                BL</span></div>
+                                        <div
+                                            class="flex justify-between border-b border-slate-800/50 pb-1">
+                                            <span>ISSUE DATE</span> <span
+                                                class="text-white font-bold">2026-01-29</span>
+                                        </div>
+                                        <div
+                                            class="flex justify-between border-b border-slate-800/50 pb-1">
+                                            <span>ISSUE SERIAL</span> <span
+                                                class="text-white font-bold">ISS-671867</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="xl:col-span-2 bg-[#0f172a] p-3 rounded border border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px]">
+                                        <div>
+                                            <p
+                                                class="text-cyan-400 mb-2 font-bold uppercase tracking-wider">
+                                                BL Details</p>
+                                            <div
+                                                class="flex justify-between mb-1">
+                                                <span>BL No:</span> <span
+                                                    class="text-sky-400">BL-671867</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span>Loading:</span> <span>-/-
+                                                    (-)</span></div>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="hidden md:block text-transparent mb-2">
+                                                .</p>
+                                            <div
+                                                class="flex justify-between mb-1">
+                                                <span>Vessel:</span>
+                                                <span>-</span></div>
+                                            <div class="flex justify-between">
+                                                <span>Receiving:</span>
+                                                <span>-/- (-)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-4 grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                                    <div
+                                        class="bg-[#0f172a] min-h-[80px] p-2 rounded border border-slate-800">
+                                        <p
+                                            class="text-cyan-400 text-[10px] font-bold border-b border-slate-800 mb-1">
+                                            NOTIFY PARTY</p>
+                                        <p class="text-xs text-slate-500">-</p>
+                                    </div>
+                                    <div
+                                        class="bg-[#0f172a] min-h-[80px] p-2 rounded border border-slate-800">
+                                        <p
+                                            class="text-cyan-400 text-[10px] font-bold border-b border-slate-800 mb-1">
+                                            IMPORTER</p>
+                                        <p class="text-xs text-slate-500">-</p>
+                                    </div>
+                                    <div
+                                        class="bg-[#0f172a] min-h-[80px] p-2 rounded border border-slate-800">
+                                        <p
+                                            class="text-cyan-400 text-[10px] font-bold border-b border-slate-800 mb-1">
+                                            EXPORTER</p>
+                                        <p class="text-xs text-slate-500">-</p>
+                                    </div>
+                                </div>
+                                <div class="border-t border-slate-800">
+                                    <div
+                                        class="text-[9px] text-center py-2 text-slate-500 uppercase font-bold bg-[#1e293b]/20">
+                                        Goods Container Report</div>
+                                    <div class="overflow-x-auto">
+                                        <table
+                                            class="w-full text-center text-[10px] min-w-[800px]">
+                                            <thead
+                                                class="bg-[#1e293b]/50 text-slate-300">
+                                                <tr
+                                                    class="border-y border-slate-800">
+                                                    <th class="p-3 font-medium">
+                                                        S/N</th>
+                                                    <th class="p-3 font-medium">
+                                                        Goods Name</th>
+                                                    <th class="p-3 font-medium">
+                                                        Unit</th>
+                                                    <th class="p-3 font-medium">
+                                                        Quantity No</th>
+                                                    <th class="p-3 font-medium">
+                                                        Gross Weight</th>
+                                                    <th class="p-3 font-medium">
+                                                        Net Weight</th>
+                                                    <th class="p-3 font-medium">
+                                                        Container No</th>
+                                                    <th class="p-3 font-medium">
+                                                        Seal No</th>
+                                                    <th class="p-3 font-medium">
+                                                        Container Name</th>
+                                                    <th class="p-3 font-medium">
+                                                        Size</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                class="divide-y divide-slate-800">
+                                                <tr
+                                                    class="bg-[#0f172a] hover:bg-[#1e293b]/50 transition-colors">
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        1</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800 text-white font-bold">
+                                                        Cotton</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        1</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td
+                                                        class="p-3 border-r border-slate-800">
+                                                        -</td>
+                                                    <td class="p-3">-</td>
+                                                </tr>
+                                                <tr class="bg-[#111827] h-10">
+                                                    <td colspan="10"></td>
+                                                </tr>
+                                                <tr class="bg-[#0f172a] h-10">
+                                                    <td colspan="10"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
