@@ -46,7 +46,7 @@
         x-transition:leave-end="opacity-0" @click="sidebarOpen = false"
         class="fixed inset-0 bg-black/50 z-40 lg:hidden" x-cloak></div>
     <div class="flex h-screen overflow-hidden">
-      <aside x-data="{ openMenu: '', openSub: '' }"
+     <aside x-data="{ openMenu: '', openSub: '' }"
         :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
         class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
         <div class="p-6 mb-2 border-b border-gray-800/50 relative">
