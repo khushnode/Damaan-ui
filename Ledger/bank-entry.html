@@ -36,7 +36,7 @@
 
     <div class="flex h-screen overflow-hidden">
         
-         <aside x-data="{ openMenu: '', openSub: '' }"
+       <aside x-data="{ openMenu: '', openSub: '' }"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
             <div class="p-6 mb-2 border-b border-gray-800/50 relative">
@@ -108,7 +108,7 @@
                                     Branch</a>
                             </div>
                             <button
-                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
                                 class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
                                 <span class="text-[12px] font-medium">User
                                     Entry</span>
@@ -291,6 +291,31 @@
                                 class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
                         </div>
                     </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-invoice w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'vat'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <!-- Purchase Entry (Now Inactive) -->
+                            <a href="../Ledger/importparches.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Sale Entry
+                            </a>
+                        </div>
+                    </div>
                     <div
                         class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Reports & Utils</div>
@@ -309,12 +334,12 @@
                         </button>
                         <div x-show="openMenu === 'reports'" x-collapse
                             class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
-                                Report</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
-                                Summary</a>
+                            <a href="../Ledger/ledgerreport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger Report</a>
+                                  <a href="../Ledger/super-admin-roznamcha-report.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super Admin Roznamcha Report</a>
+                            <a href="../Ledger/branchromanchareport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch Roznamcha Report</a>
                         </div>
                     </div>
                     <div class="relative">

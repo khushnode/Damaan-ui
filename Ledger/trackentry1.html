@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAMAAN - BL System</title>
- <link rel="stylesheet"
+    <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js">
@@ -58,8 +58,8 @@
     x-data="{ sidebarOpen: false }">
     <div x-show="sidebarOpen" @click="sidebarOpen = false"
         class="fixed inset-0 z-40 bg-black/60 md:hidden"></div>
-      <aside x-data="{ openMenu: '', openSub: '' }"
-:class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    <aside x-data="{ openMenu: '', openSub: '' }"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
             <div class="p-6 mb-2 border-b border-gray-800/50 relative">
                 <div class="flex items-center gap-3">
@@ -130,7 +130,7 @@
                                     Branch</a>
                             </div>
                             <button
-                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
                                 class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
                                 <span class="text-[12px] font-medium">User
                                     Entry</span>
@@ -313,6 +313,31 @@
                                 class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
                         </div>
                     </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-invoice w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'vat'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <!-- Purchase Entry (Now Inactive) -->
+                            <a href="../Ledger/importparches.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Sale Entry
+                            </a>
+                        </div>
+                    </div>
                     <div
                         class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Reports & Utils</div>
@@ -331,12 +356,12 @@
                         </button>
                         <div x-show="openMenu === 'reports'" x-collapse
                             class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
-                                Report</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
-                                Summary</a>
+                            <a href="../Ledger/ledgerreport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger Report</a>
+                                  <a href="../Ledger/super-admin-roznamcha-report.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super Admin Roznamcha Report</a>
+                            <a href="../Ledger/branchromanchareport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch Roznamcha Report</a>
                         </div>
                     </div>
                     <div class="relative">
@@ -401,7 +426,7 @@
                 </nav>
             </div>
         </aside>
-        <div class="flex-1 flex flex-col min-h-screen overflow-hidden w-0">
+    <div class="flex-1 flex flex-col min-h-screen overflow-hidden w-0">
         <header
             class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
             <!-- LEFT SIDE -->
@@ -474,11 +499,11 @@
             </div>
         </header>
         <main class="p-4">
-             <div
+            <div
                 class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
                 <div class="flex items-center space-x-4">
                     <h1 class="text-2xl font-bold text-white">BL System</h1>
-           <div
+                    <div
                         class="flex items-center bg-[#1e293b]/40 border border-gray-800 rounded px-3 py-1.5 space-x-3">
                         <span
                             class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Music</span>
@@ -495,20 +520,24 @@
                         </div>
                     </div>
                 </div>
-      <div class="flex space-x-2">
+                <div class="flex space-x-2">
                     <button
                         class="bg-white text-black font-bold text-[11px] px-4 py-1.5 rounded">Print</button>
                     <button
                         class="bg-gray-800 text-white font-bold text-[11px] px-4 py-1.5 rounded border border-gray-700">Preview</button>
                 </div>
             </div>
-            <div class="flex space-x-1 mb-4">
-                <button
-                    class="px-4 py-1.5 bg-blue-600 text-white text-[11px] rounded-t-md">Sheet
-                    1) Entry</button>
-                <button
-                    class="px-4 py-1.5 bg-gray-800/50 text-gray-400 text-[11px] rounded-t-md">Sheet
-                    2) Live Report</button>
+            <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
+                <!-- Sheet 1 -->
+                <a href=""
+                    class=" bg-blue-600  text-white px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap block text-center">
+                    Sheet 1) Entry
+                </a>
+                <!-- Sheet 2 -->
+                <a href="#"
+                    class=" bg-slate-800 text-slate-400 px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap block text-center">
+                    Sheet 2) Live Report
+                </a>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div class="lg:col-span-3 space-y-4">
@@ -524,7 +553,8 @@
                                 Serial:</span> <span
                                 class="text-gray-300">ISS-776441</span></div>
                         <div class="flex justify-between"><span>Bill No:</span>
-                            <span class="text-gray-300">BL-776441</span></div>
+                            <span class="text-gray-300">BL-776441</span>
+                        </div>
                     </div>
                     <div
                         class="bg-[#111827] border border-gray-800 rounded shadow-lg overflow-hidden">
@@ -657,131 +687,186 @@
                     </div>
                 </div>
                 <div class="lg:col-span-9 space-y-4">
-    <div class="bg-[#111827] border border-gray-800 rounded-lg p-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-8">
-            <h3 class="text-xs font-bold text-white uppercase tracking-widest">
-                Live BL Report
-            </h3>
-            <button class="bg-red-600 hover:bg-red-700 transition-colors text-white px-4 py-1.5 rounded text-[10px] uppercase font-black">
-                Clear BL
-            </button>
-        </div>
-
-        <div class="grid grid-cols-3 gap-12 mb-8 text-[11px] border-b border-gray-800 pb-8">
-            <div class="space-y-2">
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500 font-medium">MODE</span>
-                    <span class="text-blue-400 font-black">New BL</span>
+                    <div
+                        class="bg-[#111827] border border-gray-800 rounded-lg p-6 shadow-2xl">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3
+                                class="text-xs font-bold text-white uppercase tracking-widest">
+                                Live BL Report
+                            </h3>
+                            <button
+                                class="bg-red-600 hover:bg-red-700 transition-colors text-white px-4 py-1.5 rounded text-[10px] uppercase font-black">
+                                Clear BL
+                            </button>
+                        </div>
+                        <div
+                            class="grid grid-cols-3 gap-12 mb-8 text-[11px] border-b border-gray-800 pb-8">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-gray-500 font-medium">MODE</span>
+                                    <span class="text-blue-400 font-black">New
+                                        BL</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-gray-500 font-medium">DATE</span>
+                                    <span class="text-white">2026-01-29</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-gray-500 font-medium">SERIAL</span>
+                                    <span class="text-white">ISS-671867</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div
+                                    class="text-blue-400 font-bold uppercase mb-1">
+                                    BL Details</div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">No:</span>
+                                    <span class="text-blue-400">BL-671867</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Load:</span>
+                                    <span class="text-white">— / —</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Vessel:</span>
+                                    <span class="text-white">— / —</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Recv:</span>
+                                    <span class="text-white">— / —</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1 text-right">
+                                <div
+                                    class="text-yellow-600 text-[10px] font-bold uppercase mb-1">
+                                    Truck Details</div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Truck No:</span>
+                                    <span
+                                        class="text-yellow-500 font-bold text-base">BL-671867</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Seal No:</span>
+                                    <span class="text-white">—</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">Size:</span>
+                                    <span class="text-white">— / — ( — )</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mb-10">
+                            <div
+                                class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
+                                <div
+                                    class="text-teal-500 text-[10px] font-black uppercase mb-2">
+                                    Notify Party</div>
+                                <div class="text-xs text-gray-600 font-bold">—
+                                </div>
+                            </div>
+                            <div
+                                class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
+                                <div
+                                    class="text-teal-500 text-[10px] font-black uppercase mb-2">
+                                    Importer</div>
+                                <div class="text-xs text-gray-600 font-bold">—
+                                </div>
+                            </div>
+                            <div
+                                class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
+                                <div
+                                    class="text-teal-500 text-[10px] font-black uppercase mb-2">
+                                    Exporter</div>
+                                <div class="text-xs text-gray-600 font-bold">—
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="text-[10px] text-gray-500 uppercase font-bold text-center mb-4 tracking-tighter">
+                            Goods Container Report
+                        </div>
+                        <div
+                            class="overflow-x-auto custom-scrollbar border border-gray-800 rounded">
+                            <table
+                                class="w-full text-left text-[10px] border-collapse min-w-[900px]">
+                                <thead
+                                    class="bg-gray-800/50 text-gray-400 uppercase font-bold">
+                                    <tr>
+                                        <th
+                                            class="p-3 border border-gray-800 text-center w-12">
+                                            S/N</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Goods Name</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Unit</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Quantity No</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Gross Weight</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Net Weight</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Container No</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Container Seal No</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Container Name</th>
+                                        <th class="p-3 border border-gray-800">
+                                            Container Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    class="divide-y divide-gray-800 bg-transparent">
+                                    <template x-for="i in 11">
+                                        <tr
+                                            class="hover:bg-blue-600/5 transition">
+                                            <td class="p-3 border border-gray-800 text-center text-gray-400"
+                                                x-text="i"></td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-white font-medium">
+                                                Cotton</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-white">
+                                                1</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                            <td
+                                                class="p-3 border border-gray-800 text-gray-500">
+                                                —</td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500 font-medium">DATE</span>
-                    <span class="text-white">2026-01-29</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500 font-medium">SERIAL</span>
-                    <span class="text-white">ISS-671867</span>
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <div class="text-blue-400 font-bold uppercase mb-1">BL Details</div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">No:</span>
-                    <span class="text-blue-400">BL-671867</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Load:</span>
-                    <span class="text-white">— / —</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Vessel:</span>
-                    <span class="text-white">— / —</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Recv:</span>
-                    <span class="text-white">— / —</span>
-                </div>
-            </div>
-
-            <div class="space-y-1 text-right">
-                <div class="text-yellow-600 text-[10px] font-bold uppercase mb-1">Truck Details</div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Truck No:</span>
-                    <span class="text-yellow-500 font-bold text-base">BL-671867</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Seal No:</span>
-                    <span class="text-white">—</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500">Size:</span>
-                    <span class="text-white">— / — ( — )</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-3 gap-4 mb-10">
-            <div class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
-                <div class="text-teal-500 text-[10px] font-black uppercase mb-2">Notify Party</div>
-                <div class="text-xs text-gray-600 font-bold">—</div>
-            </div>
-            <div class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
-                <div class="text-teal-500 text-[10px] font-black uppercase mb-2">Importer</div>
-                <div class="text-xs text-gray-600 font-bold">—</div>
-            </div>
-            <div class="bg-[#0f172a] p-4 rounded border border-gray-800 min-h-[100px]">
-                <div class="text-teal-500 text-[10px] font-black uppercase mb-2">Exporter</div>
-                <div class="text-xs text-gray-600 font-bold">—</div>
-            </div>
-        </div>
-
-        <div class="text-[10px] text-gray-500 uppercase font-bold text-center mb-4 tracking-tighter">
-            Goods Container Report
-        </div>
-
-        <div class="overflow-x-auto custom-scrollbar border border-gray-800 rounded">
-            <table class="w-full text-left text-[10px] border-collapse min-w-[900px]">
-                <thead class="bg-gray-800/50 text-gray-400 uppercase font-bold">
-                    <tr>
-                        <th class="p-3 border border-gray-800 text-center w-12">S/N</th>
-                        <th class="p-3 border border-gray-800">Goods Name</th>
-                        <th class="p-3 border border-gray-800">Unit</th>
-                        <th class="p-3 border border-gray-800">Quantity No</th>
-                        <th class="p-3 border border-gray-800">Gross Weight</th>
-                        <th class="p-3 border border-gray-800">Net Weight</th>
-                        <th class="p-3 border border-gray-800">Container No</th>
-                        <th class="p-3 border border-gray-800">Container Seal No</th>
-                        <th class="p-3 border border-gray-800">Container Name</th>
-                        <th class="p-3 border border-gray-800">Container Size</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-800 bg-transparent">
-                    <template x-for="i in 11">
-                        <tr class="hover:bg-blue-600/5 transition">
-                            <td class="p-3 border border-gray-800 text-center text-gray-400" x-text="i"></td>
-                            <td class="p-3 border border-gray-800 text-white font-medium">Cotton</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-white">1</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                            <td class="p-3 border border-gray-800 text-gray-500">—</td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
             </div>
         </main>
     </div>
-     <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                lucide.createIcons();
-            });
-        </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>

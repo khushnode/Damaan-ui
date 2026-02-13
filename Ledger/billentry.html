@@ -124,7 +124,7 @@
                                     Branch</a>
                             </div>
                             <button
-                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
                                 class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
                                 <span class="text-[12px] font-medium">User
                                     Entry</span>
@@ -307,6 +307,31 @@
                                 class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
                         </div>
                     </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-invoice w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'vat'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <!-- Purchase Entry (Now Inactive) -->
+                            <a href="../Ledger/importparches.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Sale Entry
+                            </a>
+                        </div>
+                    </div>
                     <div
                         class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Reports & Utils</div>
@@ -325,12 +350,12 @@
                         </button>
                         <div x-show="openMenu === 'reports'" x-collapse
                             class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
-                                Report</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
-                                Summary</a>
+                            <a href="../Ledger/ledgerreport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger Report</a>
+                                  <a href="../Ledger/super-admin-roznamcha-report.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super Admin Roznamcha Report</a>
+                            <a href="../Ledger/branchromanchareport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch Roznamcha Report</a>
                         </div>
                     </div>
                     <div class="relative">
@@ -479,17 +504,20 @@
                                 class="text-xl font-bold text-white whitespace-nowrap">
                                 BL System</h2>
                             <div
-                                class="flex flex-wrap items-center bg-[#1e293b] rounded p-1 gap-2 border border-slate-700 w-full md:w-auto">
+                                class="flex items-center bg-[#1e293b]/40 border border-gray-800 rounded px-3 py-1.5 space-x-3">
                                 <span
-                                    class="text-[10px] px-2 text-slate-400 font-bold">MUSIC</span>
+                                    class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Music</span>
                                 <input type="text"
                                     placeholder="Select track (or paste URL)"
-                                    class="bg-transparent text-[10px] flex-1 min-w-[120px] px-2 outline-none border-r border-slate-700">
+                                    class="bg-transparent border border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 focus:outline-none focus:border-blue-500">
                                 <input type="text"
-                                    placeholder="Paste MP3/OGG URL here (opt)"
-                                    class="bg-transparent text-[10px] flex-1 min-w-[120px] px-2 outline-none">
+                                    placeholder="Paste MP3/OGG URL here (opti..."
+                                    class="bg-transparent border border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 focus:outline-none focus:border-blue-500">
                                 <button
-                                    class="bg-white text-black px-4 py-1 rounded text-[10px] font-bold uppercase hover:bg-slate-200 ml-auto md:ml-0">Play</button>
+                                    class="bg-white text-black text-[11px] font-bold px-4 py-0.5 rounded hover:bg-gray-200 transition">Play</button>
+                                <div
+                                    class="w-24 h-5 bg-white rounded border border-gray-700">
+                                </div>
                             </div>
                         </div>
                         <div
@@ -501,12 +529,16 @@
                         </div>
                     </div>
                     <div class="flex space-x-2 mb-6 overflow-x-auto pb-2">
-                        <button
-                            class="bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap">Sheet
-                            1) Entry</button>
-                        <button
-                            class="bg-slate-800 text-slate-400 px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap">Sheet
-                            2) Live Report</button>
+                        <!-- Sheet 1 -->
+                        <a href="billentry.html"
+                            class="bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap block text-center">
+                            Sheet 1) Entry
+                        </a>
+                        <!-- Sheet 2 -->
+                        <a href="livereport1.html"
+                            class="bg-slate-800 text-slate-400 px-6 py-2 rounded-full text-xs font-medium whitespace-nowrap block text-center">
+                            Sheet 2) Live Report
+                        </a>
                     </div>
                     <div class="grid grid-cols-12 gap-4 lg:gap-6">
                         <div
@@ -516,7 +548,8 @@
                                 <div class="flex justify-between">
                                     <span>Mode:</span> <span
                                         class="text-white font-medium">New
-                                        BL</span></div>
+                                        BL</span>
+                                </div>
                                 <div class="flex justify-between"><span>Issue
                                         Date:</span> <span
                                         class="text-white font-medium">2026-01-29</span>
@@ -531,15 +564,18 @@
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-1 mb-6">
-                                <button
-                                    class="bg-blue-600 text-white py-2 rounded text-[9px] font-bold">1)
-                                    BL Entry</button>
-                                <button
-                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400">2)
-                                    Parties</button>
-                                <button
-                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400">3)
-                                    Goods Entry</button>
+                                <a href="billentry.html"
+                                    class="bg-blue-600 text-white py-2 rounded text-[9px] font-bold text-center block">
+                                    1) BL Entry
+                                </a>
+                                <a href="parties.html"
+                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400 text-center block">
+                                    2) Parties
+                                </a>
+                                <a href="goodentry.html"
+                                    class="bg-slate-800 py-2 rounded text-[9px] text-slate-400 text-center block">
+                                    3) Goods Entry
+                                </a>
                             </div>
                             <div class="space-y-4">
                                 <div
@@ -658,7 +694,8 @@
                                             class="flex justify-between border-b border-slate-800/50 pb-1">
                                             <span>MODE</span> <span
                                                 class="text-sky-400 font-bold">New
-                                                BL</span></div>
+                                                BL</span>
+                                        </div>
                                         <div
                                             class="flex justify-between border-b border-slate-800/50 pb-1">
                                             <span>ISSUE DATE</span> <span
@@ -683,7 +720,8 @@
                                             </div>
                                             <div class="flex justify-between">
                                                 <span>Loading:</span> <span>-/-
-                                                    (-)</span></div>
+                                                    (-)</span>
+                                            </div>
                                         </div>
                                         <div>
                                             <p
@@ -692,10 +730,12 @@
                                             <div
                                                 class="flex justify-between mb-1">
                                                 <span>Vessel:</span>
-                                                <span>-</span></div>
+                                                <span>-</span>
+                                            </div>
                                             <div class="flex justify-between">
                                                 <span>Receiving:</span>
-                                                <span>-/- (-)</span></div>
+                                                <span>-/- (-)</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

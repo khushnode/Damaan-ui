@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damaan Business Group | Admin Dashboard</title>
-   <link rel="stylesheet"
+    <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js">
@@ -109,7 +109,7 @@
                                     Branch</a>
                             </div>
                             <button
-                                @click="openSub = (openSub === 'accountEntry' ? '' : 'userEntry')"
+                                @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
                                 class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
                                 <span class="text-[12px] font-medium">User
                                     Entry</span>
@@ -292,6 +292,31 @@
                                 class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
                         </div>
                     </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-invoice w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'vat'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <!-- Purchase Entry (Now Inactive) -->
+                            <a href="../Ledger/importparches.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Sale Entry
+                            </a>
+                        </div>
+                    </div>
                     <div
                         class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Reports & Utils</div>
@@ -310,12 +335,12 @@
                         </button>
                         <div x-show="openMenu === 'reports'" x-collapse
                             class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Annual
-                                Report</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Tax
-                                Summary</a>
+                            <a href="../Ledger/ledgerreport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger Report</a>
+                                  <a href="../Ledger/super-admin-roznamcha-report.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super Admin Roznamcha Report</a>
+                            <a href="../Ledger/branchromanchareport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch Roznamcha Report</a>
                         </div>
                     </div>
                     <div class="relative">
@@ -455,41 +480,52 @@
             </header>
             <div class="flex-1 overflow-y-auto p-6 custom-scroll">
                 <div class="relative mb-6">
-
-    <!-- Soft Glow Background Layer -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[#1c2536] via-[#1a2234] to-[#1c2536] opacity-80 rounded-xl blur-xl"></div>
-
-    <!-- Main Container -->
-    <div class="relative bg-[#1c2536]/90 backdrop-blur-sm border border-white/5 shadow-lg rounded-xl p-4 md:p-6 
+                    <!-- Soft Glow Background Layer -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-[#1c2536] via-[#1a2234] to-[#1c2536] opacity-80 rounded-xl blur-xl">
+                    </div>
+                    <!-- Main Container -->
+                    <div
+                        class="relative bg-[#1c2536]/90 backdrop-blur-sm border border-white/5 shadow-lg rounded-xl p-4 md:p-6 
                 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
-
-        <!-- Title -->
-        <h2 class="text-lg md:text-xl font-bold text-white uppercase tracking-tight">
-            Super Admin Roznamcha Report
-        </h2>
-
-        <!-- Stats Container -->
-        <div class="grid grid-cols-3 sm:flex sm:flex-nowrap gap-3 sm:gap-6 md:gap-8 w-full md:w-auto text-center sm:text-right">
-
-            <div class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
-                <p class="text-gray-400 text-[10px] tracking-wider">DEBIT</p>
-                <p class="text-red-500 font-bold text-sm md:text-base">10,716.91</p>
-            </div>
-
-            <div class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
-                <p class="text-gray-400 text-[10px] tracking-wider">CREDIT</p>
-                <p class="text-green-500 font-bold text-sm md:text-base">13,333.68</p>
-            </div>
-
-            <div class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
-                <p class="text-gray-400 text-[10px] tracking-wider">BALANCE</p>
-                <p class="text-yellow-400 font-bold text-sm md:text-base">89.86</p>
-            </div>
-
-        </div>
-    </div>
-</div>
-
+                        <!-- Title -->
+                        <h2
+                            class="text-lg md:text-xl font-bold text-white uppercase tracking-tight">
+                            Super Admin Roznamcha Report
+                        </h2>
+                        <!-- Stats Container -->
+                        <div
+                            class="grid grid-cols-3 sm:flex sm:flex-nowrap gap-3 sm:gap-6 md:gap-8 w-full md:w-auto text-center sm:text-right">
+                            <div
+                                class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
+                                <p
+                                    class="text-gray-400 text-[10px] tracking-wider">
+                                    DEBIT</p>
+                                <p
+                                    class="text-red-500 font-bold text-sm md:text-base">
+                                    10,716.91</p>
+                            </div>
+                            <div
+                                class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
+                                <p
+                                    class="text-gray-400 text-[10px] tracking-wider">
+                                    CREDIT</p>
+                                <p
+                                    class="text-green-500 font-bold text-sm md:text-base">
+                                    13,333.68</p>
+                            </div>
+                            <div
+                                class="bg-[#1a2234]/60 sm:bg-transparent p-3 sm:p-0 rounded-lg border border-white/5 sm:border-0">
+                                <p
+                                    class="text-gray-400 text-[10px] tracking-wider">
+                                    BALANCE</p>
+                                <p
+                                    class="text-yellow-400 font-bold text-sm md:text-base">
+                                    89.86</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     <div
@@ -719,10 +755,10 @@
             </div>
         </main>
     </div>
-     <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                lucide.createIcons();
-            });
-        </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
