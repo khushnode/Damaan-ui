@@ -1,753 +1,708 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ sidebarOpen: false }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Country Branch Dashboard</title>
+<link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js">
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+        .sidebar-scroll::-webkit-scrollbar { width: 3px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #1e293b; }
+        /* Prevent horizontal scroll on small screens */
+body {
+    overflow-x: hidden;
+}
+
+/* Make all form controls fully responsive */
+select, input {
+    min-width: 0;
+}
+
+/* Fix flex overflow issue */
+.flex {
+    min-width: 0;
+}
+
+/* Ensure sticky preview behaves properly on mobile */
+@media (max-width: 1024px) {
+    .sticky {
+        position: relative !important;
+        top: 0 !important;
+    }
+}
+    </style>
 </head>
 <body class="bg-[#0b1120] text-gray-300 font-sans">
-    <div class="flex min-h-screen">
-      <aside x-data="{ openMenu: '', openSub: '' }"
-        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
-        <div class="p-6 mb-2 border-b border-gray-800/50 relative">
-            <div class="flex items-center gap-3">
-                <div class="relative w-8 h-8">
-                    <div
-                        class="absolute inset-0 border-t-2 border-l-2 border-green-500 rounded-tl-full">
-                    </div>
-                    <div
-                        class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
-                    </div>
-                </div>
-                <div>
-                    <h1
-                        class="text-white font-bold leading-none tracking-wider text-lg">
-                        DAMAAN</h1>
-                    <p class="text-[10px] text-gray-500 font-medium uppercase">
-                        Business Group</p>
-                </div>
-            </div>
-        </div>
-        <div class="flex-1 overflow-y-auto sidebar-scroll px-0 pb-10">
-            <nav class="space-y-0.5">
-                <div
-                    class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                    Main Navigation</div>
-                <a href="../Dashboard/Superadmin.html"
-                    class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                    <i class="fas fa-home w-8 text-sm"></i>
-                    <span
-                        class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
-                </a>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
-                        <div class="flex items-center">
-                            <i class="fas fa-plus-square w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-bold uppercase tracking-tight">New
-                                Entry</span>
-                        </div>
-                        <i class="fas text-[10px] transition-transform duration-200"
-                            :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'newEntry'" x-collapse
-                        class="bg-[#0b0f17]">
-                        <button
-                            @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Branch
-                                Entry</span>
-                            <i class="fas text-[9px]"
-                                :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
-                        <div x-show="openSub === 'branchEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12">
-                            <a href="../Superbranch/superbranch.html"
-                                @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
-                                Super Branch
-                            </a>
-                            <a href="../Superbranch/countrybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
-                                Branch</a>
-                            <a href="../Superbranch/citybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
-                                Branch</a>
-                        </div>
-                        <button
-                            @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">User
-                                Entry</span>
-                            <i class="fas text-[9px]"
-                                :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
-                                Admin User Entry</a>
-                        </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
-                                Admin User Entry</a>
-                        </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
-                                Admin User Entry</a>
-                        </div>
-                        <button
-                            @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Account
-                                Entry</span>
-                            <i class="fas text-[9px]"
-                                :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
-                        <div x-show="openSub === 'accountEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/newaccount.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
-                                Account</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i
-                                class="fas fa-file-invoice-dollar w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Ledger
-                                Account</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'ledger'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/super-admin-ledger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Ledger</a>
-                        <a href="../Ledger/countryLedger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
-                            Ledger</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-money-bill-wave w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                Payment</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'dailyPay'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/Super-admin-roznamcha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha
-                        </a>
-                        <a href="../Ledger/branchRomancha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                    Operations</div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-shopping-cart w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'ops'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Sale</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Purchase</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-boxes w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'stock'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
-                            Stock</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
-                            Reports</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-ship w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Shipping
-                                Line</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'ship'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="../Ledger/trackentry1.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
-                            Entry</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-user-tie w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Clearing
-                                Agent</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'agent'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-file-invoice w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'vat'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <!-- Purchase Entry (Now Inactive) -->
-                        <a href="../Ledger/importparches.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
-                            Purchase Entry
-                        </a>
-                        <a href="../Ledger/importsale.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
-                            Sale Entry
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                    Reports & Utils</div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-chart-bar w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Total
-                                Reports</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'reports'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/ledgerreport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger
-                            Report</a>
-                        <a href="../Ledger/super-admin-roznamcha-report.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha Report</a>
-                        <a href="../Ledger/branchromanchareport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha Report</a>
-                    </div>
-                </div>
-                <div class="relative">
-                    <a href="../Ledger/email-compose.html">
-                        <button
-                            @click="openMenu = (openMenu === 'email' ? '' : 'email')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                            <div class="flex items-center">
-                                <i class="fas fa-envelope w-8 text-sm"></i>
-                                <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
-                            </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
-                    </a>
-                </div>
-                <div class="relative">
-                    <button
-                        @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <div class="flex items-center">
-                            <i class="fas fa-cog w-8 text-sm"></i>
-                            <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
-                        </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                    </button>
-                    <div x-show="openMenu === 'settings'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/setting-bill-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
-                            Entry</a>
-                        <a href="../Ledger/setting-cash-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
-                            Entry</a>
-                        <a href="../Ledger/exchange-entry-setting.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
-                            Entry</a>
-                        <a href="../Ledger/bank-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
-                            Entry</a>
-                        <a href="../Ledger/employe-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
-                            Data Entry</a>
-                        <a href="../Ledger/worker.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
-                            Entry</a>
-                        <a href="../Ledger/goods-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
-                            Entry</a>
-                        <a href="../Ledger/warehouse-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
-                            Entry</a>
-                        <a href="../Ledger/wherehouse-import.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
-                        <a href="../Ledger/warehouse-export.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </aside>
-        <main class="flex-1 p-6 bg-[#0b0e14] min-h-screen text-white">
-           <header
-            class="flex justify-between items-center mb-8 bg-[#0b0e14] py-2">
-            <div class="relative w-1/2 max-w-md">
-                <span
-                    class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
-                    <i class="fas fa-search text-sm"></i>
-                </span>
-                <input type="text"
-                    class="bg-[#111827] w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-800/50 text-sm focus:outline-none focus:border-gray-700 transition-all placeholder-gray-600 text-white"
-                    placeholder="Search invoices, customers, or reports...">
-            </div>
-            <div class="flex items-center space-x-5">
-                <button
-                    class="text-gray-400 hover:text-white transition-colors">
-                    <i class="fas fa-moon text-lg"></i>
-                </button>
-                <div class="flex items-center space-x-2 cursor-pointer group">
-                    <i
-                        class="fas fa-globe text-gray-400 group-hover:text-white"></i>
-                    <span
-                        class="text-xs font-semibold text-gray-400 group-hover:text-white">EN</span>
-                </div>
-                <div
-                    class="relative cursor-pointer text-gray-400 hover:text-white">
-                    <i class="far fa-bell text-xl"></i>
-                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                        <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span
-                            class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-[#0b0e14]"></span>
-                    </span>
-                </div>
-                <div
-                    class="flex items-center space-x-3 pl-4 border-l border-gray-800">
-                    <div class="text-right leading-tight">
-                        <p class="text-sm font-bold text-white tracking-wide">
-                            Admin User</p>
-                        <p class="text-[10px] text-gray-500 font-medium">Super
-                            Admin</p>
-                    </div>
-                    <div
-                        class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-gray-800 ring-offset-2 ring-offset-[#0b0e14] cursor-pointer hover:bg-blue-500 transition-colors">
-                        AD</div>
-                </div>
-            </div>
-        </header>
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12 lg:col-span-8 space-y-6">
-                    <div class="flex justify-between items-end">
-                        <h2 class="text-2xl font-semibold">Country Branch</h2>
-                        <span
-                            class="text-blue-500 text-xs font-bold uppercase tracking-tighter">●
-                            Office Config</span>
-                    </div>
-                    <div
-                        class="bg-[#1e293b]/50 p-6 rounded-lg border border-gray-800 space-y-8">
-                        <div class="space-y-4">
-                            <span
-                                class="bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step
-                                1 — Country & Currency</span>
-                            <div class="grid grid-cols-2 gap-4">
-                                <select
-                                    class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                                    <option>Select Country</option>
-                                </select>
-                                <select
-                                    class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                                    <option>Select Currency</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <span
-                                class="bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step
-                                2 — Location</span>
-                            <div class="grid grid-cols-3 gap-4">
-                                <select
-                                    class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                                    <option>Select State</option>
-                                </select>
-                                <select
-                                    class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                                    <option>Select City</option>
-                                </select>
-                                <input type="text"
-                                    placeholder="Zip / Postal Code"
-                                    class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                            </div>
-                            <input type="text"
-                                placeholder="Full Address (Street, Area, Building, etc.)"
-                                class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-4">
-                                <span
-                                    class="bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step
-                                    3 — Company & Branch Owner</span>
-                                <select
-                                    class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                                    <option>Select Company</option>
-                                </select>
-                            </div>
-                            <div class="space-y-4 pt-6">
-                                <input type="text" placeholder="Owner Full Name"
-                                    class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm mt-1">
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <span
-                                class="bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step
-                                5 — Contacts</span>
-                            <div id="contact-container" class="space-y-2">
-                                <div class="flex gap-2 contact-row">
-                                    <select
-                                        class="w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                                        <option>Mobile</option>
-                                        <option>Email</option>
-                                    </select>
-                                    <input type="text"
-                                        placeholder="+92 300 1234567"
-                                        class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                                    <button
-                                        onclick="this.parentElement.remove()"
-                                        class="px-3 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-                                </div>
-                            </div>
-                            <button onclick="addContact()"
-                                class="text-blue-400 text-xs font-bold hover:underline">+
-                                Add Contact</button>
-                        </div>
-                        <div class="space-y-4">
-                            <span
-                                class="bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step
-                                6 — Owner Identification</span>
-                            <div id="document-container" class="space-y-2">
-                                <div class="flex gap-2 doc-row">
-                                    <select
-                                        class="w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                                        <option>Passport</option>
-                                        <option>CNIC</option>
-                                    </select>
-                                    <input type="text" placeholder="P-12345678"
-                                        class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-                                    <button
-                                        onclick="this.parentElement.remove()"
-                                        class="px-3 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-                                </div>
-                            </div>
-                            <button onclick="addDocument()"
-                                class="text-blue-400 text-xs font-bold hover:underline">+
-                                Add Owner Document</button>
-                        </div>
-                        <div class="flex justify-end space-x-3 pt-4">
-                            <button
-                                class="px-6 py-2 text-sm text-gray-400 hover:text-white">Cancel</button>
-                            <button
-                                class="px-8 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 shadow-lg shadow-blue-900/20">Save</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-span-12 lg:col-span-4">
-                    <div
-                        class="bg-[#1e293b]/30 border border-gray-800 rounded-lg p-6 h-fit sticky top-6">
-                        <div class="flex justify-between mb-8">
-                            <h3 class="text-sm font-medium">Store Entry (Live
-                                Preview)</h3>
-                            <span
-                                class="bg-gray-800 px-2 py-0.5 rounded text-[10px] text-gray-400">STATUS:
-                                NEW</span>
+    <div class="flex min-h-screen w-full overflow-hidden">
+        <aside x-data="{ openMenu: '', openSub: '' }"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
+            <div class="p-6 mb-2 border-b border-gray-800/50 relative">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-8 h-8">
+                        <div
+                            class="absolute inset-0 border-t-2 border-l-2 border-green-500 rounded-tl-full">
                         </div>
                         <div
-                            class="flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-800 rounded-xl">
-                            <div
-                                class="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mb-4">
+                            class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
+                        </div>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-white font-bold leading-none tracking-wider text-lg">
+                            DAMAAN</h1>
+                        <p
+                            class="text-[10px] text-gray-500 font-medium uppercase">
+                            Business Group</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto sidebar-scroll px-0 pb-10">
+                <nav class="space-y-0.5">
+                    <div
+                        class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Main Navigation</div>
+                    <a href="../Dashboard/country-dashboard.html"
+                        class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        <i class="fas fa-home w-8 text-sm"></i>
+                        <span
+                            class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                    </a>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                            <div class="flex items-center">
+                                <i class="fas fa-plus-square w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-bold uppercase tracking-tight">New
+                                    Entry</span>
                             </div>
+                            <i class="fas text-[10px] transition-transform duration-200"
+                                :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'newEntry'" x-collapse
+                            class="bg-[#0b0f17]">
+                            <button
+                                @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Branch
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'branchEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12">
+                                <a href="../Superbranch/superbranch.html"
+                                    @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
+                                    Super Branch
+                                </a>
+                                <a href="../Superbranch/countrybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
+                                    Branch</a>
+                                <a href="../Superbranch/citybranch.html"
+                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
+                                    Branch</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">User
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
+                                    Admin User Entry</a>
+                            </div>
+                            <div x-show="openSub === 'userEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/userentry.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
+                                    Admin User Entry</a>
+                            </div>
+                            <button
+                                @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
+                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
+                                <span class="text-[12px] font-medium">Account
+                                    Entry</span>
+                                <i class="fas text-[9px]"
+                                    :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                            <div x-show="openSub === 'accountEntry'" x-collapse
+                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
+                                <a href="../Superbranch/newaccount.html"
+                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
+                                    Account</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-file-invoice-dollar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Ledger
+                                    Account</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ledger'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/super-admin-ledger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Ledger</a>
+                            <a href="../Ledger/countryLedger.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
+                                Ledger</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-money-bill-wave w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Daily
+                                    Payment</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'dailyPay'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/Super-admin-roznamcha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Roznamcha
+                            </a>
+                            <a href="../Ledger/branchRomancha.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
+                                Roznamcha
+                            </a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Operations</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-shopping-cart w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ops'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Sale</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
+                                Purchase</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-boxes w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'stock'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
+                                Stock</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
+                                Reports</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-ship w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Shipping
+                                    Line</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'ship'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="../Ledger/trackentry1.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
+                                Entry</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-tie w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Clearing
+                                    Agent</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'agent'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/billentry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
+                                Entry</a>
+                            <a href="#"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-invoice w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'vat'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <!-- Purchase Entry (Now Inactive) -->
+                            <a href="../Ledger/importparches.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html"
+                                class="py-2 text-[12px] text-gray-500 hover:text-white">
+                                Sale Entry
+                            </a>
+                        </div>
+                    </div>
+                    <div
+                        class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                        Reports & Utils</div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-bar w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Total
+                                    Reports</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'reports'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/ledgerreport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger
+                                Report</a>
+                            <a href="../Ledger/super-admin-roznamcha-report.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
+                                Admin Roznamcha Report</a>
+                            <a href="../Ledger/branchromanchareport.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
+                                Roznamcha Report</a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <a href="../Ledger/email-compose.html">
+                            <button
+                                @click="openMenu = (openMenu === 'email' ? '' : 'email')"
+                                class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope w-8 text-sm"></i>
+                                    <span
+                                        class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
+                                </div>
+                                <i class="fas text-[10px]"
+                                    :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <button
+                            @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-cog w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                            </div>
+                            <i class="fas text-[10px]"
+                                :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        </button>
+                        <div x-show="openMenu === 'settings'" x-collapse
+                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                            <a href="../Ledger/setting-bill-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
+                                Entry</a>
+                            <a href="../Ledger/setting-cash-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
+                                Entry</a>
+                            <a href="../Ledger/exchange-entry-setting.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
+                                Entry</a>
+                            <a href="../Ledger/bank-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
+                                Entry</a>
+                            <a href="../Ledger/employe-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
+                                Data Entry</a>
+                            <a href="../Ledger/worker.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
+                                Entry</a>
+                            <a href="../Ledger/goods-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
+                                Entry</a>
+                            <a href="../Ledger/warehouse-entry.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
+                                Entry</a>
+                            <a href="../Ledger/wherehouse-import.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                            <a href="../Ledger/warehouse-export.html"
+                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+<main class="flex-1 min-w-0 w-full p-4 md:p-6 bg-[#0b0e14] min-h-screen text-white overflow-x-hidden">
+
+    <header
+                class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
+                <!-- LEFT SIDE -->
+                <div class="flex items-center w-full max-w-md">
+                    <!-- Mobile Menu Button -->
+                    <button @click="sidebarOpen = true"
+                        class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <!-- Search -->
+                    <div class="relative w-full hidden md:block">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </span>
+                        <input type="text"
+                            class="bg-[#111827] w-full pl-10 pr-4 py-2 rounded-lg border border-slate-800 text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder-slate-500 text-white"
+                            placeholder="Search invoices, customers, or reports...">
+                    </div>
+                </div>
+                <!-- RIGHT SIDE -->
+                <div class="flex items-center space-x-6">
+                    <!-- Icons Group -->
+                    <div
+                        class="flex items-center space-x-4 pr-6 border-r border-slate-800">
+                        <button
+                            class="text-slate-400 hover:text-white transition-colors p-1">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </button>
+                        <div
+                            class="flex items-center space-x-1.5 cursor-pointer group p-1">
+                            <i data-lucide="globe"
+                                class="w-4 h-4 text-slate-400 group-hover:text-blue-400"></i>
+                            <span
+                                class="text-xs font-bold text-slate-400 group-hover:text-white uppercase tracking-wider">EN</span>
+                        </div>
+                        <div
+                            class="relative cursor-pointer text-slate-400 hover:text-white transition-colors p-1">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                            <span class="absolute top-1 right-1 flex h-2 w-2">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span
+                                    class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Profile -->
+                    <div
+                        class="flex items-center space-x-3 group cursor-pointer">
+                        <div class="text-right hidden sm:block">
                             <p
-                                class="text-gray-500 text-[10px] text-center max-w-[150px]">
-                                Real-time visualization of the Head Office node.
+                                class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                                Admin User
+                            </p>
+                            <p
+                                class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
+                                Super Admin
                             </p>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="mt-8 col-span-12 bg-[#1e293b]/40 rounded-xl border border-gray-800 overflow-hidden shadow-2xl">
-                <div
-                    class="p-5 border-b border-gray-800 flex flex-wrap justify-between items-center gap-4 bg-[#111827]/50">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-blue-500/20 p-2 rounded-lg">
-                            <i class="fas fa-history text-blue-400 text-sm"></i>
+                        <div class="relative">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 ring-offset-2 ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
+                                AD
+                            </div>
+                            <div
+                                class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0b0f1a] rounded-full">
+                            </div>
                         </div>
-                        <h3 class="text-base font-semibold tracking-tight">
-                            Recent Setup Activity</h3>
-                    </div>
-                    <button
-                        class="text-[10px] bg-blue-900/30 text-blue-400 px-4 py-1.5 rounded-md border border-blue-800/50 hover:bg-blue-900/50 transition-all font-bold uppercase tracking-wider">
-                        System Logs
-                    </button>
-                </div>
-                <div
-                    class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3 border-b border-gray-800/50 bg-[#0f172a]/30">
-                    <select
-                        class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
-                        <option>All Countries</option>
-                    </select>
-                    <select
-                        class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
-                        <option>Select State</option>
-                    </select>
-                    <select
-                        class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
-                        <option>Select City</option>
-                    </select>
-                    <select
-                        class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
-                        <option>Select Company</option>
-                    </select>
-                    <div class="relative">
-                        <i
-                            class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-[10px]"></i>
-                        <input type="text" placeholder="Search accounts..."
-                            class="w-full bg-[#0f172a] border border-gray-700/50 rounded-lg py-2 pl-8 pr-3 text-xs focus:outline-none focus:border-blue-500/50">
                     </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-[11px]">
-                        <thead
-                            class="bg-[#0f172a]/80 text-gray-500 uppercase tracking-widest font-bold">
-                            <tr>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    Country</th>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    State</th>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    City</th>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    Owner</th>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    Contact</th>
-                                <th class="px-6 py-4 border-b border-gray-800">
-                                    Document</th>
-                                <th
-                                    class="px-6 py-4 border-b border-gray-800 text-right">
-                                    Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-800/50">
-                            <tr
-                                class="hover:bg-blue-500/5 transition-colors group">
-                                <td class="px-6 py-4 font-medium text-gray-300">
-                                    India</td>
-                                <td class="px-6 py-4 text-gray-500">South</td>
-                                <td class="px-6 py-4 text-white font-semibold">
-                                    Kerala</td>
-                                <td class="px-6 py-4 text-gray-300">Demaan</td>
-                                <td class="px-6 py-4 text-gray-500">ali / 123455
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="text-[9px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">CNIC</span>
-                                </td>
-                                <td class="px-6 py-4 text-right space-x-3">
-                                    <button
-                                        class="text-gray-500 hover:text-blue-400 transition-colors"><i
-                                            class="fas fa-edit"></i></button>
-                                    <button
-                                        class="text-gray-500 hover:text-red-500 transition-colors"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-blue-500/5 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-300">
-                                    India</td>
-                                <td class="px-6 py-4 text-gray-500">South</td>
-                                <td class="px-6 py-4 text-white font-semibold">
-                                    Kerala</td>
-                                <td class="px-6 py-4 text-gray-300">Demaan</td>
-                                <td class="px-6 py-4 text-gray-500">ali / 123455
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="text-[9px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">CNIC</span>
-                                </td>
-                                <td class="px-6 py-4 text-right space-x-3">
-                                    <button
-                                        class="text-gray-500 hover:text-blue-400 transition-colors"><i
-                                            class="fas fa-edit"></i></button>
-                                    <button
-                                        class="text-gray-500 hover:text-red-500 transition-colors"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-blue-500/5 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-300">
-                                    India</td>
-                                <td class="px-6 py-4 text-gray-500">South</td>
-                                <td class="px-6 py-4 text-white font-semibold">
-                                    Kerala</td>
-                                <td class="px-6 py-4 text-gray-300">Demaan</td>
-                                <td class="px-6 py-4 text-gray-500">ali / 123455
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="text-[9px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">CNIC</span>
-                                </td>
-                                <td class="px-6 py-4 text-right space-x-3">
-                                    <button
-                                        class="text-gray-500 hover:text-blue-400 transition-colors"><i
-                                            class="fas fa-edit"></i></button>
-                                    <button
-                                        class="text-gray-500 hover:text-red-500 transition-colors"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </header>
+
+    <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
+            <div class="flex justify-between items-end">
+                <h2 class="text-xl md:text-2xl font-semibold">Country Branch</h2>
+                <span class="text-blue-500 text-[10px] md:text-xs font-bold uppercase tracking-tighter">● Office Config</span>
+            </div>
+            
+            <div class="bg-[#1e293b]/50 p-4 md:p-6 rounded-lg border border-gray-800 space-y-8">
+                <div class="space-y-4">
+                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 1 — Country & Currency</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400 w-full">
+                            <option>Select Country</option>
+                        </select>
+                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400 w-full">
+                            <option>Select Currency</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 2 — Location</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
+                            <option>Select State</option>
+                        </select>
+                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
+                            <option>Select City</option>
+                        </select>
+                        <input type="text" placeholder="Zip / Postal Code" class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                    </div>
+                    <input type="text" placeholder="Full Address (Street, Area, Building, etc.)" class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 3 — Company & Branch Owner</span>
+                        <select class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
+                            <option>Select Company</option>
+                        </select>
+                    </div>
+                    <div class="space-y-4 md:pt-6">
+                        <input type="text" placeholder="Owner Full Name" class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white mt-1">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 5 — Contacts</span>
+                    <div id="contact-container" class="space-y-2">
+                        <div class="flex flex-col sm:flex-row gap-2 contact-row">
+                            <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                                <option>Mobile</option>
+                                <option>Email</option>
+                            </select>
+                            <input type="text" placeholder="+92 300 1234567" class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                            <button onclick="this.parentElement.remove()" class="px-3 py-2 sm:py-0 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
+                        </div>
+                    </div>
+                    <button onclick="addContact()" class="text-blue-400 text-xs font-bold hover:underline">+ Add Contact</button>
+                </div>
+
+                <div class="space-y-4">
+                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 6 — Owner Identification</span>
+                    <div id="document-container" class="space-y-2">
+                        <div class="flex flex-col sm:flex-row gap-2 doc-row">
+                            <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                                <option>Passport</option>
+                                <option>CNIC</option>
+                            </select>
+                            <input type="text" placeholder="P-12345678" class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                            <button onclick="this.parentElement.remove()" class="px-3 py-2 sm:py-0 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
+                        </div>
+                    </div>
+                    <button onclick="addDocument()" class="text-blue-400 text-xs font-bold hover:underline">+ Add Owner Document</button>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t border-gray-800">
+                    <button class="px-6 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+                    <button class="px-8 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 shadow-lg shadow-blue-900/20 transition-all">Save</button>
                 </div>
             </div>
-        </main>
-        <script>
-            // Logic to add more Contact rows
-            function addContact() {
-                const container = document.getElementById('contact-container');
-                const newRow = document.createElement('div');
-                newRow.className = 'flex gap-2 contact-row animate-fadeIn';
-                newRow.innerHTML = `
-        <select class="w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-            <option>Mobile</option>
-            <option>Email</option>
-        </select>
-        <input type="text" placeholder="Enter details..." class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-        <button onclick="this.parentElement.remove()" class="px-3 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-    `;
-                container.appendChild(newRow);
-            }
-            // Logic to add more Document rows
-            function addDocument() {
-                const container = document.getElementById('document-container');
-                const newRow = document.createElement('div');
-                newRow.className = 'flex gap-2 doc-row animate-fadeIn';
-                newRow.innerHTML = `
-        <select class="w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm">
-            <option>Passport</option>
-            <option>CNIC</option>
-            <option>Driving License</option>
-        </select>
-        <input type="text" placeholder="Document Number" class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-        <button onclick="this.parentElement.remove()" class="px-3 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-    `;
-                container.appendChild(newRow);
-            }
-        </script>
-        <style>
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-5px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            .animate-fadeIn {
-                animation: fadeIn 0.3s ease-out;
-            }
-        </style>
+        </div>
+
+        <div class="col-span-12 lg:col-span-4 xl:col-span-3">
+            <div class=" mt-12 bg-[#0b0e14] border border-gray-800 rounded-lg p-5 flex flex-col items-center h-fit sticky top-6">
+                <div class="flex justify-between w-full mb-6 items-center">
+                    <span class="text-[11px] font-bold text-white uppercase">Store Entry (Live Preview)</span>
+                    <span class="text-[9px] bg-gray-800 text-gray-400 px-2 py-0.5 rounded border border-gray-700">Status: Empty</span>
+                </div>
+                <div class="relative w-28 h-28 flex items-center justify-center bg-[#111827] rounded-xl border border-gray-800">
+                    <div class="absolute inset-3 border border-dashed border-cyan-500/30 rounded-full animate-[spin_8s_linear_infinite]"></div>
+                    <div class="relative w-14 h-14 flex items-center justify-center">
+                        <div class="absolute inset-0 border-4 border-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.3)]"></div>
+                        <div class="absolute bottom-1.5 w-8 h-4 border-t-4 border-cyan-400 rounded-t-full"></div>
+                        <div class="absolute -top-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                        <div class="absolute -bottom-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                        <div class="absolute -left-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                        <div class="absolute -right-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                    </div>
+                </div>
+                <p class="mt-4 text-[10px] text-gray-500 italic text-center leading-tight">
+                    Real-time visualization of the<br>Head Office node.
+                </p>
+            </div>
+        </div>
     </div>
+
+    <div class="mt-8 col-span-12 bg-[#1e293b]/40 rounded-xl border border-gray-800 overflow-hidden shadow-2xl">
+        <div class="p-5 border-b border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#111827]/50">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-500/20 p-2 rounded-lg">
+                    <i class="fas fa-history text-blue-400 text-sm"></i>
+                </div>
+                <h3 class="text-base font-semibold tracking-tight">Recent Setup Activity</h3>
+            </div>
+            <button class="text-[10px] bg-blue-900/30 text-blue-400 px-4 py-1.5 rounded-md border border-blue-800/50 hover:bg-blue-900/50 transition-all font-bold uppercase tracking-wider w-full sm:w-auto text-center">
+                System Logs
+            </button>
+        </div>
+        
+        <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 border-b border-gray-800/50 bg-[#0f172a]/30">
+            <select class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
+                <option>All Countries</option>
+            </select>
+            <select class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
+                <option>Select State</option>
+            </select>
+            <select class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
+                <option>Select City</option>
+            </select>
+            <select class="bg-[#0f172a] border border-gray-700/50 rounded-lg p-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500/50">
+                <option>Select Company</option>
+            </select>
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-[10px]"></i>
+                <input type="text" placeholder="Search accounts..."
+                    class="w-full bg-[#0f172a] border border-gray-700/50 rounded-lg py-2 pl-8 pr-3 text-xs focus:outline-none focus:border-blue-500/50 text-white">
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-[11px] min-w-[800px]">
+                <thead class="bg-[#0f172a]/80 text-gray-500 uppercase tracking-widest font-bold">
+                    <tr>
+                        <th class="px-6 py-4 border-b border-gray-800">Country</th>
+                        <th class="px-6 py-4 border-b border-gray-800">State</th>
+                        <th class="px-6 py-4 border-b border-gray-800">City</th>
+                        <th class="px-6 py-4 border-b border-gray-800">Owner</th>
+                        <th class="px-6 py-4 border-b border-gray-800">Contact</th>
+                        <th class="px-6 py-4 border-b border-gray-800">Document</th>
+                        <th class="px-6 py-4 border-b border-gray-800 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800/50">
+                    <tr class="hover:bg-blue-500/5 transition-colors group">
+                        <td class="px-6 py-4 font-medium text-gray-300">India</td>
+                        <td class="px-6 py-4 text-gray-500">South</td>
+                        <td class="px-6 py-4 text-white font-semibold">Kerala</td>
+                        <td class="px-6 py-4 text-gray-300">Demaan</td>
+                        <td class="px-6 py-4 text-gray-500">ali / 123455</td>
+                        <td class="px-6 py-4">
+                            <span class="text-[9px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">CNIC</span>
+                        </td>
+                        <td class="px-6 py-4 text-right space-x-3">
+                            <button class="text-gray-500 hover:text-blue-400 transition-colors"><i class="fas fa-edit"></i></button>
+                            <button class="text-gray-500 hover:text-red-500 transition-colors"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+    </div>
+
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/60 z-30 md:hidden" x-transition.opacity></div>
+
+    <script>
+        function addContact() {
+            const container = document.getElementById('contact-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'flex flex-col sm:flex-row gap-2 contact-row animate-fadeIn';
+            newRow.innerHTML = `
+                <select class="sm:w-1/4 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm">
+                    <option>Mobile</option>
+                    <option>Email</option>
+                </select>
+                <input type="text" placeholder="Enter details..." class="flex-1 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm text-white">
+                <button onclick="this.parentElement.remove()" class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded-lg hover:bg-red-900/20"><i class="fas fa-trash"></i></button>
+            `;
+            container.appendChild(newRow);
+        }
+
+        function addDocument() {
+            const container = document.getElementById('document-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'flex flex-col sm:flex-row gap-2 doc-row animate-fadeIn';
+            newRow.innerHTML = `
+                <select class="sm:w-1/4 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm">
+                    <option>Passport</option>
+                    <option>CNIC</option>
+                    <option>Driving License</option>
+                </select>
+                <input type="text" placeholder="Document Number" class="flex-1 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm text-white">
+                <button onclick="this.parentElement.remove()" class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded-lg hover:bg-red-900/20"><i class="fas fa-trash"></i></button>
+            `;
+            container.appendChild(newRow);
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
