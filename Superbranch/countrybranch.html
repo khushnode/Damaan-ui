@@ -19,6 +19,7 @@
         .sidebar-scroll::-webkit-scrollbar { width: 3px; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #1e293b; }
         /* Prevent horizontal scroll on small screens */
+
 body {
     overflow-x: hidden;
 }
@@ -40,6 +41,17 @@ select, input {
         top: 0 !important;
     }
 }
+  /* Hide scrollbar but keep scroll working */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        .sidebar-scroll {
+            -ms-overflow-style: none;
+            /* IE & Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
     </style>
 </head>
 <body class="bg-[#0b1120] text-gray-300 font-sans">
@@ -190,7 +202,7 @@ select, input {
                                     class="fas fa-money-bill-wave w-8 text-sm"></i>
                                 <span
                                     class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                    Payment</span>
+                                    Payment Entry</span>
                             </div>
                             <i class="fas text-[10px]"
                                 :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>

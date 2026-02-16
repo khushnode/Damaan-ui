@@ -34,6 +34,17 @@
         .border-custom {
             border-color: #1e293b;
         }
+          /* Hide scrollbar but keep scroll working */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        .sidebar-scroll {
+            -ms-overflow-style: none;
+            /* IE & Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
     </style>
 </head>
 <body class="bg-dark-main text-gray-300 font-sans"
@@ -188,7 +199,7 @@
                             <i class="fas fa-money-bill-wave w-8 text-sm"></i>
                             <span
                                 class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                Payment</span>
+                                Payment Entry</span>
                         </div>
                         <i class="fas text-[10px]"
                             :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
