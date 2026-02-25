@@ -52,7 +52,32 @@ select, input {
             scrollbar-width: none;
             /* Firefox */
         }
-    </style>
+        /* Modal Center Animation */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.25s ease-out;
+}
+
+/* Hide Scrollbar but keep scroll */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+    </style>   
 </head>
 <body class="bg-[#0b1120] text-gray-300 font-sans">
     <div class="flex min-h-screen w-full overflow-hidden">
@@ -502,113 +527,27 @@ select, input {
                 </div>
             </header>
 
-    <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
-            <div class="flex justify-between items-end">
-                <h2 class="text-xl md:text-2xl font-semibold">Country Branch</h2>
-                <span class="text-blue-500 text-[10px] md:text-xs font-bold uppercase tracking-tighter">● Office Config</span>
-            </div>
-            
-            <div class="bg-[#1e293b]/50 p-4 md:p-6 rounded-lg border border-gray-800 space-y-8">
-                <div class="space-y-4">
-                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 1 — Country & Currency</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400 w-full">
-                            <option>Select Country</option>
-                        </select>
-                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400 w-full">
-                            <option>Select Currency</option>
-                        </select>
-                    </div>
+     <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 flex justify-end mb-8 mt-8">
+                    <button
+                        onclick="document.getElementById('countryBranchModal').classList.remove('hidden')"
+                        class="group inline-flex items-center gap-2 px-6 py-2.5 
+               bg-gradient-to-r from-cyan-500 to-blue-600 
+               text-white text-sm font-semibold rounded-lg 
+               shadow-lg shadow-cyan-500/20 
+               hover:shadow-cyan-500/40 
+               hover:scale-105 active:scale-95 
+               transition-all duration-300">
+                        <span
+                            class="text-lg font-bold group-hover:rotate-90 transition-transform duration-300">
+                            +
+                        </span>
+                        Add Country Branch
+                    </button>
                 </div>
-
-                <div class="space-y-4">
-                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 2 — Location</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                            <option>Select State</option>
-                        </select>
-                        <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                            <option>Select City</option>
-                        </select>
-                        <input type="text" placeholder="Zip / Postal Code" class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                    </div>
-                    <input type="text" placeholder="Full Address (Street, Area, Building, etc.)" class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-4">
-                        <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 3 — Company & Branch Owner</span>
-                        <select class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-gray-400">
-                            <option>Select Company</option>
-                        </select>
-                    </div>
-                    <div class="space-y-4 md:pt-6">
-                        <input type="text" placeholder="Owner Full Name" class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white mt-1">
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 5 — Contacts</span>
-                    <div id="contact-container" class="space-y-2">
-                        <div class="flex flex-col sm:flex-row gap-2 contact-row">
-                            <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                                <option>Mobile</option>
-                                <option>Email</option>
-                            </select>
-                            <input type="text" placeholder="+92 300 1234567" class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                            <button onclick="this.parentElement.remove()" class="px-3 py-2 sm:py-0 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-                        </div>
-                    </div>
-                    <button onclick="addContact()" class="text-blue-400 text-xs font-bold hover:underline">+ Add Contact</button>
-                </div>
-
-                <div class="space-y-4">
-                    <span class="inline-block bg-blue-900/40 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-800">Step 6 — Owner Identification</span>
-                    <div id="document-container" class="space-y-2">
-                        <div class="flex flex-col sm:flex-row gap-2 doc-row">
-                            <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                                <option>Passport</option>
-                                <option>CNIC</option>
-                            </select>
-                            <input type="text" placeholder="P-12345678" class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
-                            <button onclick="this.parentElement.remove()" class="px-3 py-2 sm:py-0 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">Remove</button>
-                        </div>
-                    </div>
-                    <button onclick="addDocument()" class="text-blue-400 text-xs font-bold hover:underline">+ Add Owner Document</button>
-                </div>
-
-                <div class="flex justify-end space-x-3 pt-4 border-t border-gray-800">
-                    <button class="px-6 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
-                    <button class="px-8 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 shadow-lg shadow-blue-900/20 transition-all">Save</button>
+                <div class="col-span-12 xl:col-span-3">
                 </div>
             </div>
-        </div>
-
-        <div class="col-span-12 lg:col-span-4 xl:col-span-3">
-            <div class=" mt-12 bg-[#0b0e14] border border-gray-800 rounded-lg p-5 flex flex-col items-center h-fit sticky top-6">
-                <div class="flex justify-between w-full mb-6 items-center">
-                    <span class="text-[11px] font-bold text-white uppercase">Store Entry (Live Preview)</span>
-                    <span class="text-[9px] bg-gray-800 text-gray-400 px-2 py-0.5 rounded border border-gray-700">Status: Empty</span>
-                </div>
-                <div class="relative w-28 h-28 flex items-center justify-center bg-[#111827] rounded-xl border border-gray-800">
-                    <div class="absolute inset-3 border border-dashed border-cyan-500/30 rounded-full animate-[spin_8s_linear_infinite]"></div>
-                    <div class="relative w-14 h-14 flex items-center justify-center">
-                        <div class="absolute inset-0 border-4 border-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.3)]"></div>
-                        <div class="absolute bottom-1.5 w-8 h-4 border-t-4 border-cyan-400 rounded-t-full"></div>
-                        <div class="absolute -top-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                        <div class="absolute -bottom-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                        <div class="absolute -left-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                        <div class="absolute -right-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                    </div>
-                </div>
-                <p class="mt-4 text-[10px] text-gray-500 italic text-center leading-tight">
-                    Real-time visualization of the<br>Head Office node.
-                </p>
-            </div>
-        </div>
-    </div>
-
     <div class="mt-8 col-span-12 bg-[#1e293b]/40 rounded-xl border border-gray-800 overflow-hidden shadow-2xl">
         <div class="p-5 border-b border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#111827]/50">
             <div class="flex items-center space-x-3">
@@ -674,47 +613,241 @@ select, input {
             </table>
         </div>
     </div>
+
+    <!-- COUNTRY BRANCH MODAL -->
+<div id="countryBranchModal"
+     class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+    <div class="bg-[#0f172a] w-full max-w-5xl max-h-[90vh] overflow-y-auto scrollbar-hide
+                rounded-xl border border-gray-800 shadow-2xl relative animate-scaleIn">
+
+        <!-- Close Button -->
+        <button onclick="closeCountryModal()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+            ✕
+        </button>
+
+        <div class="p-6 space-y-8">
+
+            <h2 class="text-2xl font-semibold text-white">Add Country Branch</h2>
+
+            <!-- Step 1 -->
+            <div class="space-y-4">
+                <span class="inline-block bg-blue-900/40 text-blue-400 text-xs px-2 py-1 rounded border border-blue-800">
+                    Step 1 — Country & Currency
+                </span>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                        <option>Select Country</option>
+                    </select>
+                    <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                        <option>Select Currency</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="space-y-4">
+                <span class="inline-block bg-blue-900/40 text-blue-400 text-xs px-2 py-1 rounded border border-blue-800">
+                    Step 2 — Location
+                </span>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                        <option>Select State</option>
+                    </select>
+                    <select class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                        <option>Select City</option>
+                    </select>
+                    <input type="text" placeholder="Zip / Postal Code"
+                        class="bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                </div>
+
+                <input type="text" placeholder="Full Address"
+                    class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+            </div>
+
+            <!-- Step 3 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <span class="inline-block bg-blue-900/40 text-blue-400 text-xs px-2 py-1 rounded border border-blue-800">
+                        Step 3 — Company & Owner
+                    </span>
+
+                    <select class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                        <option>Select Company</option>
+                    </select>
+                </div>
+
+                <div class="md:pt-6">
+                    <input type="text" placeholder="Owner Full Name"
+                        class="w-full bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                </div>
+            </div>
+
+            <!-- Step 4 Contacts -->
+            <div class="space-y-4">
+                <span class="inline-block bg-blue-900/40 text-blue-400 text-xs px-2 py-1 rounded border border-blue-800">
+                    Step 4 — Contacts
+                </span>
+
+                <div id="contact-container" class="space-y-2">
+                    <div class="flex flex-col sm:flex-row gap-2 contact-row">
+                        <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                            <option>Mobile</option>
+                            <option>Email</option>
+                        </select>
+
+                        <input type="text" placeholder="Enter value"
+                            class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+
+                        <button onclick="this.parentElement.remove()"
+                            class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="addContact()"
+                    class="text-blue-400 text-xs font-bold hover:underline">
+                    + Add Contact
+                </button>
+            </div>
+
+            <!-- Step 5 Documents -->
+            <div class="space-y-4">
+                <span class="inline-block bg-blue-900/40 text-blue-400 text-xs px-2 py-1 rounded border border-blue-800">
+                    Step 5 — Owner Identification
+                </span>
+
+                <div id="document-container" class="space-y-2">
+                    <div class="flex flex-col sm:flex-row gap-2 doc-row">
+                        <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+                            <option>Passport</option>
+                            <option>CNIC</option>
+                        </select>
+
+                        <input type="text" placeholder="Document Number"
+                            class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+
+                        <button onclick="this.parentElement.remove()"
+                            class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="addDocument()"
+                    class="text-blue-400 text-xs font-bold hover:underline">
+                    + Add Owner Document
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-800">
+                <button onclick="closeCountryModal()"
+                    class="px-6 py-2 text-sm text-gray-400 hover:text-white transition">
+                    Cancel
+                </button>
+
+                <button
+                    class="px-8 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 shadow-lg transition">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </main>
     </div>
 
     <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/60 z-30 md:hidden" x-transition.opacity></div>
 
-    <script>
-        function addContact() {
-            const container = document.getElementById('contact-container');
-            const newRow = document.createElement('div');
-            newRow.className = 'flex flex-col sm:flex-row gap-2 contact-row animate-fadeIn';
-            newRow.innerHTML = `
-                <select class="sm:w-1/4 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm">
-                    <option>Mobile</option>
-                    <option>Email</option>
-                </select>
-                <input type="text" placeholder="Enter details..." class="flex-1 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm text-white">
-                <button onclick="this.parentElement.remove()" class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded-lg hover:bg-red-900/20"><i class="fas fa-trash"></i></button>
-            `;
-            container.appendChild(newRow);
-        }
+  <script>
+function openCountryModal() {
+    const modal = document.getElementById("countryBranchModal");
+    modal.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+}
 
-        function addDocument() {
-            const container = document.getElementById('document-container');
-            const newRow = document.createElement('div');
-            newRow.className = 'flex flex-col sm:flex-row gap-2 doc-row animate-fadeIn';
-            newRow.innerHTML = `
-                <select class="sm:w-1/4 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm">
-                    <option>Passport</option>
-                    <option>CNIC</option>
-                    <option>Driving License</option>
-                </select>
-                <input type="text" placeholder="Document Number" class="flex-1 bg-[#0b1120] border border-gray-700 rounded-lg p-2.5 text-sm text-white">
-                <button onclick="this.parentElement.remove()" class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded-lg hover:bg-red-900/20"><i class="fas fa-trash"></i></button>
-            `;
-            container.appendChild(newRow);
-        }
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            lucide.createIcons();
-        });
-    </script>
+function closeCountryModal() {
+    const modal = document.getElementById("countryBranchModal");
+    modal.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+}
+
+// Outside click close
+window.addEventListener("click", function(e) {
+    const modal = document.getElementById("countryBranchModal");
+    if (e.target === modal) {
+        closeCountryModal();
+    }
+});
+
+// ESC close
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+        closeCountryModal();
+    }
+});
+
+// Add Contact
+function addContact() {
+    const container = document.getElementById("contact-container");
+
+    const div = document.createElement("div");
+    div.className = "flex flex-col sm:flex-row gap-2 contact-row";
+    div.innerHTML = `
+        <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+            <option>Mobile</option>
+            <option>Email</option>
+        </select>
+
+        <input type="text" placeholder="Enter value"
+            class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+
+        <button onclick="this.parentElement.remove()"
+            class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">
+            Remove
+        </button>
+    `;
+
+    container.appendChild(div);
+}
+
+// Add Document
+function addDocument() {
+    const container = document.getElementById("document-container");
+
+    const div = document.createElement("div");
+    div.className = "flex flex-col sm:flex-row gap-2 doc-row";
+    div.innerHTML = `
+        <select class="w-full sm:w-1/4 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+            <option>Passport</option>
+            <option>CNIC</option>
+        </select>
+
+        <input type="text" placeholder="Document Number"
+            class="flex-1 bg-[#0f172a] border border-gray-700 rounded p-2 text-sm text-white">
+
+        <button onclick="this.parentElement.remove()"
+            class="px-3 py-2 border border-red-900/50 text-red-500 text-xs rounded hover:bg-red-900/20">
+            Remove
+        </button>
+    `;
+
+    container.appendChild(div);
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
+</script>
 </body>
 </html>

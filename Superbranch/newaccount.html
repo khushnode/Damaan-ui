@@ -12,16 +12,37 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b0e14; color: #94a3b8; }
-        .bg-sidebar { background-color: #0f1219; }
-        .bg-card { background-color: #151921; }
-        .bg-input { background-color: #1c222c; }
-        .border-custom { border-color: #2d3748; }
-        .text-accent { color: #3b82f6; }
-        .bg-accent { background-color: #007bff; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 10px; }
-          /* Hide scrollbar but keep scroll working */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0e14;
+            color: #94a3b8;
+        }
+        .bg-sidebar {
+            background-color: #0f1219;
+        }
+        .bg-card {
+            background-color: #151921;
+        }
+        .bg-input {
+            background-color: #1c222c;
+        }
+        .border-custom {
+            border-color: #2d3748;
+        }
+        .text-accent {
+            color: #3b82f6;
+        }
+        .bg-accent {
+            background-color: #007bff;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 10px;
+        }
+        /* Hide scrollbar but keep scroll working */
         .sidebar-scroll::-webkit-scrollbar {
             width: 0px;
             background: transparent;
@@ -32,17 +53,37 @@
             scrollbar-width: none;
             /* Firefox */
         }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Hide Scrollbar but keep scroll working */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            /* IE & Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
     </style>
 </head>
-<body x-data="{ sidebarOpen: false }"
-      @keydown.escape.window="sidebarOpen = false"
-      class="flex min-h-screen overflow-x-hidden">
-
-
-<aside
-    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transform transition-transform duration-300 md:translate-x-0 md:static">
-
+<body class="bg-[#0b1120] text-gray-300 font-sans">
+    <div class="flex min-h-screen w-full overflow-hidden">
+        <aside x-data="{ openMenu: '', openSub: '' }"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
             <div class="p-6 mb-2 border-b border-gray-800/50 relative">
                 <div class="flex items-center gap-3">
                     <div class="relative w-8 h-8">
@@ -68,7 +109,7 @@
                     <div
                         class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Main Navigation</div>
-                    <a href="../Dashboard/Superadmin.html"
+                    <a href="../Dashboard/country-dashboard.html"
                         class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
                         <i class="fas fa-home w-8 text-sm"></i>
                         <span
@@ -411,19 +452,13 @@
                 </nav>
             </div>
         </aside>
-<!-- Overlay -->
-<div 
-    x-show="sidebarOpen"
-    x-transition.opacity
-    @click="sidebarOpen = false"
-    class="fixed inset-0 bg-black/50 z-40 md:hidden">
-</div>
-
-
-
-
-    <main class="flex-1 flex flex-col w-full h-screen overflow-y-auto">
-         <header
+        <!-- Overlay -->
+        <div x-show="sidebarOpen" x-transition.opacity
+            @click="sidebarOpen = false"
+            class="fixed inset-0 bg-black/50 z-40 md:hidden">
+        </div>
+        <main class="flex-1 flex flex-col w-full h-screen overflow-y-auto">
+            <header
                 class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
                 <!-- LEFT SIDE -->
                 <div class="flex items-center w-full max-w-md">
@@ -495,222 +530,320 @@
                     </div>
                 </div>
             </header>
-
-        <div class="p-6 space-y-8">
-            <div class="flex flex-col lg:flex-row gap-6">
-                <div class="lg:col-span-8 flex-1">
-                    <div class="flex items-center justify-between mb-2">
-                        <h1 class="text-xl font-bold text-white">New Account</h1>
-                        <span class="text-[10px] text-accent font-bold tracking-wider uppercase flex items-center gap-1">
-                            <i class="fas fa-cog"></i> Office Config
-                        </span>
+            <div class="p-6 space-y-8">
+                <div class="grid grid-cols-12 gap-6">
+                    <div class="col-span-12 flex justify-end mb-8 mt-8">
+                        <button onclick="openNewAccountModal()" class="group inline-flex items-center gap-2 px-6 py-2.5 
+               bg-gradient-to-r from-cyan-500 to-blue-600 
+               text-white text-sm font-semibold rounded-lg 
+               shadow-lg shadow-cyan-500/20 
+               hover:shadow-cyan-500/40 
+               hover:scale-105 active:scale-95 
+               transition-all duration-300">
+                            <span
+                                class="text-lg font-bold group-hover:rotate-90 transition-transform duration-300">
+                                +
+                            </span>
+                            Add New Account
+                        </button>
                     </div>
-
-                    <div class="bg-card border border-custom rounded-xl p-6 shadow-xl">
-                        <h2 class="text-lg font-bold text-white mb-6">New Account</h2>
-                        
-                        <div class="space-y-8">
-                            <section>
-                                <h3 class="bg-accent/10 text-accent text-[10px] px-3 py-1.5 rounded w-max font-bold mb-4 uppercase tracking-widest">Step 1 — Branch Details</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Select Country</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Country</option>
-                                        </select>
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Branch Type</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Branch Type</option>
-                                        </select>
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Select Branch</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Branch</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section>
-                                <h3 class="bg-accent/10 text-accent text-[10px] px-3 py-1.5 rounded w-max font-bold mb-4 uppercase tracking-widest">Step 2 — Account Setup</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Account Type</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Account Type</option>
-                                        </select>
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Sub Type</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Sub Type</option>
-                                        </select>
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Category</label>
-                                        <select class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white appearance-none outline-none focus:border-accent">
-                                            <option>Select Category</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section>
-                                <h3 class="bg-accent/10 text-accent text-[10px] px-3 py-1.5 rounded w-max font-bold mb-4 uppercase tracking-widest">Step 3 — Codes & Naming</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Global Code Series</label>
-                                        <input type="text" placeholder="Global Code Series" class="w-full bg-input/50 border border-custom rounded-lg px-4 py-2.5 text-xs text-white outline-none focus:border-accent">
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Branch Code (Manual)</label>
-                                        <input type="text" placeholder="Branch Code (Manual)" class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white outline-none focus:border-accent">
-                                    </div>
-                                    <div class="space-y-1.5">
-                                        <label class="text-[11px] text-gray-400 font-medium">Account Name</label>
-                                        <input type="text" placeholder="Account Name" class="w-full bg-input border border-custom rounded-lg px-4 py-2.5 text-xs text-white outline-none focus:border-accent">
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-
-                        <div class="mt-10 flex gap-4">
-                            <button class="bg-accent hover:bg-blue-600 text-white text-xs font-bold py-3 px-8 rounded-lg shadow-lg shadow-blue-500/20 transition">Create Super Branch</button>
-                            <button class="bg-transparent border border-custom text-gray-400 hover:text-white text-xs font-bold py-3 px-8 rounded-lg transition">Discard Changes</button>
-                        </div>
+                    <div class="col-span-12 xl:col-span-3">
                     </div>
                 </div>
-
-                <div class="lg:w-80 space-y-4">
-                    <div class="bg-card border border-custom rounded-xl p-6 h-full shadow-lg">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-xs font-bold text-white tracking-widest uppercase">Branch Summary</h2>
-                            <span class="h-1 w-20 bg-gray-600 rounded-full"></span>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-history text-accent text-lg"></i>
+                            <h2 class="text-lg font-bold text-white">Recent
+                                Setup Activity</h2>
                         </div>
-                        
-                        <div class="flex items-center gap-3 bg-input/40 p-3 rounded-lg border border-custom mb-6">
-                            <div class="text-accent text-sm"><i class="fas fa-project-diagram"></i></div>
-                            <span class="text-[11px] text-gray-300">A-*****</span>
+                        <button
+                            class="bg-input border border-custom text-accent text-[10px] px-3 py-1 rounded-md font-bold uppercase">System
+                            Logs</button>
+                    </div>
+                    <div
+                        class="bg-card/50 border border-custom p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <select
+                            class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent">
+                            <option>All Countries</option>
+                        </select>
+                        <select
+                            class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent">
+                            <option>All Branches</option>
+                        </select>
+                        <select
+                            class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent">
+                            <option>All Account Types</option>
+                        </select>
+                        <select
+                            class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent">
+                            <option>All Sub Types</option>
+                        </select>
+                        <div class="flex gap-2">
+                            <button
+                                class="bg-accent text-white text-xs font-bold px-6 py-2 rounded-lg flex-1">APPLY</button>
+                            <button
+                                class="text-gray-500 text-xs px-2 hover:text-white">Reset</button>
                         </div>
-
-                        <div class="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
-                            <div class="grid grid-cols-2 gap-y-3">
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Company</div>
-                                <div class="text-[11px] text-gray-300">———</div>
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Branch Code</div>
-                                <div class="text-[11px] text-gray-300">———</div>
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Country</div>
-                                <div class="text-[11px] text-gray-300">———</div>
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">City</div>
-                                <div class="text-[11px] text-gray-300">———</div>
+                    </div>
+                    <div
+                        class="bg-card border border-custom rounded-xl overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr
+                                    class="bg-input/80 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        SR#</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Super Admin</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Account No.</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Account Name</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Account Type</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Sub Type</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Category</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Branch Type</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Branch Name</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Country</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Currency</th>
+                                    <th
+                                        class="px-4 py-4 border-b border-custom">
+                                        Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-[11px]">
+                                <tr
+                                    class="hover:bg-white/5 transition border-b border-custom/30">
+                                    <td class="px-4 py-4 text-gray-500">1</td>
+                                    <td class="px-4 py-4 text-gray-400">Admin_01
+                                    </td>
+                                    <td class="px-4 py-4 font-bold text-white">
+                                        ACC-9921</td>
+                                    <td class="px-4 py-4 text-gray-300">Damaan
+                                        General</td>
+                                    <td class="px-4 py-4 text-gray-300">Agent
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">Direct
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">Clearing
+                                        Agent</td>
+                                    <td class="px-4 py-4 text-gray-300">Main
+                                        Branch</td>
+                                    <td class="px-4 py-4 text-gray-300">Lahore
+                                        HQ</td>
+                                    <td class="px-4 py-4 text-gray-300">Pakistan
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">PKR</td>
+                                    <td class="px-4 py-4">
+                                        <span
+                                            class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Active</span>
+                                    </td>
+                                </tr>
+                                <tr
+                                    class="hover:bg-white/5 transition border-b border-custom/30">
+                                    <td class="px-4 py-4 text-gray-500">2</td>
+                                    <td class="px-4 py-4 text-gray-400">Admin_02
+                                    </td>
+                                    <td class="px-4 py-4 font-bold text-white">
+                                        ACC-1044</td>
+                                    <td class="px-4 py-4 text-gray-300">Global
+                                        Exports</td>
+                                    <td class="px-4 py-4 text-gray-300">Customer
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">Retail
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">
+                                        Warehouse</td>
+                                    <td class="px-4 py-4 text-gray-300">City
+                                        Branch</td>
+                                    <td class="px-4 py-4 text-gray-300">Mumbai
+                                        North</td>
+                                    <td class="px-4 py-4 text-gray-300">India
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-300">INR</td>
+                                    <td class="px-4 py-4">
+                                        <span
+                                            class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Active</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="newAccountModal" onclick="outsideClickClose(event)"
+                class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                <div
+                    class="bg-[#0b1120] w-full max-w-5xl max-h-[90vh] overflow-y-auto scrollbar-hide
+                rounded-xl border border-gray-800 shadow-2xl relative animate-scaleIn text-gray-300">
+                    <div
+                        class="flex justify-between items-center p-6 border-b border-gray-800/50">
+                        <h2 class="text-xl font-bold text-white">New Account
+                        </h2>
+                        <button
+                            class="text-[10px] font-bold text-blue-400 uppercase tracking-widest flex items-center gap-1 hover:text-blue-300">
+                            <span class="text-xs">⚙</span> OFFICE CONFIG
+                        </button>
+                    </div>
+                    <div class="p-8 space-y-10">
+                        <h1 class="text-2xl font-bold text-white">New Account
+                        </h1>
+                        <div class="space-y-6">
+                            <h3
+                                class="text-[11px] font-bold text-blue-500 uppercase tracking-[0.2em]">
+                                Step 1 — Branch Details</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Select
+                                        Country</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Country</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Branch
+                                        Type</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Branch Type</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Select
+                                        Branch</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Branch</option>
+                                    </select>
+                                </div>
                             </div>
-                            
-                            <hr class="border-custom opacity-50">
-
-                            <div class="grid grid-cols-2 gap-y-3">
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Address</div>
-                                <div class="text-[11px] text-gray-300">———</div>
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Phone</div>
-                                <div class="text-[11px] text-gray-300">———</div>
-                                <div class="text-[10px] text-gray-500 font-bold uppercase">Manager</div>
-                                <div class="text-[11px] text-gray-300">———</div>
+                        </div>
+                        <div class="space-y-6">
+                            <h3
+                                class="text-[11px] font-bold text-blue-500 uppercase tracking-[0.2em]">
+                                Step 2 — Account Setup</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Account
+                                        Type</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Account Type</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Sub
+                                        Type</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Sub Type</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Category</label>
+                                    <select
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                        <option>Select Category</option>
+                                    </select>
+                                </div>
                             </div>
-                            
-                            <div class="mt-10 pt-6 border-t border-custom border-dashed">
-                                <div class="text-[9px] text-gray-600 font-bold uppercase mb-2">Next Super Admin (Preview)</div>
-                                <div class="text-[11px] text-accent font-medium mb-1">SUPER_001</div>
-                                <div class="text-[10px] text-gray-400">Account Code (Branch): ———</div>
-                                <div class="text-[10px] text-gray-400">Account Name: ———</div>
+                        </div>
+                        <div class="space-y-6">
+                            <h3
+                                class="text-[11px] font-bold text-blue-500 uppercase tracking-[0.2em]">
+                                Step 3 — Codes & Naming</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Global
+                                        Code Series</label>
+                                    <input type="text"
+                                        placeholder="Global Code Series"
+                                        class="w-full bg-white border border-gray-300 rounded-lg p-3 text-sm text-gray-900 focus:ring-2 ring-blue-500 outline-none transition shadow-inner">
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Branch
+                                        Code (Manual)</label>
+                                    <input type="text"
+                                        placeholder="Branch Code (Manual)"
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs text-gray-500 ml-1">Account
+                                        Name</label>
+                                    <input type="text"
+                                        placeholder="Account Name"
+                                        class="w-full bg-[#161f31] border border-gray-700/50 rounded-lg p-3 text-sm text-gray-400 focus:border-blue-500 outline-none transition">
+                                </div>
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-4 pt-10">
+                            <button
+                                class="px-10 py-3 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all active:scale-95">
+                                Create New Account
+                            </button>
+                            <button onclick="closeNewAccountModal()"
+                                class="px-8 py-3 border border-gray-700 text-sm font-semibold text-gray-400 rounded-lg hover:bg-gray-800/50 transition">
+                                Discard Changes
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-history text-accent text-lg"></i>
-                        <h2 class="text-lg font-bold text-white">Recent Setup Activity</h2>
-                    </div>
-                    <button class="bg-input border border-custom text-accent text-[10px] px-3 py-1 rounded-md font-bold uppercase">System Logs</button>
-                </div>
-
-                <div class="bg-card/50 border border-custom p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-3">
-                    <select class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent"><option>All Countries</option></select>
-                    <select class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent"><option>All Branches</option></select>
-                    <select class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent"><option>All Account Types</option></select>
-                    <select class="bg-input border border-custom rounded px-3 py-2 text-xs text-gray-400 outline-none focus:border-accent"><option>All Sub Types</option></select>
-                    <div class="flex gap-2">
-                        <button class="bg-accent text-white text-xs font-bold px-6 py-2 rounded-lg flex-1">APPLY</button>
-                        <button class="text-gray-500 text-xs px-2 hover:text-white">Reset</button>
-                    </div>
-                </div>
-
-                <div class="bg-card border border-custom rounded-xl overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-input/80 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                <th class="px-4 py-4 border-b border-custom">SR#</th>
-                                <th class="px-4 py-4 border-b border-custom">Super Admin</th>
-                                <th class="px-4 py-4 border-b border-custom">Account No.</th>
-                                <th class="px-4 py-4 border-b border-custom">Account Name</th>
-                                <th class="px-4 py-4 border-b border-custom">Account Type</th>
-                                <th class="px-4 py-4 border-b border-custom">Sub Type</th>
-                                <th class="px-4 py-4 border-b border-custom">Category</th>
-                                <th class="px-4 py-4 border-b border-custom">Branch Type</th>
-                                <th class="px-4 py-4 border-b border-custom">Branch Name</th>
-                                <th class="px-4 py-4 border-b border-custom">Country</th>
-                                <th class="px-4 py-4 border-b border-custom">Currency</th>
-                                <th class="px-4 py-4 border-b border-custom">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-[11px]">
-                            <tr class="hover:bg-white/5 transition border-b border-custom/30">
-                                <td class="px-4 py-4 text-gray-500">1</td>
-                                <td class="px-4 py-4 text-gray-400">Admin_01</td>
-                                <td class="px-4 py-4 font-bold text-white">ACC-9921</td>
-                                <td class="px-4 py-4 text-gray-300">Damaan General</td>
-                                <td class="px-4 py-4 text-gray-300">Agent</td>
-                                <td class="px-4 py-4 text-gray-300">Direct</td>
-                                <td class="px-4 py-4 text-gray-300">Clearing Agent</td>
-                                <td class="px-4 py-4 text-gray-300">Main Branch</td>
-                                <td class="px-4 py-4 text-gray-300">Lahore HQ</td>
-                                <td class="px-4 py-4 text-gray-300">Pakistan</td>
-                                <td class="px-4 py-4 text-gray-300">PKR</td>
-                                <td class="px-4 py-4">
-                                    <span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Active</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-white/5 transition border-b border-custom/30">
-                                <td class="px-4 py-4 text-gray-500">2</td>
-                                <td class="px-4 py-4 text-gray-400">Admin_02</td>
-                                <td class="px-4 py-4 font-bold text-white">ACC-1044</td>
-                                <td class="px-4 py-4 text-gray-300">Global Exports</td>
-                                <td class="px-4 py-4 text-gray-300">Customer</td>
-                                <td class="px-4 py-4 text-gray-300">Retail</td>
-                                <td class="px-4 py-4 text-gray-300">Warehouse</td>
-                                <td class="px-4 py-4 text-gray-300">City Branch</td>
-                                <td class="px-4 py-4 text-gray-300">Mumbai North</td>
-                                <td class="px-4 py-4 text-gray-300">India</td>
-                                <td class="px-4 py-4 text-gray-300">INR</td>
-                                <td class="px-4 py-4">
-                                    <span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Active</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            lucide.createIcons();
-        });
-    </script>
+        </main>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lucide.createIcons();
+            });
+        </script>
+        <script>
+            function openNewAccountModal() {
+                const modal = document.getElementById('newAccountModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex'); // ensure flex applied
+                document.body.classList.add('overflow-hidden');
+            }
+            function closeNewAccountModal() {
+                const modal = document.getElementById('newAccountModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }
+            function outsideClickClose(event) {
+                const modal = document.getElementById("newAccountModal");
+                // agar click overlay pe hua (modal box pe nahi)
+                if (event.target === modal) {
+                    closeNewAccountModal();
+                }
+            }
+        </script>
 </body>
 </html>
