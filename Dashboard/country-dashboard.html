@@ -33,16 +33,21 @@
         }
     </style>
 </head>
-<body x-data="{ sidebarOpen: false }">
+<body 
+x-data="{ 
+    sidebarOpen: false,
+    darkMode: localStorage.getItem('theme') === 'dark'
+}" 
+:class="{ 'dark': darkMode }"
+>
     <div
         class="min-h-screen bg-[#0b0e14] text-slate-300 font-sans flex flex-col md:flex-row">
-        
         <aside x-data="{ openMenu: '', openSub: '' }"
-            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static md:h-screen">
-            <div class="md:hidden absolute top-4 right-4">
-               
-            </div>
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-40 w-64 
+                  bg-white border-r border-gray-200
+                  dark:bg-[#0d121d] dark:border-gray-900
+                  flex flex-col transition-transform duration-300
+                  md:translate-x-0 md:static">
             <div class="p-6 mb-2 border-b border-gray-800/50 relative">
                 <div class="flex items-center gap-3">
                     <div class="relative w-8 h-8">
@@ -57,8 +62,8 @@
                         <h1
                             class="text-white font-bold leading-none tracking-wider text-lg">
                             DAMAAN</h1>
-                        <p
-                            class="text-[10px] text-gray-500 font-medium uppercase">
+                        <p class="text-[10px] text-gray-600 dark:text-gray-400"
+                            font-medium uppercase">
                             Business Group</p>
                     </div>
                 </div>
@@ -68,129 +73,199 @@
                     <div
                         class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Main Navigation</div>
-                    <a href="../Dashboard/country-dashboard.html"
-                        class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                        <i class="fas fa-home w-8 text-sm"></i>
+                    <a href="../Dashboard/city-dashboard.html" class="group flex items-center gap-3 px-4 py-3
+   text-gray-600 dark:text-gray-400
+   hover:text-gray-900 dark:hover:text-white
+   hover:bg-gray-100 dark:hover:bg-gray-800/30
+   transition-all duration-300">
+                        <i class="fas fa-home text-sm"></i>
                         <span
-                            class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                            class="text-[13px] font-medium uppercase tracking-tight">
+                            Dashboard
+                        </span>
                     </a>
                     <div class="relative">
+                        <!-- Main Button -->
                         <button
                             @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-plus-square w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-bold uppercase tracking-tight">New
-                                    Entry</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    New Entry
+                                </span>
                             </div>
-                            <i class="fas text-[10px] transition-transform duration-200"
-                                :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'newEntry'" x-collapse
-                            class="bg-[#0b0f17]">
+                        <!-- Submenu Wrapper -->
+                        <div x-show="openMenu === 'newEntry'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <!-- Branch Entry -->
                             <button
                                 @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
-                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                                <span class="text-[12px] font-medium">Branch
-                                    Entry</span>
+                                class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                <span>Branch Entry</span>
                                 <i class="fas text-[9px]"
-                                    :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                    :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                                </i>
                             </button>
                             <div x-show="openSub === 'branchEntry'" x-collapse
-                                class="flex flex-col border-l border-gray-800 ml-12">
-                                <a href="../Superbranch/superbranch.html"
-                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Super
-                                    Branch</a>
+                                class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                                <a href="../Superbranch/superbranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    Super Branch
+                                </a>
                                 <a href="../Superbranch/countrybranch.html"
-                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
-                                    Branch</a>
-                                <a href="../Superbranch/citybranch.html"
-                                    class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
-                                    Branch</a>
+                                    class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    Country Branch
+                                </a>
+                                <a href="../Superbranch/citybranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    City Branch
+                                </a>
                             </div>
+                            <!-- User Entry -->
                             <button
                                 @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
-                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                                <span class="text-[12px] font-medium">User
-                                    Entry</span>
+                                class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                <span>User Entry</span>
                                 <i class="fas text-[9px]"
-                                    :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                    :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                                </i>
                             </button>
                             <div x-show="openSub === 'userEntry'" x-collapse
-                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                                <a href="../Superbranch/userentry.html"
-                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
-                                    Admin User Entry</a>
-                                <a href="../Superbranch/userentry.html"
-                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
-                                    Admin User Entry</a>
-                                <a href="../Superbranch/userentry.html"
-                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
-                                    Admin User Entry</a>
+                                class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                                <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    Super Admin User Entry
+                                </a>
+                                <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    Country Admin User Entry
+                                </a>
+                                <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    City Admin User Entry
+                                </a>
                             </div>
+                            <!-- Account Entry -->
                             <button
                                 @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
-                                class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                                <span class="text-[12px] font-medium">Account
-                                    Entry</span>
+                                class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                <span>Account Entry</span>
                                 <i class="fas text-[9px]"
-                                    :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                    :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                                </i>
                             </button>
                             <div x-show="openSub === 'accountEntry'" x-collapse
-                                class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                                <a href="../Superbranch/newaccount.html"
-                                    class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
-                                    Account</a>
+                                class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                                <a href="../Superbranch/newaccount.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                    New Account
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all outline-none">
                             <div class="flex items-center">
                                 <i
                                     class="fas fa-file-invoice-dollar w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Ledger
-                                    Account</span>
+                                    class="text-[13px] font-bold uppercase tracking-tight">
+                                    Ledger Account
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-200"
+                                :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'ledger'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="../Ledger/super-admin-ledger.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                                Admin Ledger</a>
-                            <a href="../Ledger/countryLedger.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
-                                Ledger</a>
+                        <!-- Submenu -->
+                        <div x-show="openMenu === 'ledger'" x-collapse class="bg-gray-100 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Ledger/super-admin-ledger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                                Super Admin Ledger
+                            </a>
+                            <a href="../Ledger/countryLedger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                                Country Ledger
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
+                        <!-- Main Button -->
                         <button
                             @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i
                                     class="fas fa-money-bill-wave w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                    Payment Entry</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Daily Payment Entry
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'dailyPay'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                        <!-- Submenu -->
+                        <div x-show="openMenu === 'dailyPay'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
                             <a href="../Ledger/Super-admin-roznamcha.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                                Admin Roznamcha</a>
-                            <a href="../Ledger/branchRomancha.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                                Roznamcha</a>
+                                class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                Super Admin Roznamcha
+                            </a>
+                            <a href="../Ledger/branchRomancha.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                Branch Roznamcha
+                            </a>
                         </div>
                     </div>
                     <div
@@ -199,200 +274,290 @@
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-shopping-cart w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Purchase / Sale
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'ops'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                                Sale</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                                Purchase</a>
+                        <div x-show="openMenu === 'ops'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                New Sale
+                            </a>
+                            <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                New Purchase
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-boxes w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Stock
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'stock'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
-                                Stock</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
-                                Reports</a>
+                        <div x-show="openMenu === 'stock'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Current Stock
+                            </a>
+                            <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Stock Reports
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-ship w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Shipping
-                                    Line</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Shipping Line
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'ship'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="../Ledger/billentry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                                Entry</a>
-                            <a href="../Ledger/trackentry1.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
-                                Entry</a>
+                        <div x-show="openMenu === 'ship'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                BL Entry
+                            </a>
+                            <a href="../Ledger/trackentry1.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Truck Entry
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-user-tie w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Clearing
-                                    Agent</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Clearing Agent
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'agent'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="../Ledger/billentry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                                Entry</a>
-                            <a href="#"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                        <div x-show="openMenu === 'agent'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                BL Entry
+                            </a>
+                            <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Commission
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
                         <button
                             @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-file-invoice w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    VAT
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'vat'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="../Ledger/importparches.html"
-                                class="py-2 text-[12px] text-gray-500 hover:text-white">Purchase
-                                Entry</a>
-                            <a href="../Ledger/importsale.html"
-                                class="py-2 text-[12px] text-gray-500 hover:text-white">Sale
-                                Entry</a>
+                        <div x-show="openMenu === 'vat'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Ledger/importparches.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Purchase Entry
+                            </a>
+                            <a href="../Ledger/importsale.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                                Sale Entry
+                            </a>
                         </div>
                     </div>
                     <div
                         class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                         Reports & Utils</div>
                     <div class="relative">
+                        <!-- Main Button -->
                         <button
                             @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-chart-bar w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Total
-                                    Reports</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Total Reports
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'reports'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                            <a href="../Ledger/ledgerreport.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger
-                                Report</a>
+                        <!-- Submenu -->
+                        <div x-show="openMenu === 'reports'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Ledger/ledgerreport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                Ledger Report
+                            </a>
                             <a href="../Ledger/super-admin-roznamcha-report.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                                Admin Roznamcha Report</a>
-                            <a href="../Ledger/branchromanchareport.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                                Roznamcha Report</a>
+                                class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                Super Admin Roznamcha Report
+                            </a>
+                            <a href="../Ledger/branchromanchareport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                                Branch Roznamcha Report
+                            </a>
                         </div>
                     </div>
                     <div class="relative">
-                        <a href="../Ledger/email-compose.html">
-                            <button
-                                @click="openMenu = (openMenu === 'email' ? '' : 'email')"
-                                class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                                <div class="flex items-center">
-                                    <i class="fas fa-envelope w-8 text-sm"></i>
-                                    <span
-                                        class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
-                                </div>
-                                <i class="fas text-[10px]"
-                                    :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                            </button>
+                        <a href="../Ledger/email-compose.html" class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope w-8 text-sm"></i>
+                                <span
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Emails
+                                </span>
+                            </div>
                         </a>
                     </div>
                     <div class="relative">
+                        <!-- Main Button -->
                         <button
                             @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                            class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                             <div class="flex items-center">
                                 <i class="fas fa-cog w-8 text-sm"></i>
                                 <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                                    class="text-[13px] font-medium uppercase tracking-tight">
+                                    Settings
+                                </span>
                             </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                            <i class="fas text-[10px] transition-transform duration-300"
+                                :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
-                        <div x-show="openMenu === 'settings'" x-collapse
-                            class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                        <!-- Submenu -->
+                        <div x-show="openMenu === 'settings'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
                             <a href="../Ledger/setting-bill-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
-                                Entry</a>
+                                class="submenu-link">Bill Entry</a>
                             <a href="../Ledger/setting-cash-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
-                                Entry</a>
+                                class="submenu-link">Cash Entry</a>
                             <a href="../Ledger/exchange-entry-setting.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
-                                Entry</a>
+                                class="submenu-link">Exchange Entry</a>
                             <a href="../Ledger/bank-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
-                                Entry</a>
+                                class="submenu-link">Bank Entry</a>
                             <a href="../Ledger/employe-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
-                                Data Entry</a>
+                                class="submenu-link">Employee Data Entry</a>
                             <a href="../Ledger/worker.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
-                                Entry</a>
+                                class="submenu-link">Worker Entry</a>
                             <a href="../Ledger/goods-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
-                                Entry</a>
+                                class="submenu-link">Goods Entry</a>
                             <a href="../Ledger/warehouse-entry.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
-                                Entry</a>
+                                class="submenu-link">Warehouse Entry</a>
                             <a href="../Ledger/wherehouse-import.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                                class="submenu-link">Warehouse (Import)</a>
                             <a href="../Ledger/warehouse-export.html"
-                                class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                                class="submenu-link">Warehouse (Export)</a>
                         </div>
                     </div>
                 </nav>
@@ -402,136 +567,192 @@
             <div x-show="sidebarOpen" @click="sidebarOpen = false"
                 class="fixed inset-0 z-40 bg-black/50 lg:hidden transition-opacity">
             </div>
-            <main
-                class="flex-1 p-4 lg:p-6 bg-[#0b0e14] min-h-screen transition-all">
-                <header class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
-        <div class="flex items-center w-full max-w-md">
-            <button @click="sidebarOpen = true" class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white transition-colors">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-            <div class="relative w-full hidden md:block">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                    <i data-lucide="search" class="w-4 h-4"></i>
-                </span>
-                <input type="text" class="bg-[#111827] w-full pl-10 pr-4 py-2 rounded-lg border border-slate-800 text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder-slate-500 text-white" placeholder="Search invoices, customers, or reports...">
-            </div>
-        </div>
-        <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-4 pr-6 border-r border-slate-800">
-                <button class="text-slate-400 hover:text-white transition-colors p-1">
-                    <i data-lucide="moon" class="w-5 h-5"></i>
-                </button>
-                <div class="flex items-center space-x-1.5 cursor-pointer group p-1">
-                    <i data-lucide="globe" class="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition-colors"></i>
-                    <span class="text-xs font-bold text-slate-400 group-hover:text-white uppercase tracking-wider transition-colors">EN</span>
-                </div>
-                <div class="relative cursor-pointer text-slate-400 hover:text-white transition-colors p-1">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                    <span class="absolute top-1 right-1 flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="flex items-center space-x-3 group cursor-pointer">
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
-                        Admin User
-                    </p>
-                    <p class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
-                        Super Admin
-                    </p>
-                </div>
-                <div class="relative">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 ring-offset-2 ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform shadow-lg shadow-blue-900/20">
-                        AD
+            <main class="flex-1 p-6 min-h-screen overflow-y-auto 
+       bg-white text-gray-800
+       dark:bg-[#0b0e14] dark:text-gray-300
+       transition-colors duration-300">
+                <header class="sticky top-0 z-10 flex justify-between items-center 
+       bg-white border-b border-gray-200
+       dark:bg-[#0b0f1a]/80 dark:border-slate-800
+       backdrop-blur-md px-4 lg:px-8 h-16
+       transition-colors duration-300">
+                    <!-- LEFT SIDE -->
+                    <div class="flex items-center w-full max-w-md">
+                        <!-- Mobile Menu Button -->
+                        <button @click="sidebarOpen = true"
+                            class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
+                        </button>
+                        <!-- Search -->
+                        <div class="relative w-full hidden md:block">
+                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center 
+               text-gray-600 dark:text-gray-400" dark:text-slate-500">
+                                <i data-lucide="search" class="w-4 h-4"></i>
+                            </span>
+                            <input type="text" class="w-full pl-10 pr-4 py-2 rounded-lg text-sm
+               bg-gray-100 dark:bg-[#111827]
+               border border-gray-300 dark:border-slate-800
+               text-gray-800 dark:text-white
+               placeholder-gray-400 dark:placeholder-slate-500
+               focus:outline-none
+               focus:border-blue-500/50
+               focus:ring-1 focus:ring-blue-500/20
+               transition-all duration-200"
+                                placeholder="Search invoices, customers, or reports...">
+                        </div>
                     </div>
-                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0b0f1a] rounded-full">
+                    <!-- RIGHT SIDE -->
+                    <div class="flex items-center space-x-6">
+                        <!-- Icons Group -->
+                        <div
+                            class="flex items-center space-x-4 pr-6 border-r border-slate-800">
+                            <button @click="darkMode = !darkMode; 
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light')" class="text-slate-500 dark:text-slate-400 
+           hover:text-black dark:hover:text-white 
+           transition-colors p-1">
+                                <!-- Moon Icon -->
+                                <i x-show="!darkMode" data-lucide="moon"
+                                    class="w-5 h-5"></i>
+                                <!-- Sun Icon -->
+                                <i x-show="darkMode" data-lucide="sun"
+                                    class="w-5 h-5"></i>
+                            </button>
+                            <div
+                                class="flex items-center space-x-1.5 cursor-pointer group p-1">
+                                <i data-lucide="globe"
+                                    class="w-4 h-4 text-slate-400 group-hover:text-blue-400"></i>
+                                <span
+                                    class="text-xs font-bold text-slate-400 group-hover:text-white uppercase tracking-wider">EN</span>
+                            </div>
+                            <div
+                                class="relative cursor-pointer text-slate-400 hover:text-white transition-colors p-1">
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                                <span
+                                    class="absolute top-1 right-1 flex h-2 w-2">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span
+                                        class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Profile -->
+                        <div
+                        class="flex items-center space-x-3 group cursor-pointer">
+                        <div class="text-right hidden sm:block">
+                            <p
+                                class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                Admin User
+                            </p>
+                            <p
+                                class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide uppercase">
+                                Super Admin
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-200 dark:ring-slate-700 ring-offset-2 ring-offset-white dark:ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
+                                AD
+                            </div>
+                            <div
+                                class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#0b0f1a] rounded-full">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </header>
+                    </div>
+                </header>
                 <div class="p-4 lg:p-8 space-y-6 overflow-y-auto">
                     <div
-                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6">
                         <div
-                            class="bg-[#161b26] p-6 rounded-xl border border-slate-800">
+                            class="bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-300">
                             <p
-                                class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                                class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">
                                 Country Total Sales</p>
-                            <div class="text-2xl font-bold text-white mt-1">
+                            <div
+                                class="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                                 $920,500
                                 <span
-                                    class="text-[10px] font-normal text-cyan-400">▲</span>
+                                    class="text-[10px] font-normal text-cyan-600 dark:text-cyan-400">▲</span>
                             </div>
                             <div
-                                class="mt-2 text-[10px] bg-cyan-500/10 text-cyan-500 w-fit px-2 py-1 rounded">
-                                + 8.4%</div>
+                                class="mt-2 text-[10px] bg-cyan-100 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-500 w-fit px-2 py-1 rounded font-medium">
+                                + 8.4%
+                            </div>
                         </div>
                         <div
-                            class="bg-[#161b26] p-6 rounded-xl border border-slate-800">
+                            class="bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-300">
                             <p
-                                class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                                class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">
                                 Country Total Purchase</p>
-                            <div class="text-2xl font-bold text-white mt-1">
+                            <div
+                                class="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                                 $750,200
                                 <span
-                                    class="text-[10px] font-normal text-pink-500">▼</span>
+                                    class="text-[10px] font-normal text-pink-600 dark:text-pink-500">▼</span>
                             </div>
                             <div
-                                class="mt-2 text-[10px] bg-pink-500/10 text-pink-500 w-fit px-2 py-1 rounded">
-                                - 5.2%</div>
+                                class="mt-2 text-[10px] bg-pink-100 dark:bg-pink-500/10 text-pink-700 dark:text-pink-500 w-fit px-2 py-1 rounded font-medium">
+                                - 5.2%
+                            </div>
                         </div>
                         <div
-                            class="bg-[#161b26] p-6 rounded-xl border border-slate-800">
+                            class="bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-300">
                             <p
-                                class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                                class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">
                                 Total Shipping Cost</p>
-                            <div class="text-2xl font-bold text-white mt-1">
+                            <div
+                                class="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                                 $123,450
                             </div>
                             <div
-                                class="mt-2 text-[10px] text-slate-600 uppercase">
-                                Avg. per city branch</div>
+                                class="mt-2 text-[10px] text-slate-500 dark:text-slate-600 uppercase">
+                                Avg. per city branch
+                            </div>
                         </div>
                         <div
-                            class="bg-[#161b26] p-6 rounded-xl border-l-4 border-emerald-500">
+                            class="bg-white dark:bg-[#161b26] p-6 rounded-xl border-l-4 border-emerald-500 transition-colors duration-300 shadow-sm dark:shadow-none">
                             <p
-                                class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                                class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">
                                 Country Net Profit</p>
-                            <div class="text-2xl font-bold text-white mt-1">
+                            <div
+                                class="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                                 $246,850
                                 <span
-                                    class="text-[10px] font-normal text-emerald-400">▲</span>
+                                    class="text-[10px] font-normal text-emerald-600 dark:text-emerald-400">▲</span>
                             </div>
                             <div
-                                class="mt-2 text-[10px] bg-emerald-500/10 text-emerald-500 w-fit px-2 py-1 rounded">
-                                + 12.5%</div>
+                                class="mt-2 text-[10px] bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 w-fit px-2 py-1 rounded font-medium">
+                                + 12.5%
+                            </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
                         <div
-                            class="col-span-1 lg:col-span-8 bg-[#161b26] p-6 rounded-xl border border-slate-800 relative">
+                            class="col-span-1 lg:col-span-8 bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 relative transition-colors duration-300">
                             <div class="flex justify-between mb-8">
-                                <h3 class="font-bold">City Performance & Margins
-                                </h3>
+                                <h3
+                                    class="font-bold text-slate-900 dark:text-white">
+                                    City Performance & Margins</h3>
                                 <span
-                                    class="text-[10px] px-2 py-1 bg-cyan-900/30 text-cyan-400 rounded-full border border-cyan-800">LIVE
+                                    class="text-[10px] px-2 py-1 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 rounded-full border border-cyan-200 dark:border-cyan-800 font-bold">LIVE
                                     DATA</span>
                             </div>
                             <div class="space-y-6">
                                 <div
                                     class="flex items-center justify-between border-l-4 border-cyan-500 pl-4">
                                     <div>
-                                        <p class="font-bold text-white">City
-                                            Cluster 01</p>
-                                        <p class="text-[10px] text-slate-500">
+                                        <p
+                                            class="font-bold text-slate-800 dark:text-white">
+                                            City Cluster 01</p>
+                                        <p
+                                            class="text-[10px] text-slate-500 dark:text-slate-400">
                                             Sales: $442.5k | Pur: $386.5k</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-cyan-400 font-bold">12.6%
-                                        </p>
+                                        <p
+                                            class="text-cyan-600 dark:text-cyan-400 font-bold">
+                                            12.6%</p>
                                         <p
                                             class="text-[10px] uppercase text-slate-500">
                                             Margin</p>
@@ -540,13 +761,16 @@
                                 <div
                                     class="flex items-center justify-between border-l-4 border-amber-500 pl-4">
                                     <div>
-                                        <p class="font-bold text-white">City
-                                            Cluster 02</p>
-                                        <p class="text-[10px] text-slate-500">
+                                        <p
+                                            class="font-bold text-slate-800 dark:text-white">
+                                            City Cluster 02</p>
+                                        <p
+                                            class="text-[10px] text-slate-500 dark:text-slate-400">
                                             Sales: $340.5k | Pur: $265.3k</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-amber-400 font-bold">
+                                        <p
+                                            class="text-amber-600 dark:text-amber-400 font-bold">
                                             22.1%</p>
                                         <p
                                             class="text-[10px] uppercase text-slate-500">
@@ -556,31 +780,36 @@
                             </div>
                         </div>
                         <div
-                            class="col-span-1 lg:col-span-4 bg-[#161b26] p-6 rounded-xl border border-slate-800">
-                            <h3 class="font-bold mb-6">Top Revenue Branches</h3>
+                            class="col-span-1 lg:col-span-4 bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-300">
+                            <h3
+                                class="font-bold mb-6 text-slate-900 dark:text-white">
+                                Top Revenue Branches</h3>
                             <div class="space-y-6">
                                 <div>
                                     <div
-                                        class="flex justify-between text-xs mb-2">
+                                        class="flex justify-between text-xs mb-2 text-slate-600 dark:text-slate-400">
                                         <span>Branch Alpha</span>
-                                        <span class="text-white">$135,600</span>
+                                        <span
+                                            class="text-slate-900 dark:text-white font-bold">$135,600</span>
                                     </div>
                                     <div
-                                        class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                                        <div class="bg-cyan-400 h-full w-[85%]">
+                                        class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                                        <div
+                                            class="bg-cyan-500 dark:bg-cyan-400 h-full w-[85%]">
                                         </div>
                                     </div>
                                 </div>
                                 <div>
                                     <div
-                                        class="flex justify-between text-xs mb-2">
+                                        class="flex justify-between text-xs mb-2 text-slate-600 dark:text-slate-400">
                                         <span>Branch Beta</span>
-                                        <span class="text-white">$118,200</span>
+                                        <span
+                                            class="text-slate-900 dark:text-white font-bold">$118,200</span>
                                     </div>
                                     <div
-                                        class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                        class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                                         <div
-                                            class="bg-amber-400 h-full w-[70%]">
+                                            class="bg-amber-500 dark:bg-amber-400 h-full w-[70%]">
                                         </div>
                                     </div>
                                 </div>
@@ -589,12 +818,13 @@
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div
-                            class="col-span-1 lg:col-span-8 bg-[#161b26] p-6 rounded-xl border border-slate-800 overflow-x-auto">
-                            <h3 class="font-bold mb-6 text-sm">National Activity
-                                Log</h3>
+                            class="col-span-1 lg:col-span-8 bg-white dark:bg-[#161b26] p-6 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto transition-colors duration-300">
+                            <h3
+                                class="font-bold mb-6 text-sm text-slate-900 dark:text-white">
+                                National Activity Log</h3>
                             <table class="w-full text-xs min-w-[400px]">
                                 <thead
-                                    class="text-slate-500 text-left border-b border-slate-800">
+                                    class="text-slate-500 dark:text-slate-400 text-left border-b border-slate-100 dark:border-slate-800">
                                     <tr>
                                         <th class="pb-4 font-normal">Transaction
                                             Info</th>
@@ -605,70 +835,73 @@
                                             Net Amount</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-800">
+                                <tbody
+                                    class="divide-y divide-slate-100 dark:divide-slate-800">
                                     <tr>
                                         <td class="py-4">
-                                            <p class="text-white">Sale INV-0012
-                                            </p>
+                                            <p
+                                                class="text-slate-800 dark:text-white font-medium">
+                                                Sale INV-0012</p>
                                             <p class="text-slate-500">Retail
                                                 Transaction</p>
                                         </td>
-                                        <td class="text-center font-mono">
+                                        <td
+                                            class="text-center font-mono text-slate-600 dark:text-slate-400">
                                             CITY-01</td>
                                         <td
-                                            class="text-right text-emerald-400 font-bold">
+                                            class="text-right text-emerald-600 dark:text-emerald-400 font-bold">
                                             $25,200</td>
                                     </tr>
                                     <tr>
                                         <td class="py-4">
-                                            <p class="text-white">Purchase
-                                                ENT-0031</p>
+                                            <p
+                                                class="text-slate-800 dark:text-white font-medium">
+                                                Purchase ENT-0031</p>
                                             <p class="text-slate-500">Stock
                                                 Acquisition</p>
                                         </td>
-                                        <td class="text-center font-mono">
+                                        <td
+                                            class="text-center font-mono text-slate-600 dark:text-slate-400">
                                             CITY-02</td>
                                         <td
-                                            class="text-right text-pink-400 font-bold">
+                                            class="text-right text-pink-600 dark:text-pink-400 font-bold">
                                             $17,900</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div
-                            class="col-span-1 lg:col-span-4 bg-[#111827] p-6 rounded-xl border border-gray-800 flex flex-col items-center">
+                            class="col-span-1 lg:col-span-4 bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-200 dark:border-gray-800 flex flex-col items-center transition-colors duration-300">
                             <h3
-                                class="text-white font-semibold mb-8 w-full text-left">
+                                class="text-slate-900 dark:text-white font-semibold mb-8 w-full text-left">
                                 Country Margin Split</h3>
                             <div
                                 class="relative flex items-center justify-center">
-                                <svg class="w-32 h-32 lg:w-40 lg:h-40">
-                                    <circle cx="64" cy="64" r="56"
-                                        fill="transparent" stroke="#1f2937"
-                                        stroke-width="12"
-                                        class="lg:cx-80 lg:cy-80 lg:r-70">
-                                    </circle>
-                                    <circle cx="64" cy="64" r="56"
+                                <svg class="w-32 h-32 lg:w-40 lg:h-40"
+                                    viewBox="0 0 160 160">
+                                    <circle cx="80" cy="80" r="70"
+                                        fill="transparent"
+                                        class="stroke-slate-100 dark:stroke-gray-800"
+                                        stroke-width="12"></circle>
+                                    <circle cx="80" cy="80" r="70"
                                         fill="transparent" stroke="#06b6d4"
                                         stroke-width="12"
                                         stroke-dasharray="80 440"
                                         stroke-dashoffset="0"
-                                        class="donut-segment lg:cx-80 lg:cy-80 lg:r-70">
-                                    </circle>
-                                    <circle cx="64" cy="64" r="56"
+                                        class="donut-segment"></circle>
+                                    <circle cx="80" cy="80" r="70"
                                         fill="transparent" stroke="#10b981"
                                         stroke-width="12"
                                         stroke-dasharray="140 440"
                                         stroke-dashoffset="-85"
-                                        class="donut-segment lg:cx-80 lg:cy-80 lg:r-70">
-                                    </circle>
+                                        class="donut-segment"></circle>
                                 </svg>
                                 <div class="absolute text-center">
                                     <p
-                                        class="text-xl lg:text-2xl font-bold text-white">
+                                        class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">
                                         26%</p>
                                     <p
-                                        class="text-[8px] lg:text-[10px] text-gray-500 uppercase tracking-widest">
+                                        class="text-[8px] lg:text-[10px] text-slate-500 uppercase tracking-widest">
                                         Avg Margin</p>
                                 </div>
                             </div>
@@ -678,15 +911,17 @@
                                     class="flex items-center space-x-2 text-[11px]">
                                     <span
                                         class="w-2 h-2 rounded-full bg-cyan-500"></span>
-                                    <span class="text-gray-400">City 01:
-                                        12%</span>
+                                    <span
+                                        class="text-slate-600 dark:text-gray-400">City
+                                        01: 12%</span>
                                 </div>
                                 <div
                                     class="flex items-center space-x-2 text-[11px]">
                                     <span
                                         class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                    <span class="text-gray-400">City 02:
-                                        22%</span>
+                                    <span
+                                        class="text-slate-600 dark:text-gray-400">City
+                                        02: 22%</span>
                                 </div>
                             </div>
                         </div>
@@ -695,10 +930,15 @@
             </main>
         </div>
     </div>
-     <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             lucide.createIcons();
         });
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
     </script>
 </body>
 </html>
