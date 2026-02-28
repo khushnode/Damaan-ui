@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ 
+        sidebarOpen: false,
+        darkMode: localStorage.getItem('theme') === 'dark'
+      }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +37,7 @@
         .accent-blue {
             background-color: #2563eb;
         }
-          /* Hide scrollbar but keep scroll working */
+        /* Hide scrollbar but keep scroll working */
         .sidebar-scroll::-webkit-scrollbar {
             width: 0px;
             background: transparent;
@@ -58,8 +61,11 @@
         x-transition:leave-end="opacity-0" @click="sidebarOpen = false"
         class="fixed inset-0 z-40 bg-black/50 lg:hidden" x-cloak></div>
     <aside x-data="{ openMenu: '', openSub: '' }"
-        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-40 w-64 
+                  bg-white border-r border-gray-200
+                  dark:bg-[#0d121d] dark:border-gray-900
+                  flex flex-col transition-transform duration-300
+                  md:translate-x-0 md:static">
         <div class="p-6 mb-2 border-b border-gray-800/50 relative">
             <div class="flex items-center gap-3">
                 <div class="relative w-8 h-8">
@@ -70,12 +76,15 @@
                         class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
                     </div>
                 </div>
-                <div>
+                <div class="transition-colors duration-300">
                     <h1
-                        class="text-white font-bold leading-none tracking-wider text-lg">
-                        DAMAAN</h1>
-                    <p class="text-[10px] text-gray-500 font-medium uppercase">
-                        Business Group</p>
+                        class="text-black dark:text-white font-bold leading-none tracking-wider text-lg transition-colors">
+                        DAMAAN
+                    </h1>
+                    <p
+                        class="text-[10px] text-slate-400 dark:text-gray-500 font-medium uppercase transition-colors">
+                        Business Group
+                    </p>
                 </div>
             </div>
         </div>
@@ -84,137 +93,195 @@
                 <div
                     class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                     Main Navigation</div>
-                <a href="../Dashboard/Superadmin.html"
-                    class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                    <i class="fas fa-home w-8 text-sm"></i>
+                <a href="../Dashboard/city-dashboard.html" class="group flex items-center gap-3 px-4 py-3
+   text-gray-600 dark:text-gray-400
+   hover:text-gray-900 dark:hover:text-white
+   hover:bg-gray-100 dark:hover:bg-gray-800/30
+   transition-all duration-300">
+                    <i class="fas fa-home text-sm"></i>
                     <span
-                        class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                        class="text-[13px] font-medium uppercase tracking-tight">
+                        Dashboard
+                    </span>
                 </a>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-plus-square w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-bold uppercase tracking-tight">New
-                                Entry</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                New Entry
+                            </span>
                         </div>
-                        <i class="fas text-[10px] transition-transform duration-200"
-                            :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'newEntry'" x-collapse
-                        class="bg-[#0b0f17]">
+                    <!-- Submenu Wrapper -->
+                    <div x-show="openMenu === 'newEntry'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <!-- Branch Entry -->
                         <button
                             @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Branch
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>Branch Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'branchEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12">
-                            <a href="../Superbranch/superbranch.html"
-                                @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/superbranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
                                 Super Branch
                             </a>
-                            <a href="../Superbranch/countrybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
-                                Branch</a>
-                            <a href="../Superbranch/citybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
-                                Branch</a>
+                            <a href="../Superbranch/countrybranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Country Branch
+                            </a>
+                            <a href="../Superbranch/citybranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                City Branch
+                            </a>
                         </div>
+                        <!-- User Entry -->
                         <button
                             @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">User
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>User Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
-                                Admin User Entry</a>
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Super Admin User Entry
+                            </a>
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Country Admin User Entry
+                            </a>
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                City Admin User Entry
+                            </a>
                         </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
-                                Admin User Entry</a>
-                        </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
-                                Admin User Entry</a>
-                        </div>
+                        <!-- Account Entry -->
                         <button
                             @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Account
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>Account Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'accountEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/newaccount.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
-                                Account</a>
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/newaccount.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                New Account
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all outline-none">
                         <div class="flex items-center">
                             <i
                                 class="fas fa-file-invoice-dollar w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Ledger
-                                Account</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Ledger Account
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-200"
+                            :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ledger'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/super-admin-ledger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Ledger</a>
-                        <a href="../Ledger/countryLedger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
-                            Ledger</a>
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'ledger'" x-collapse class="bg-gray-100 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/super-admin-ledger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                            Super Admin Ledger
+                        </a>
+                        <a href="../Ledger/countryLedger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                            Country Ledger
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-money-bill-wave w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                Payment Entry</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Daily Payment Entry
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'dailyPay'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/Super-admin-roznamcha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'dailyPay'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/Super-admin-roznamcha.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Super Admin Roznamcha
                         </a>
-                        <a href="../Ledger/branchRomancha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha
+                        <a href="../Ledger/branchRomancha.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Branch Roznamcha
                         </a>
                     </div>
                 </div>
@@ -224,113 +291,179 @@
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-shopping-cart w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Purchase / Sale
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ops'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Sale</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Purchase</a>
+                    <div x-show="openMenu === 'ops'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            New Sale
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            New Purchase
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-boxes w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Stock
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'stock'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
-                            Stock</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
-                            Reports</a>
+                    <div x-show="openMenu === 'stock'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Current Stock
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Stock Reports
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-ship w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Shipping
-                                Line</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Shipping Line
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ship'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="../Ledger/trackentry1.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
-                            Entry</a>
+                    <div x-show="openMenu === 'ship'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            BL Entry
+                        </a>
+                        <a href="../Ledger/trackentry1.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Truck Entry
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-user-tie w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Clearing
-                                Agent</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Clearing Agent
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'agent'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                    <div x-show="openMenu === 'agent'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            BL Entry
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Commission
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-file-invoice w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                VAT
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'vat'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <!-- Purchase Entry (Now Inactive) -->
-                        <a href="../Ledger/importparches.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
+                    <div x-show="openMenu === 'vat'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/importparches.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
                             Purchase Entry
                         </a>
-                        <a href="../Ledger/importsale.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
+                        <a href="../Ledger/importsale.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
                             Sale Entry
                         </a>
                     </div>
@@ -339,112 +472,142 @@
                     class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                     Reports & Utils</div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-chart-bar w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Total
-                                Reports</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Total Reports
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'reports'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/ledgerreport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger
-                            Report</a>
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'reports'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/ledgerreport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Ledger Report
+                        </a>
                         <a href="../Ledger/super-admin-roznamcha-report.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha Report</a>
-                        <a href="../Ledger/branchromanchareport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha Report</a>
+                            class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Super Admin Roznamcha Report
+                        </a>
+                        <a href="../Ledger/branchromanchareport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Branch Roznamcha Report
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
-                    <a href="../Ledger/email-compose.html">
-                        <button
-                            @click="openMenu = (openMenu === 'email' ? '' : 'email')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                            <div class="flex items-center">
-                                <i class="fas fa-envelope w-8 text-sm"></i>
-                                <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
-                            </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
+                    <a href="../Ledger/email-compose.html" class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope w-8 text-sm"></i>
+                            <span
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Emails
+                            </span>
+                        </div>
                     </a>
                 </div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-cog w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Settings
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'settings'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'settings'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+                           bg-gray-50 dark:bg-[#0b0f17]
+                           border-l border-gray-200 dark:border-gray-800">
                         <a href="../Ledger/setting-bill-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
-                            Entry</a>
+                            class="submenu-link">Bill Entry</a>
                         <a href="../Ledger/setting-cash-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
-                            Entry</a>
+                            class="submenu-link">Cash Entry</a>
                         <a href="../Ledger/exchange-entry-setting.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
-                            Entry</a>
+                            class="submenu-link">Exchange Entry</a>
                         <a href="../Ledger/bank-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
-                            Entry</a>
+                            class="submenu-link">Bank Entry</a>
                         <a href="../Ledger/employe-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
-                            Data Entry</a>
+                            class="submenu-link">Employee Data Entry</a>
                         <a href="../Ledger/worker.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
-                            Entry</a>
+                            class="submenu-link">Worker Entry</a>
                         <a href="../Ledger/goods-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
-                            Entry</a>
+                            class="submenu-link">Goods Entry</a>
                         <a href="../Ledger/warehouse-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
-                            Entry</a>
+                            class="submenu-link">Warehouse Entry</a>
                         <a href="../Ledger/wherehouse-import.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                            class="submenu-link">Warehouse (Import)</a>
                         <a href="../Ledger/warehouse-export.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                            class="submenu-link">Warehouse (Export)</a>
                     </div>
                 </div>
             </nav>
         </div>
     </aside>
-    <div class="flex-1 flex flex-col min-h-screen overflow-hidden w-0">
-        <header
-            class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
+    <div class="flex-1 p-6 min-h-screen overflow-y-auto 
+       bg-white text-gray-800
+       dark:bg-[#0b0e14] dark:text-gray-300
+       transition-colors duration-300">
+        <header class=" flex justify-between items-center 
+       bg-white border-b border-gray-200
+       dark:bg-[#0b0f1a]/80 dark:border-slate-800
+       backdrop-blur-md px-4 lg:px-8 h-16
+       transition-colors duration-300">
             <!-- LEFT SIDE -->
             <div class="flex items-center w-full max-w-md">
-                <!-- Mobile Menu Button -->
                 <button @click="sidebarOpen = true"
-                    class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white">
+                    class="lg:hidden mr-3 p-2 rounded-md transition-colors
+               text-slate-600 hover:bg-gray-100 
+               dark:text-slate-400 dark:hover:text-white dark:hover:bg-gray-800">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
-                <!-- Search -->
-                <div class="relative w-full hidden md:block">
-                    <span
-                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </span>
-                    <input type="text"
-                        class="bg-[#111827] w-full pl-10 pr-4 py-2 rounded-lg border border-slate-800 text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder-slate-500 text-white"
-                        placeholder="Search invoices, customers, or reports...">
+                <div class="relative w-full">
+                    <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search"
+                            class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <input type="text" class="w-full pl-10 pr-4 py-2 rounded-lg text-sm border outline-none transition-all duration-200
+                   bg-gray-50 text-gray-900 border-gray-300 placeholder-gray-400
+                   dark:bg-[#0d1117] dark:text-gray-100 dark:border-gray-700 dark:placeholder-gray-500
+                   focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        placeholder="Search invoices, customers, or reports..." />
                 </div>
             </div>
             <!-- RIGHT SIDE -->
@@ -452,9 +615,16 @@
                 <!-- Icons Group -->
                 <div
                     class="flex items-center space-x-4 pr-6 border-r border-slate-800">
-                    <button
-                        class="text-slate-400 hover:text-white transition-colors p-1">
-                        <i data-lucide="moon" class="w-5 h-5"></i>
+                    <button @click="darkMode = !darkMode; 
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light')" class="text-slate-500 dark:text-slate-400 
+           hover:text-black dark:hover:text-white 
+           transition-colors p-1">
+                        <!-- Moon Icon -->
+                        <i x-show="!darkMode" data-lucide="moon"
+                            class="w-5 h-5"></i>
+                        <!-- Sun Icon -->
+                        <i x-show="darkMode" data-lucide="sun"
+                            class="w-5 h-5"></i>
                     </button>
                     <div
                         class="flex items-center space-x-1.5 cursor-pointer group p-1">
@@ -478,21 +648,21 @@
                 <div class="flex items-center space-x-3 group cursor-pointer">
                     <div class="text-right hidden sm:block">
                         <p
-                            class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                            class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             Admin User
                         </p>
                         <p
-                            class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
+                            class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide uppercase">
                             Super Admin
                         </p>
                     </div>
                     <div class="relative">
                         <div
-                            class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 ring-offset-2 ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
+                            class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-200 dark:ring-slate-700 ring-offset-2 ring-offset-white dark:ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
                             AD
                         </div>
                         <div
-                            class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0b0f1a] rounded-full">
+                            class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#0b0f1a] rounded-full">
                         </div>
                     </div>
                 </div>
@@ -501,270 +671,369 @@
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 lg:p-6">
             <div
                 class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                <div class="flex items-center space-x-4">
-                    <h1 class="text-2xl font-bold text-white">BL System</h1>
-                    <div
-                        class="flex items-center bg-[#1e293b]/40 border border-gray-800 rounded px-3 py-1.5 space-x-3">
-                        <span
-                            class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Music</span>
-                        <input type="text"
-                            placeholder="Select track (or paste URL)"
-                            class="bg-transparent border border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 focus:outline-none focus:border-blue-500">
-                        <input type="text"
-                            placeholder="Paste MP3/OGG URL here (opti..."
-                            class="bg-transparent border border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 focus:outline-none focus:border-blue-500">
-                        <button
-                            class="bg-white text-black text-[11px] font-bold px-4 py-0.5 rounded hover:bg-gray-200 transition">Play</button>
+                <div
+                    class="flex items-center justify-between transition-colors duration-300">
+                    <div class="flex items-center space-x-4">
+                        <h1
+                            class="text-2xl font-bold text-slate-900 dark:text-white transition-colors">
+                            BL System</h1>
                         <div
-                            class="w-24 h-5 bg-white rounded border border-gray-700">
+                            class="flex items-center bg-slate-100 dark:bg-[#1e293b]/40 border border-slate-200 dark:border-gray-800 rounded px-3 py-1.5 space-x-3 shadow-sm transition-all">
+                            <span
+                                class="text-[10px] font-bold text-slate-500 dark:text-gray-500 uppercase tracking-widest">Music</span>
+                            <input type="text"
+                                placeholder="Select track (or paste URL)"
+                                class="bg-white dark:bg-transparent border border-slate-300 dark:border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <input type="text"
+                                placeholder="Paste MP3/OGG URL here (opti..."
+                                class="bg-white dark:bg-transparent border border-slate-300 dark:border-gray-700 rounded px-2 py-0.5 text-[11px] w-48 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <button
+                                class="bg-slate-900 dark:bg-white text-white dark:text-black text-[11px] font-bold px-4 py-0.5 rounded hover:bg-slate-800 dark:hover:bg-gray-200 transition-colors">
+                                Play
+                            </button>
+                            <div
+                                class="w-24 h-5 bg-slate-200 dark:bg-white rounded border border-slate-300 dark:border-gray-700 opacity-80">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex space-x-2">
-                    <button
-                        class="bg-white text-black font-bold text-[11px] px-4 py-1.5 rounded">Print</button>
-                    <button
-                        class="bg-gray-800 text-white font-bold text-[11px] px-4 py-1.5 rounded border border-gray-700">Preview</button>
+                    <div class="flex space-x-2">
+                        <button
+                            class="bg-slate-900 dark:bg-white text-white dark:text-black font-bold text-[11px] px-4 py-1.5 rounded shadow-sm hover:opacity-90 transition-opacity">
+                            Print
+                        </button>
+                        <button
+                            class="bg-white dark:bg-gray-800 text-slate-900 dark:text-white font-bold text-[11px] px-4 py-1.5 rounded border border-slate-300 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors">
+                            Preview
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="flex space-x-1 mb-6">
+            <div class="flex space-x-2 mb-6 transition-colors duration-300">
                 <a href="../Ledger/trackentry1.html">
                     <button
-                        class="px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-medium">
+                        class="px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition-all">
                         Sheet 1) Entry
                     </button>
                 </a>
                 <a href="../Ledger/trackentry.html">
                     <button
-                        class="px-6 py-2 bg-slate-800 text-slate-400 rounded-full text-xs font-medium hover:text-white">
+                        class="px-6 py-2 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-medium hover:bg-slate-300 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-all border border-slate-300 dark:border-transparent">
                         Sheet 2) Live Report
                     </button>
                 </a>
             </div>
             <div class="grid grid-cols-12 gap-6">
+                <!-- ================= LEFT PANEL ================= -->
                 <div class="col-span-12 lg:col-span-4 space-y-6">
-                    <div
-                        class="bg-dark-card p-6 rounded-xl border border-slate-700 shadow-xl">
+                    <div class="bg-white dark:bg-[#0f172a]
+                   p-6 rounded-xl
+                   border border-slate-200 dark:border-slate-700
+                   shadow-lg dark:shadow-xl
+                   transition-colors duration-300">
+                        <!-- TOP INFO -->
                         <div class="grid grid-cols-2 gap-y-2 text-xs mb-6">
-                            <span class="text-slate-500">Mode:</span> <span
-                                class="text-blue-400 font-bold">New BL</span>
-                            <span class="text-slate-500">Issue Date:</span>
-                            <span class="text-white">2026-01-29</span>
-                            <span class="text-slate-500">Issue Serial:</span>
-                            <span class="text-white">ISS-776441</span>
-                            <span class="text-slate-500">Billi No:</span> <span
-                                class="text-white">BL-776441</span>
+                            <span
+                                class="text-slate-500 dark:text-slate-400">Mode:</span>
+                            <span
+                                class="text-blue-600 dark:text-blue-400 font-bold">New
+                                BL</span>
+                            <span
+                                class="text-slate-500 dark:text-slate-400">Issue
+                                Date:</span>
+                            <span
+                                class="text-slate-800 dark:text-white">2026-01-29</span>
+                            <span
+                                class="text-slate-500 dark:text-slate-400">Issue
+                                Serial:</span>
+                            <span
+                                class="text-slate-800 dark:text-white">ISS-776441</span>
+                            <span
+                                class="text-slate-500 dark:text-slate-400">Billi
+                                No:</span>
+                            <span
+                                class="text-slate-800 dark:text-white font-semibold">BL-776441</span>
                         </div>
+                        <!-- STEPS -->
                         <div class="flex gap-2 mb-6">
                             <a href="trackentry1.html" class="flex-1">
-                                <button
-                                    class="w-full py-2 rounded bg-slate-700 text-[10px] text-slate-400">
+                                <button class="w-full py-2 rounded
+                               bg-slate-200 dark:bg-slate-700
+                               text-[10px]
+                               text-slate-700 dark:text-slate-400">
                                     1) BL Entry
                                 </button>
                             </a>
                             <a href="../Ledger/trackentry3.html" class="flex-1">
-                                <button
-                                    class="w-full py-2 rounded bg-blue-600 text-[10px] text-white">
+                                <button class="w-full py-2 rounded
+                               bg-blue-600 text-white text-[10px]">
                                     2) Parties
                                 </button>
                             </a>
                             <a href="../Ledger/trackentry2.html" class="flex-1">
-                                <button
-                                    class="w-full py-2 rounded bg-slate-700 text-[10px] text-slate-400">
+                                <button class="w-full py-2 rounded
+                               bg-slate-200 dark:bg-slate-700
+                               text-[10px]
+                               text-slate-700 dark:text-slate-400">
                                     3) Goods Entry
                                 </button>
                             </a>
                         </div>
+                        <!-- PARTIES FORM -->
                         <div class="space-y-4">
-                            <h3
-                                class="text-sm font-bold border-b border-slate-700 pb-2">
-                                Parties</h3>
+                            <h3 class="text-sm font-bold
+                           border-b border-slate-200 dark:border-slate-700
+                           pb-2
+                           text-slate-800 dark:text-white">
+                                Parties
+                            </h3>
+                            <!-- SELECT TEMPLATE -->
                             <div>
-                                <label class="text-[11px] text-slate-400">Notify
-                                    Party Account *</label>
-                                <select
-                                    class="w-full bg-slate-800 border border-slate-700 rounded p-2 mt-1 text-sm text-white focus:ring-1 focus:ring-blue-500">
+                                <label
+                                    class="text-[11px] text-slate-600 dark:text-slate-400">
+                                    Notify Party Account *
+                                </label>
+                                <select class="w-full
+                               bg-white dark:bg-slate-800
+                               border border-slate-300 dark:border-slate-700
+                               rounded p-2 mt-1 text-sm
+                               text-slate-800 dark:text-white
+                               focus:ring-1 focus:ring-blue-500">
                                     <option>Type / search</option>
                                 </select>
                             </div>
                             <div>
                                 <label
-                                    class="text-[11px] text-slate-400">Importer
-                                    Account *</label>
-                                <select
-                                    class="w-full bg-slate-800 border border-slate-700 rounded p-2 mt-1 text-sm text-white focus:ring-1 focus:ring-blue-500">
+                                    class="text-[11px] text-slate-600 dark:text-slate-400">
+                                    Importer Account *
+                                </label>
+                                <select class="w-full bg-white dark:bg-slate-800
+                               border border-slate-300 dark:border-slate-700
+                               rounded p-2 mt-1 text-sm
+                               text-slate-800 dark:text-white
+                               focus:ring-1 focus:ring-blue-500">
                                     <option>Type / search</option>
                                 </select>
                             </div>
                             <div>
                                 <label
-                                    class="text-[11px] text-slate-400">Exporter
-                                    Account *</label>
-                                <select
-                                    class="w-full bg-slate-800 border border-slate-700 rounded p-2 mt-1 text-sm text-white focus:ring-1 focus:ring-blue-500">
+                                    class="text-[11px] text-slate-600 dark:text-slate-400">
+                                    Exporter Account *
+                                </label>
+                                <select class="w-full bg-white dark:bg-slate-800
+                               border border-slate-300 dark:border-slate-700
+                               rounded p-2 mt-1 text-sm
+                               text-slate-800 dark:text-white
+                               focus:ring-1 focus:ring-blue-500">
                                     <option>Type / search</option>
                                 </select>
                             </div>
                         </div>
+                        <!-- NAV BUTTONS -->
                         <div class="flex justify-between mt-8">
-                            <button
-                                class="px-8 py-2 bg-white text-black font-bold rounded-md text-sm">Back</button>
-                            <button
-                                class="px-8 py-2 bg-blue-600 text-white font-bold rounded-md text-sm">Next</button>
+                            <button class="px-8 py-2
+                           bg-slate-200 dark:bg-white
+                           text-slate-800 dark:text-black
+                           font-bold rounded-md text-sm">
+                                Back
+                            </button>
+                            <button class="px-8 py-2
+                           bg-blue-600 hover:bg-blue-700
+                           text-white font-bold rounded-md text-sm transition">
+                                Next
+                            </button>
                         </div>
                     </div>
                 </div>
+                <!-- ================= RIGHT PANEL ================= -->
                 <div class="col-span-12 lg:col-span-8">
-                    <div
-                        class="bg-dark-card rounded-xl border border-slate-700 shadow-xl flex flex-col h-full">
-                        <div
-                            class="p-4 border-b border-slate-700 flex justify-between items-center">
-                            <h2 class="text-lg font-semibold">Live BL Report
+                    <div class="bg-white dark:bg-[#0f172a]
+                   rounded-xl
+                   border border-slate-200 dark:border-slate-700
+                   shadow-lg dark:shadow-xl
+                   flex flex-col h-full
+                   transition-colors duration-300">
+                        <!-- HEADER -->
+                        <div class="p-4
+                       border-b border-slate-200 dark:border-slate-700
+                       flex justify-between items-center">
+                            <h2
+                                class="text-lg font-semibold text-slate-800 dark:text-white">
+                                Live BL Report
                             </h2>
-                            <button
-                                class="px-3 py-1 bg-red-500/20 text-red-500 border border-red-500/50 rounded text-xs font-bold">Clear
-                                BL</button>
+                            <button class="px-3 py-1
+                           bg-red-100 dark:bg-red-500/20
+                           text-red-600 dark:text-red-400
+                           border border-red-300 dark:border-red-500/50
+                           rounded text-xs font-bold">
+                                Clear BL
+                            </button>
                         </div>
-                        <div class="p-6 overflow-x-auto">
-                            <div class="grid grid-cols-3 gap-4 mb-8">
-                                <div class="space-y-1 text-[10px]">
+                        <!-- CONTENT -->
+                        <div
+                            class="p-6 overflow-x-auto transition-colors duration-300">
+                            <!-- TOP INFO GRID -->
+                            <div
+                                class="grid grid-cols-3 gap-4 mb-8 text-[10px]">
+                                <div class="space-y-1">
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">Mode</span>
-                                        <span class="text-blue-400">New
+                                        <span
+                                            class="text-blue-600 dark:text-blue-400">New
                                             BL</span>
                                     </div>
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">Date</span>
-                                        <span>2026-01-29</span>
+                                        <span
+                                            class="text-slate-800 dark:text-slate-300">2026-01-29</span>
                                     </div>
-                                    <div class="flex justify-between py-1"><span
+                                    <div class="flex justify-between py-1">
+                                        <span
                                             class="text-slate-500 uppercase">Serial</span>
-                                        <span>ISS-671867</span>
+                                        <span
+                                            class="text-slate-800 dark:text-slate-300">ISS-671867</span>
                                     </div>
                                 </div>
-                                <div class="space-y-1 text-[10px]">
+                                <div class="space-y-1">
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">No.</span>
                                         <span
-                                            class="text-blue-400 font-bold">BL-671867</span>
+                                            class="text-blue-600 dark:text-blue-400 font-bold">BL-671867</span>
                                     </div>
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">Load:</span>
                                         <span>-- / --</span>
                                     </div>
-                                    <div class="flex justify-between py-1"><span
+                                    <div class="flex justify-between py-1">
+                                        <span
                                             class="text-slate-500 uppercase">Vessel:</span>
                                         <span>--</span>
                                     </div>
                                 </div>
-                                <div class="space-y-1 text-[10px]">
+                                <div class="space-y-1">
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">Truck
-                                            No</span> <span
-                                            class="text-yellow-500 font-bold">BL-671867</span>
+                                            No</span>
+                                        <span
+                                            class="text-yellow-600 dark:text-yellow-500 font-bold">BL-671867</span>
                                     </div>
                                     <div
-                                        class="flex justify-between border-b border-slate-800 py-1">
+                                        class="flex justify-between border-b border-slate-200 dark:border-slate-800 py-1">
                                         <span
                                             class="text-slate-500 uppercase">Seal
-                                            No:</span> <span>--</span>
+                                            No:</span>
+                                        <span>--</span>
                                     </div>
-                                    <div class="flex justify-between py-1"><span
+                                    <div class="flex justify-between py-1">
+                                        <span
                                             class="text-slate-500 uppercase">Size:</span>
                                         <span>-- / -- (-)</span>
                                     </div>
                                 </div>
                             </div>
+                            <!-- PARTY SUMMARY CARDS -->
                             <div class="grid grid-cols-3 gap-4 mb-8">
-                                <div class="bg-slate-800/50 p-3 rounded h-24">
+                                <div
+                                    class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded h-24">
                                     <span
-                                        class="text-[9px] text-blue-400 font-bold uppercase block mb-2">Notify
-                                        Party</span>
-                                    <div class="text-[10px] text-slate-500">--
-                                    </div>
+                                        class="text-[9px] text-blue-600 dark:text-blue-400 font-bold uppercase block mb-2">
+                                        Notify Party
+                                    </span>
+                                    <div
+                                        class="text-[10px] text-slate-600 dark:text-slate-400">
+                                        --</div>
                                 </div>
-                                <div class="bg-slate-800/50 p-3 rounded h-24">
+                                <div
+                                    class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded h-24">
                                     <span
-                                        class="text-[9px] text-blue-400 font-bold uppercase block mb-2">Importer</span>
-                                    <div class="text-[10px] text-slate-500">--
-                                    </div>
+                                        class="text-[9px] text-blue-600 dark:text-blue-400 font-bold uppercase block mb-2">
+                                        Importer
+                                    </span>
+                                    <div
+                                        class="text-[10px] text-slate-600 dark:text-slate-400">
+                                        --</div>
                                 </div>
-                                <div class="bg-slate-800/50 p-3 rounded h-24">
+                                <div
+                                    class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded h-24">
                                     <span
-                                        class="text-[9px] text-blue-400 font-bold uppercase block mb-2">Exporter</span>
-                                    <div class="text-[10px] text-slate-500">--
-                                    </div>
+                                        class="text-[9px] text-blue-600 dark:text-blue-400 font-bold uppercase block mb-2">
+                                        Exporter
+                                    </span>
+                                    <div
+                                        class="text-[10px] text-slate-600 dark:text-slate-400">
+                                        --</div>
                                 </div>
                             </div>
-                            <div>
-                                <p
-                                    class="text-[10px] text-center text-slate-500 uppercase mb-2 tracking-widest">
-                                    Goods Container Report</p>
-                                <table
-                                    class="w-full text-[10px] text-left border-collapse">
-                                    <thead class="bg-slate-800 text-slate-300">
+                            <!-- GOODS TABLE -->
+                            <p
+                                class="text-[10px] text-center text-slate-500 uppercase mb-2 tracking-widest">
+                                Goods Container Report
+                            </p>
+                            <table
+                                class="w-full text-[10px] text-left border-collapse">
+                                <thead
+                                    class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    <tr>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            S/N</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Goods Name</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Unit</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Quantity No</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Gross Weight</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Net Weight</th>
+                                        <th
+                                            class="p-2 border border-slate-300 dark:border-slate-700">
+                                            Container No</th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    class="text-slate-700 dark:text-slate-400">
+                                    <template x-for="i in 5">
                                         <tr>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                S/N</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Goods Name</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Unit</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Quantity No</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Gross Weight</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Net Weight</th>
-                                            <th
-                                                class="p-2 border border-slate-700">
-                                                Container No</th>
+                                            <td class="p-2 border border-slate-300 dark:border-slate-700"
+                                                x-text="i"></td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                Cotton</td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                --</td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                1</td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                --</td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                --</td>
+                                            <td
+                                                class="p-2 border border-slate-300 dark:border-slate-700">
+                                                --</td>
                                         </tr>
-                                    </thead>
-                                    <tbody class="text-slate-400">
-                                        <template x-for="i in 5">
-                                            <tr>
-                                                <td class="p-2 border border-slate-700"
-                                                    x-text="i"></td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    Cotton</td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    --</td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    1</td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    --</td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    --</td>
-                                                <td
-                                                    class="p-2 border border-slate-700">
-                                                    --</td>
-                                            </tr>
-                                        </template>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </template>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -775,6 +1044,11 @@
         document.addEventListener("DOMContentLoaded", function() {
             lucide.createIcons();
         });
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
     </script>
 </body>
 </html>

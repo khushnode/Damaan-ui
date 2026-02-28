@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ 
+        sidebarOpen: false,
+        darkMode: localStorage.getItem('theme') === 'dark'
+      }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +56,7 @@
             border-bottom: 1px solid #334155;
             padding-bottom: 0.25rem;
         }
-         /* Hide scrollbar but keep scroll working */
+        /* Hide scrollbar but keep scroll working */
         .sidebar-scroll::-webkit-scrollbar {
             width: 0px;
             background: transparent;
@@ -76,9 +79,12 @@
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-40 bg-black/50 lg:hidden"
         @click="sidebarOpen = false"></div>
-   <aside x-data="{ openMenu: '', openSub: '' }"
-        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0d121d] border-r border-gray-900 flex flex-col transition-transform duration-300 md:translate-x-0 md:static">
+    <aside x-data="{ openMenu: '', openSub: '' }"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-40 w-64 
+                  bg-white border-r border-gray-200
+                  dark:bg-[#0d121d] dark:border-gray-900
+                  flex flex-col transition-transform duration-300
+                  md:translate-x-0 md:static">
         <div class="p-6 mb-2 border-b border-gray-800/50 relative">
             <div class="flex items-center gap-3">
                 <div class="relative w-8 h-8">
@@ -89,12 +95,15 @@
                         class="absolute inset-1 border-t-2 border-l-2 border-blue-500 rounded-tl-full">
                     </div>
                 </div>
-                <div>
+                <div class="transition-colors duration-300">
                     <h1
-                        class="text-white font-bold leading-none tracking-wider text-lg">
-                        DAMAAN</h1>
-                    <p class="text-[10px] text-gray-500 font-medium uppercase">
-                        Business Group</p>
+                        class="text-black dark:text-white font-bold leading-none tracking-wider text-lg transition-colors">
+                        DAMAAN
+                    </h1>
+                    <p
+                        class="text-[10px] text-slate-400 dark:text-gray-500 font-medium uppercase transition-colors">
+                        Business Group
+                    </p>
                 </div>
             </div>
         </div>
@@ -103,137 +112,195 @@
                 <div
                     class="px-4 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                     Main Navigation</div>
-                <a href="../Dashboard/Superadmin.html"
-                    class="group flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                    <i class="fas fa-home w-8 text-sm"></i>
+                <a href="../Dashboard/city-dashboard.html" class="group flex items-center gap-3 px-4 py-3
+   text-gray-600 dark:text-gray-400
+   hover:text-gray-900 dark:hover:text-white
+   hover:bg-gray-100 dark:hover:bg-gray-800/30
+   transition-all duration-300">
+                    <i class="fas fa-home text-sm"></i>
                     <span
-                        class="text-[13px] font-medium uppercase tracking-tight">Dashboard</span>
+                        class="text-[13px] font-medium uppercase tracking-tight">
+                        Dashboard
+                    </span>
                 </a>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'newEntry' ? '' : 'newEntry')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all outline-none">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-plus-square w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-bold uppercase tracking-tight">New
-                                Entry</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                New Entry
+                            </span>
                         </div>
-                        <i class="fas text-[10px] transition-transform duration-200"
-                            :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'newEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'newEntry'" x-collapse
-                        class="bg-[#0b0f17]">
+                    <!-- Submenu Wrapper -->
+                    <div x-show="openMenu === 'newEntry'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <!-- Branch Entry -->
                         <button
                             @click="openSub = (openSub === 'branchEntry' ? '' : 'branchEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Branch
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>Branch Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'branchEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'branchEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12">
-                            <a href="../Superbranch/superbranch.html"
-                                @click="activeMenu='superBranch'; openMenu='newEntry'; openSub='branchEntry'"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/superbranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
                                 Super Branch
                             </a>
-                            <a href="../Superbranch/countrybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">Country
-                                Branch</a>
-                            <a href="../Superbranch/citybranch.html"
-                                class="pl-4 py-2 text-[12px] text-gray-400 hover:text-white">City
-                                Branch</a>
+                            <a href="../Superbranch/countrybranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Country Branch
+                            </a>
+                            <a href="../Superbranch/citybranch.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                City Branch
+                            </a>
                         </div>
+                        <!-- User Entry -->
                         <button
                             @click="openSub = (openSub === 'userEntry' ? '' : 'userEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">User
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>User Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'userEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Super
-                                Admin User Entry</a>
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Super Admin User Entry
+                            </a>
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                Country Admin User Entry
+                            </a>
+                            <a href="../Superbranch/userentry.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                City Admin User Entry
+                            </a>
                         </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">Country
-                                Admin User Entry</a>
-                        </div>
-                        <div x-show="openSub === 'userEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/userentry.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">City
-                                Admin User Entry</a>
-                        </div>
+                        <!-- Account Entry -->
                         <button
                             @click="openSub = (openSub === 'accountEntry' ? '' : 'accountEntry')"
-                            class="w-full flex items-center justify-between px-10 py-2.5 text-gray-400 hover:text-white outline-none">
-                            <span class="text-[12px] font-medium">Account
-                                Entry</span>
+                            class="flex items-center justify-between py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            <span>Account Entry</span>
                             <i class="fas text-[9px]"
-                                :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                                :class="openSub === 'accountEntry' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                            </i>
                         </button>
                         <div x-show="openSub === 'accountEntry'" x-collapse
-                            class="flex flex-col border-l border-gray-800 ml-12 pb-2">
-                            <a href="../Superbranch/newaccount.html"
-                                class="pl-4 py-1.5 text-[11px] text-gray-500 hover:text-white">New
-                                Account</a>
+                            class="flex flex-col pl-6 border-l border-gray-200 dark:border-gray-800">
+                            <a href="../Superbranch/newaccount.html" class="py-1.5 text-[11px]
+                text-gray-600 dark:text-gray-400
+                hover:text-gray-900 dark:hover:text-white">
+                                New Account
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ledger' ? '' : 'ledger')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all outline-none">
                         <div class="flex items-center">
                             <i
                                 class="fas fa-file-invoice-dollar w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Ledger
-                                Account</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Ledger Account
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-200"
+                            :class="openMenu === 'ledger' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ledger'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/super-admin-ledger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Ledger</a>
-                        <a href="../Ledger/countryLedger.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Country
-                            Ledger</a>
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'ledger'" x-collapse class="bg-gray-100 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/super-admin-ledger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                            Super Admin Ledger
+                        </a>
+                        <a href="../Ledger/countryLedger.html" class="block pl-10 py-2 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:bg-gray-100 dark:hover:bg-gray-800/30
+            hover:text-gray-900 dark:hover:text-white">
+                            Country Ledger
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'dailyPay' ? '' : 'dailyPay')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-money-bill-wave w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Daily
-                                Payment</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Daily Payment Entry
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'dailyPay' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'dailyPay'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/Super-admin-roznamcha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'dailyPay'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/Super-admin-roznamcha.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Super Admin Roznamcha
                         </a>
-                        <a href="../Ledger/branchRomancha.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha
+                        <a href="../Ledger/branchRomancha.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Branch Roznamcha
                         </a>
                     </div>
                 </div>
@@ -243,113 +310,179 @@
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ops' ? '' : 'ops')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-shopping-cart w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Purchase/Sale</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Purchase / Sale
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'ops' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ops'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Sale</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">New
-                            Purchase</a>
+                    <div x-show="openMenu === 'ops'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            New Sale
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            New Purchase
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'stock' ? '' : 'stock')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-boxes w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Stock</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Stock
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'stock' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'stock'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Current
-                            Stock</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Stock
-                            Reports</a>
+                    <div x-show="openMenu === 'stock'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Current Stock
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Stock Reports
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'ship' ? '' : 'ship')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-ship w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Shipping
-                                Line</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Shipping Line
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'ship' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'ship'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="../Ledger/trackentry1.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Truck
-                            Entry</a>
+                    <div x-show="openMenu === 'ship'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            BL Entry
+                        </a>
+                        <a href="../Ledger/trackentry1.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Truck Entry
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'agent' ? '' : 'agent')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-user-tie w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Clearing
-                                Agent</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Clearing Agent
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'agent' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'agent'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/billentry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">BL
-                            Entry</a>
-                        <a href="#"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Commission</a>
+                    <div x-show="openMenu === 'agent'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/billentry.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            BL Entry
+                        </a>
+                        <a href="#" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
+                            Commission
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
                     <button
                         @click="openMenu = (openMenu === 'vat' ? '' : 'vat')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-file-invoice w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">VAT</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                VAT
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'vat' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'vat'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <!-- Purchase Entry (Now Inactive) -->
-                        <a href="../Ledger/importparches.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
+                    <div x-show="openMenu === 'vat'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/importparches.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
                             Purchase Entry
                         </a>
-                        <a href="../Ledger/importsale.html"
-                            class="py-2 text-[12px] text-gray-500 hover:text-white">
+                        <a href="../Ledger/importsale.html" class="py-1.5 text-[12px]
+           text-gray-600 dark:text-gray-400
+           hover:text-gray-900 dark:hover:text-white
+           transition-colors duration-200">
                             Sale Entry
                         </a>
                     </div>
@@ -358,112 +491,142 @@
                     class="px-4 pt-6 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
                     Reports & Utils</div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'reports' ? '' : 'reports')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-chart-bar w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Total
-                                Reports</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Total Reports
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'reports' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'reports'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
-                        <a href="../Ledger/ledgerreport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Ledger
-                            Report</a>
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'reports'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+        bg-gray-50 dark:bg-[#0b0f17]
+        border-l border-gray-200 dark:border-gray-800">
+                        <a href="../Ledger/ledgerreport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Ledger Report
+                        </a>
                         <a href="../Ledger/super-admin-roznamcha-report.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Super
-                            Admin Roznamcha Report</a>
-                        <a href="../Ledger/branchromanchareport.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Branch
-                            Roznamcha Report</a>
+                            class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Super Admin Roznamcha Report
+                        </a>
+                        <a href="../Ledger/branchromanchareport.html" class="py-1.5 text-[12px]
+            text-gray-600 dark:text-gray-400
+            hover:text-gray-900 dark:hover:text-white
+            transition-colors duration-200">
+                            Branch Roznamcha Report
+                        </a>
                     </div>
                 </div>
                 <div class="relative">
-                    <a href="../Ledger/email-compose.html">
-                        <button
-                            @click="openMenu = (openMenu === 'email' ? '' : 'email')"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
-                            <div class="flex items-center">
-                                <i class="fas fa-envelope w-8 text-sm"></i>
-                                <span
-                                    class="text-[13px] font-medium uppercase tracking-tight">Emails</span>
-                            </div>
-                            <i class="fas text-[10px]"
-                                :class="openMenu === 'email' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        </button>
+                    <a href="../Ledger/email-compose.html" class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope w-8 text-sm"></i>
+                            <span
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Emails
+                            </span>
+                        </div>
                     </a>
                 </div>
                 <div class="relative">
+                    <!-- Main Button -->
                     <button
                         @click="openMenu = (openMenu === 'settings' ? '' : 'settings')"
-                        class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all">
+                        class="w-full flex items-center justify-between px-4 py-3
+        text-gray-600 dark:text-gray-400
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-gray-100 dark:hover:bg-gray-800/30
+        transition-all duration-300">
                         <div class="flex items-center">
                             <i class="fas fa-cog w-8 text-sm"></i>
                             <span
-                                class="text-[13px] font-medium uppercase tracking-tight">Settings</span>
+                                class="text-[13px] font-medium uppercase tracking-tight">
+                                Settings
+                            </span>
                         </div>
-                        <i class="fas text-[10px]"
-                            :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i class="fas text-[10px] transition-transform duration-300"
+                            :class="openMenu === 'settings' ? 'fa-chevron-down' : 'fa-chevron-right'">
+                        </i>
                     </button>
-                    <div x-show="openMenu === 'settings'" x-collapse
-                        class="bg-[#0b0f17] flex flex-col pl-12 py-2 border-l border-gray-800 ml-4">
+                    <!-- Submenu -->
+                    <div x-show="openMenu === 'settings'" x-collapse class="flex flex-col pl-12 py-2 ml-4
+                           bg-gray-50 dark:bg-[#0b0f17]
+                           border-l border-gray-200 dark:border-gray-800">
                         <a href="../Ledger/setting-bill-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bill
-                            Entry</a>
+                            class="submenu-link">Bill Entry</a>
                         <a href="../Ledger/setting-cash-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Cash
-                            Entry</a>
+                            class="submenu-link">Cash Entry</a>
                         <a href="../Ledger/exchange-entry-setting.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Exchange
-                            Entry</a>
+                            class="submenu-link">Exchange Entry</a>
                         <a href="../Ledger/bank-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Bank
-                            Entry</a>
+                            class="submenu-link">Bank Entry</a>
                         <a href="../Ledger/employe-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Employe
-                            Data Entry</a>
+                            class="submenu-link">Employee Data Entry</a>
                         <a href="../Ledger/worker.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Worker
-                            Entry</a>
+                            class="submenu-link">Worker Entry</a>
                         <a href="../Ledger/goods-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">Goods
-                            Entry</a>
+                            class="submenu-link">Goods Entry</a>
                         <a href="../Ledger/warehouse-entry.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse
-                            Entry</a>
+                            class="submenu-link">Warehouse Entry</a>
                         <a href="../Ledger/wherehouse-import.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(import)</a>
+                            class="submenu-link">Warehouse (Import)</a>
                         <a href="../Ledger/warehouse-export.html"
-                            class="py-1.5 text-[12px] text-gray-500 hover:text-white">WareHouse(export)</a>
+                            class="submenu-link">Warehouse (Export)</a>
                     </div>
                 </div>
             </nav>
         </div>
     </aside>
-    <div class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header
-            class="sticky top-0 z-10 flex justify-between items-center bg-[#0b0f1a]/80 backdrop-blur-md px-4 lg:px-8 h-16 border-b border-slate-800">
+    <div class="flex-1 p-6 min-h-screen overflow-y-auto 
+       bg-white text-gray-800
+       dark:bg-[#0b0e14] dark:text-gray-300
+       transition-colors duration-300">
+        <header class=" flex justify-between items-center 
+       bg-white border-b border-gray-200
+       dark:bg-[#0b0f1a]/80 dark:border-slate-800
+       backdrop-blur-md px-4 lg:px-8 h-16
+       transition-colors duration-300">
             <!-- LEFT SIDE -->
             <div class="flex items-center w-full max-w-md">
-                <!-- Mobile Menu Button -->
                 <button @click="sidebarOpen = true"
-                    class="lg:hidden mr-3 p-2 text-slate-400 hover:text-white">
+                    class="lg:hidden mr-3 p-2 rounded-md transition-colors
+               text-slate-600 hover:bg-gray-100 
+               dark:text-slate-400 dark:hover:text-white dark:hover:bg-gray-800">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
-                <!-- Search -->
-                <div class="relative w-full hidden md:block">
-                    <span
-                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </span>
-                    <input type="text"
-                        class="bg-[#111827] w-full pl-10 pr-4 py-2 rounded-lg border border-slate-800 text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder-slate-500 text-white"
-                        placeholder="Search invoices, customers, or reports...">
+                <div class="relative w-full">
+                    <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search"
+                            class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <input type="text" class="w-full pl-10 pr-4 py-2 rounded-lg text-sm border outline-none transition-all duration-200
+                   bg-gray-50 text-gray-900 border-gray-300 placeholder-gray-400
+                   dark:bg-[#0d1117] dark:text-gray-100 dark:border-gray-700 dark:placeholder-gray-500
+                   focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        placeholder="Search invoices, customers, or reports..." />
                 </div>
             </div>
             <!-- RIGHT SIDE -->
@@ -471,9 +634,16 @@
                 <!-- Icons Group -->
                 <div
                     class="flex items-center space-x-4 pr-6 border-r border-slate-800">
-                    <button
-                        class="text-slate-400 hover:text-white transition-colors p-1">
-                        <i data-lucide="moon" class="w-5 h-5"></i>
+                    <button @click="darkMode = !darkMode; 
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light')" class="text-slate-500 dark:text-slate-400 
+           hover:text-black dark:hover:text-white 
+           transition-colors p-1">
+                        <!-- Moon Icon -->
+                        <i x-show="!darkMode" data-lucide="moon"
+                            class="w-5 h-5"></i>
+                        <!-- Sun Icon -->
+                        <i x-show="darkMode" data-lucide="sun"
+                            class="w-5 h-5"></i>
                     </button>
                     <div
                         class="flex items-center space-x-1.5 cursor-pointer group p-1">
@@ -497,21 +667,21 @@
                 <div class="flex items-center space-x-3 group cursor-pointer">
                     <div class="text-right hidden sm:block">
                         <p
-                            class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                            class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             Admin User
                         </p>
                         <p
-                            class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
+                            class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide uppercase">
                             Super Admin
                         </p>
                     </div>
                     <div class="relative">
                         <div
-                            class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 ring-offset-2 ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
+                            class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-200 dark:ring-slate-700 ring-offset-2 ring-offset-white dark:ring-offset-[#0b0f1a] group-hover:scale-105 transition-transform">
                             AD
                         </div>
                         <div
-                            class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0b0f1a] rounded-full">
+                            class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#0b0f1a] rounded-full">
                         </div>
                     </div>
                 </div>
@@ -520,346 +690,270 @@
         <main class="flex-1 overflow-y-auto p-4 lg:p-6">
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="flex-1 space-y-6">
-                    <div
-                        class="bg-[#161e2e] rounded-xl border border-slate-800 p-6 shadow-xl">
-                        <div class="flex justify-between items-center mb-6">
-                            <h1 class="text-xl font-bold">Worker Entry</h1>
-                            <span
-                                class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 uppercase tracking-widest">Offline
-                                Entry</span>
+                    <div class="bg-white dark:bg-[#161e2e] rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-xl transition-colors duration-200">
+    
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-xl font-bold text-slate-900 dark:text-white">Worker Entry</h1>
+        <span class="bg-green-500/10 text-green-600 dark:text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 uppercase tracking-widest">
+            Offline Entry
+        </span>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Employee Basic Info</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Company Name</label>
+                <input type="text" placeholder="Company Name" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Branch Name</label>
+                <input type="text" placeholder="Branch Name" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Work Country</label>
+                <input type="text" placeholder="Work Country" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Work Branch</label>
+                <input type="text" placeholder="Work Branch" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">First Name</label>
+                <input type="text" placeholder="First Name" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Surname</label>
+                <input type="text" placeholder="Surname" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Post</label>
+                <input type="text" placeholder="Post" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Service Query</label>
+                <input type="text" placeholder="Query" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Salary Currency</label>
+                <select class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+                    <option>-- Select --</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Employee Address</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Country</label><input type="text" placeholder="Country" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">State</label><input type="text" placeholder="State" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">City</label><input type="text" placeholder="City" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+        </div>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Full Address</label><input type="text" placeholder="Full Address" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Postal/Zip Code</label><input type="text" placeholder="Postal Code" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Documentation (Multiple Records)</h2>
+        <div class="bg-slate-50 dark:bg-slate-900/40 p-4 rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Document Type</label><select class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"><option>-- Select --</option></select></div>
+                <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Document Number</label><input type="text" placeholder="Enter number" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Issued From</label><input type="text" placeholder="Location" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Issue Date</label><input type="date" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                    <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Expiry Date</label><input type="date" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                </div>
+                <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">G.G.C / Reference (Optional)</label><input type="text" placeholder="Reference No" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Upload File</label><input type="file" class="text-[10px] text-slate-500 dark:text-slate-400"></div>
+                    <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Document Name</label><input type="text" placeholder="Name" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button class="text-[10px] text-red-600 dark:text-red-500 hover:bg-red-500/10 px-3 py-1 rounded transition-colors">Remove</button>
+            </div>
+        </div>
+        <button class="w-full mt-4 py-2 border-2 border-dashed border-blue-500/30 text-blue-600 dark:text-blue-500 rounded text-xs hover:bg-blue-500/5 transition-all">
+            + Add Document
+        </button>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Team Movement</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">From Team</label><input type="text" placeholder="Team Name" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">To Team</label><input type="text" placeholder="Team Name" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">On Team / Day Of</label><select class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"><option>-- Select --</option></select></div>
+        </div>
+        <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Notes (SOP / Transfer details etc.)</label><textarea rows="3" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></textarea></div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Contact</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Preferred Contact Method</label><select class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"><option>-- Select --</option></select></div>
+            <div><label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Contact Details</label><input type="text" placeholder="Enter email or phone number" class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded px-3 py-2 text-xs text-slate-900 dark:text-white outline-none"></div>
+        </div>
+    </div>
+
+    <div class="flex space-x-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+        <button class="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded shadow-lg shadow-blue-900/20 uppercase tracking-wide transition-all">
+            Save Employee Entry
+        </button>
+        <button class="px-8 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white text-xs font-bold rounded uppercase tracking-wide transition-all">
+            Reset
+        </button>
+    </div>
+</div>
+                </div>
+              <div class="w-full lg:w-80 space-y-6">
+    <div class="bg-white dark:bg-[#161e2e] rounded-xl border border-slate-200 dark:border-blue-500/20 p-6 sticky top-0 shadow-2xl transition-colors duration-200">
+        
+        <h3 class="text-[10px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest mb-4">
+            Employee Summary
+        </h3>
+
+        <div class="mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-2 text-blue-600 dark:text-blue-400 mb-4">
+                <i class="fa-solid fa-circle-user text-lg"></i>
+                <span class="text-xs font-bold uppercase">EMP-000101 - Active Entry</span>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Full Name</p>
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Arshad Khan</p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Location</p>
+                    <p class="text-sm text-slate-700 dark:text-slate-300">Dubai Branch, United Arab Emirates</p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Identity Document</p>
+                    <p class="text-sm text-slate-700 dark:text-slate-300">Passport</p>
+                    <p class="text-xs font-medium text-blue-600 dark:text-blue-400">AK193290323</p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Document File</p>
+                    <p class="text-xs flex items-center text-green-600 dark:text-green-500 font-medium">
+                        <i class="fa-solid fa-file-pdf mr-2"></i>
+                        passport_copy_final.pdf
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Preferred Contact</p>
+                    <p class="text-sm font-bold text-green-600 dark:text-green-500">WhatsApp</p>
+                    <p class="text-sm text-slate-700 dark:text-slate-300">+971 50123 4567</p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">Final Address</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 italic leading-relaxed">
+                        Villa 12, Al Barsha Street, Dubai, UAE
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-[10px] text-slate-400 dark:text-slate-500 flex justify-between font-medium">
+            <span>Last Updated</span>
+            <span class="text-slate-600 dark:text-slate-400">12 Feb 2026</span>
+        </div>
+    </div>
+</div>
+            </div>
+           <div class="mt-8 bg-white dark:bg-[#161e2e] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl transition-colors duration-200">
+    <div class="p-6 flex flex-col md:flex-row justify-between items-center border-b border-slate-100 dark:border-slate-800 gap-4">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">Employee Records</h2>
+        <div class="flex gap-2">
+            <select class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-[10px] w-32 rounded px-2 py-1 outline-none">
+                <option>All Countries</option>
+            </select>
+            <select class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-[10px] w-40 rounded px-2 py-1 outline-none">
+                <option>All Document Types</option>
+            </select>
+            <button class="px-4 py-2 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors font-semibold uppercase tracking-wider">
+                Apply Filter
+            </button>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+                <tr>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Basic Info</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Work Branch</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Address</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Documentation</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Team Movement</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Contact</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <td class="px-6 py-4">
+                        <p class="text-xs font-bold text-slate-900 dark:text-white">[First Name] [Surname]</p>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500 font-medium">ID: EMP-001 | Post: Junior Dev</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">[Company Name]</p>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500">Main Branch (Work Branch)</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-[10px] text-slate-700 dark:text-slate-400 font-medium">City | [State]</p>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500">Full Address Details</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-green-600 dark:text-green-500 text-[10px] bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20 font-medium">[Document Type]</span>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500 mt-1">Exp: 01.01.2027</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-1 text-[10px]">
+                            <span class="text-slate-500 dark:text-slate-400">To:</span>
+                            <span class="text-blue-600 dark:text-blue-400 font-bold">[To Team]</span>
                         </div>
-                        <div class="mb-8">
-                            <h2 class="section-title">Employee Basic Info</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label>Company Name</label><input
-                                        type="text" placeholder="Company Name"
-                                        class="form-input text-xs"></div>
-                                <div><label>Branch Name</label><input
-                                        type="text" placeholder="Branch Name"
-                                        class="form-input text-xs"></div>
-                                <div><label>Work Country</label><input
-                                        type="text" placeholder="Work Country"
-                                        class="form-input text-xs"></div>
-                                <div><label>Work Branch</label><input
-                                        type="text" placeholder="Work Branch"
-                                        class="form-input text-xs"></div>
-                                <div><label>First Name</label><input type="text"
-                                        placeholder="First Name"
-                                        class="form-input text-xs"></div>
-                                <div><label>Surname</label><input type="text"
-                                        placeholder="Surname"
-                                        class="form-input text-xs"></div>
-                                <div><label>Post</label><input type="text"
-                                        placeholder="Post"
-                                        class="form-input text-xs"></div>
-                                <div><label>Service Query</label><input
-                                        type="text" placeholder="Query"
-                                        class="form-input text-xs"></div>
-                                <div>
-                                    <label>Salary Currency</label>
-                                    <select class="form-input text-xs">
-                                        <option>-- Select --</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-8">
-                            <h2 class="section-title">Employee Address</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div><label>Country</label><input type="text"
-                                        placeholder="Country"
-                                        class="form-input text-xs"></div>
-                                <div><label>State</label><input type="text"
-                                        placeholder="State"
-                                        class="form-input text-xs"></div>
-                                <div><label>City</label><input type="text"
-                                        placeholder="City"
-                                        class="form-input text-xs"></div>
-                            </div>
-                            <div
-                                class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label>Full Address</label><input
-                                        type="text" placeholder="Full Address"
-                                        class="form-input text-xs"></div>
-                                <div><label>Postal/Zip Code</label><input
-                                        type="text" placeholder="Postal Code"
-                                        class="form-input text-xs"></div>
-                            </div>
-                        </div>
-                        <div class="mb-8">
-                            <h2 class="section-title">Documentation (Multiple
-                                Records)</h2>
-                            <div
-                                class="bg-slate-900/40 p-4 rounded-lg border border-dashed border-slate-700">
-                                <div
-                                    class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                    <div><label>Document Type</label><select
-                                            class="form-input text-xs">
-                                            <option>-- Select --</option>
-                                        </select></div>
-                                    <div><label>Document Number</label><input
-                                            type="text"
-                                            placeholder="Enter number"
-                                            class="form-input text-xs"></div>
-                                    <div><label>Issued From</label><input
-                                            type="text" placeholder="Location"
-                                            class="form-input text-xs"></div>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div><label>Issue Date</label><input
-                                                type="date"
-                                                class="form-input text-xs">
-                                        </div>
-                                        <div><label>Expiry Date</label><input
-                                                type="date"
-                                                class="form-input text-xs">
-                                        </div>
-                                    </div>
-                                    <div><label>G.G.C / Reference
-                                            (Optional)</label><input type="text"
-                                            placeholder="Reference No"
-                                            class="form-input text-xs"></div>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div><label>Upload File</label><input
-                                                type="file"
-                                                class="text-[10px] text-slate-400">
-                                        </div>
-                                        <div><label>Document Name</label><input
-                                                type="text" placeholder="Name"
-                                                class="form-input text-xs">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-end">
-                                    <button
-                                        class="text-[10px] text-red-500 hover:bg-red-500/10 px-3 py-1 rounded">Remove</button>
-                                </div>
-                            </div>
-                            <button
-                                class="w-full mt-4 py-2 border-2 border-dashed border-blue-500/30 text-blue-500 rounded text-xs hover:bg-blue-500/5 transition-all">
-                                + Add Document
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500">On Day: 01</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-xs text-blue-600 dark:text-blue-400 font-medium">[Contact Method]</p>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-500">[Email or Phone]</p>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end space-x-3 text-slate-400 dark:text-slate-500">
+                            <button class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="hover:text-red-600 dark:hover:text-red-500 transition-colors">
+                                <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
-                        <div class="mb-8">
-                            <h2 class="section-title">Team Movement</h2>
-                            <div
-                                class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div><label>From Team</label><input type="text"
-                                        placeholder="Team Name"
-                                        class="form-input text-xs"></div>
-                                <div><label>To Team</label><input type="text"
-                                        placeholder="Team Name"
-                                        class="form-input text-xs"></div>
-                                <div><label>On Team / Day Of</label><select
-                                        class="form-input text-xs">
-                                        <option>-- Select --</option>
-                                    </select></div>
-                            </div>
-                            <div><label>Notes (SOP / Transfer details
-                                    etc.)</label><textarea rows="3"
-                                    class="form-input text-xs"></textarea></div>
-                        </div>
-                        <div class="mb-8">
-                            <h2 class="section-title">Contact</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label>Preferred Contact
-                                        Method</label><select
-                                        class="form-input text-xs">
-                                        <option>-- Select --</option>
-                                    </select></div>
-                                <div><label>Contact Details</label><input
-                                        type="text"
-                                        placeholder="Enter email or phone number"
-                                        class="form-input text-xs"></div>
-                            </div>
-                        </div>
-                        <div
-                            class="flex space-x-3 pt-4 border-t border-slate-800">
-                            <button
-                                class="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded shadow-lg shadow-blue-900/20 uppercase tracking-wide">Save
-                                Employee Entry</button>
-                            <button
-                                class="px-8 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded uppercase tracking-wide">Reset</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full lg:w-80 space-y-6">
-                    <div
-                        class="bg-[#161e2e] rounded-xl border border-blue-500/20 p-6 sticky top-0 shadow-2xl">
-                        <h3
-                            class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">
-                            Employee Summary</h3>
-                        <div class="mb-6 pb-6 border-b border-slate-800">
-                            <div
-                                class="flex items-center space-x-2 text-blue-400 mb-4">
-                                <i class="fa-solid fa-circle-user text-lg"></i>
-                                <span class="text-xs font-bold">EMP-000101 -
-                                    Active Entry</span>
-                            </div>
-                            <div class="space-y-4">
-                                <div>
-                                    <p class="text-[10px] text-slate-500">FULL
-                                        NAME</p>
-                                    <p class="text-sm font-semibold">Arshad Khan
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-500">
-                                        LOCATION</p>
-                                    <p class="text-sm">Dubai Branch, United Arab
-                                        Emirates</p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-500">
-                                        IDENTITY DOCUMENT</p>
-                                    <p class="text-sm">Passport</p>
-                                    <p class="text-xs text-blue-400">AK193290323
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-500">
-                                        DOCUMENT FILE</p>
-                                    <p
-                                        class="text-xs flex items-center text-green-500">
-                                        <i
-                                            class="fa-solid fa-file-pdf mr-2"></i>
-                                        passport_copy_final.pdf
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-500">
-                                        PREFERRED CONTACT</p>
-                                    <p class="text-sm font-bold text-green-500">
-                                        WhatsApp</p>
-                                    <p class="text-sm">+971 50123 4567</p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-500">FINAL
-                                        ADDRESS</p>
-                                    <p class="text-xs text-slate-300 italic">
-                                        Villa 12, Al Barsha Street, Dubai, UAE
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="text-[10px] text-slate-500 flex justify-between">
-                            <span>Last Updated</span>
-                            <span>12 Feb 2026</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="mt-8 bg-[#161e2e] rounded-xl border border-slate-800 overflow-hidden shadow-xl">
-                <div
-                    class="p-6 flex flex-col md:flex-row justify-between items-center border-b border-slate-800 gap-4">
-                    <h2 class="text-lg font-bold">Employee Records</h2>
-                    <div class="flex gap-2">
-                        <select class="form-input text-[10px] w-32">
-                            <option>All Countries</option>
-                        </select>
-                        <select class="form-input text-[10px] w-40">
-                            <option>All Document Types</option>
-                        </select>
-                        <button
-                            class="px-4 py-2 bg-blue-600 text-xs rounded hover:bg-blue-700">Apply
-                            Filter</button>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead
-                            class="bg-slate-900/50 border-b border-slate-800">
-                            <tr>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Basic Info</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Work Branch</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Address</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Documentation</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Team Movement</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Contact</th>
-                                <th
-                                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase">
-                                    Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800">
-                            <tr>
-                                <td class="px-6 py-4">
-                                    <p class="text-xs font-bold text-white">
-                                        [First Name] [Surname]</p>
-                                    <p class="text-[10px] text-slate-500">ID:
-                                        EMP-001 | Post: Junior Dev</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <p class="text-xs font-semibold">[Company
-                                        Name]</p>
-                                    <p class="text-[10px] text-slate-500">Main
-                                        Branch (Work Branch)</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <p class="text-[10px] text-slate-400">City |
-                                        [State]</p>
-                                    <p class="text-[10px] text-slate-500">Full
-                                        Address Details</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="text-green-500 text-[10px] bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">[Document
-                                        Type]</span>
-                                    <p class="text-[10px] text-slate-500 mt-1">
-                                        Exp: 01.01.2027</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div
-                                        class="flex items-center space-x-1 text-[10px]">
-                                        <span class="text-slate-400">To:</span>
-                                        <span
-                                            class="text-blue-400 font-bold">[To
-                                            Team]</span>
-                                    </div>
-                                    <p class="text-[10px] text-slate-500">On
-                                        Day: 01</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <p class="text-xs text-blue-400">[Contact
-                                        Method]</p>
-                                    <p class="text-[10px] text-slate-500">[Email
-                                        or Phone]</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div
-                                        class="flex items-center space-x-3 text-slate-400">
-                                        <button
-                                            class="hover:text-blue-500 transition-colors"><i
-                                                class="fa-solid fa-pen-to-square"></i></button>
-                                        <button
-                                            class="hover:text-red-500 transition-colors"><i
-                                                class="fa-solid fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
         </main>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             lucide.createIcons();
         });
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
     </script>
 </body>
 </html>
